@@ -23,7 +23,7 @@
         type: String,
         default: 'normal',
         validator: size => {
-          return ['mini', 'small', 'normal', 'large', 'warning'].includes(size);
+          return ['mini', 'small', 'normal', 'large'].includes(size);
         },
       },
       round: Boolean,
@@ -44,6 +44,11 @@
     methods: {
       onclick (e){
         this.$emit('click', e);
+      },
+    },
+    watch: {
+      disabled (val){
+        console.log('>>> disabled <<<', val);
       },
     },
   };
