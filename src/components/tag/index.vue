@@ -1,7 +1,7 @@
 <template>
-  <button class="panda-tag" :class="cClass">
+  <span class="panda-tag" :class="cClass">
     <slot></slot>
-  </button>
+  </span>
 </template>
 
 <script>

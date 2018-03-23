@@ -1,3 +1,21 @@
 .panda-tag {
-  // 
+  display: inline-block;
+  height: 22px;
+  line-height: 22px;
+  margin: 2px 4px 2px 0;
+  padding: 0 8px;
+  color: lighten(@primary-text-color, 20%);
+  border: 1px solid lighten(@primary-text-color, 40%);
+  border-radius: 3px;
+  background-color: #ffffff;
+  font-size: 12px;
+  vertical-align: middle;
+  /*opacity: 1;*/
+  overflow: hidden;
+  /*cursor: pointer;*/
+}
+
+.panda-tag.blue {
+  color: darken(@primary-button-bgcolor, 5%);
+  border: 1px solid darken(@primary-button-bgcolor, 5%);
 }

@@ -1,1 +1,2 @@
-export { default as Tag } from './index.vue';
+import { default as Tag } from './index.vue';
+export default Tag;
