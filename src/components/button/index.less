@@ -1,11 +1,20 @@
 @import '../style/val.less';
 
+/* variables */
+@default-button-bgcolor: #ffffff;
+@primary-button-bgcolor: @color-primary;
+@success-button-bgcolor: #19be6b;
+@info-button-bgcolor: #13c2c2;
+@warning-button-bgcolor: #ff7a45;
+@danger-button-bgcolor: #ed3f14;
+
+/* button types */
 .panda-button, .panda-button.default {
   font-size: 1.4rem;
   text-align: center;
   display: inline-block;
   margin: 0;
-  padding: 6px 12px;
+  padding: 8px 12px;
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
@@ -29,6 +38,7 @@
   &:active {
     background-color: darken(@default-button-bgcolor, 3%);
   }
+  box-shadow: 0 1px 5px rgba(0,0,0,.1);
 }
 
 .panda-button.primary {
@@ -79,14 +89,66 @@
   }
 }
 
-.panda-button.error {
-  border-color: darken(@error-button-bgcolor, 5%);
-  background-color: @error-button-bgcolor;
+.panda-button.danger {
+  border-color: darken(@danger-button-bgcolor, 5%);
+  background-color: @danger-button-bgcolor;
   color: #fff;
   &:hover {
-    background-color: darken(@error-button-bgcolor, 5%);
+    background-color: darken(@danger-button-bgcolor, 5%);
   }
   &:active {
-    background-color: darken(@error-button-bgcolor, 10%);
+    background-color: darken(@danger-button-bgcolor, 10%);
   }
+}
+
+.panda-button.text {
+  border: none;
+  &:hover {
+    color: @primary-button-bgcolor;
+  }
+  &:active {
+    color: darken(@primary-button-bgcolor, 5%);
+    background-color: transparent;
+  }
+  box-shadow: none;
+}
+
+/* disabled button */
+.panda-button[disabled] {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+/* block button */
+.panda-button.block, .panda-button.long {
+  display: block;
+  width: 100%;
+}
+
+/* button size */
+.panda-button.mini {
+  padding: 4px 6px;
+  font-size: 12px;
+}
+.panda-button.small {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+.panda-button.large {
+  padding: 10px 14px;
+  font-size: 16px;
+}
+
+/* round button */
+.panda-button.round {
+  border-radius: 16px;
+}
+.panda-button.round.mini {
+  border-radius: 11px;
+}
+.panda-button.round.small {
+  border-radius: 13.5px;
+}
+.panda-button.round.large {
+  border-radius: 19px;
 }

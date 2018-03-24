@@ -16,7 +16,7 @@
         type: String,
         default: 'default',
         validator: type => {
-          return ['default', 'primary', 'success', 'info', 'warning', 'error', 'text'].includes(type);
+          return ['default', 'primary', 'success', 'info', 'warning', 'danger', 'text'].includes(type);
         },
       },
       size: {
@@ -34,6 +34,7 @@
       cClass (){
         return [
           this.type,
+          this.size,
           this.disabled ? 'disabled' : '',
           this.round ? 'round' : '',
           this.block ? 'block' : '',
@@ -43,6 +44,7 @@
     },
     methods: {
       onclick (e){
+        console.log('>>> panda-button@close');
         this.$emit('click', e);
       },
     },

@@ -2,7 +2,6 @@
   display: inline-block;
   height: 22px;
   line-height: 22px;
-  margin: 2px 4px 2px 0;
   padding: 0 8px;
   color: lighten(@primary-text-color, 20%);
   border: 1px solid lighten(@primary-text-color, 40%);
@@ -10,12 +9,126 @@
   background-color: #ffffff;
   font-size: 12px;
   vertical-align: middle;
-  /*opacity: 1;*/
   overflow: hidden;
-  /*cursor: pointer;*/
 }
 
-.panda-tag.blue {
-  color: darken(@primary-button-bgcolor, 5%);
-  border: 1px solid darken(@primary-button-bgcolor, 5%);
+/* closable tag */
+.panda-tag.closable {
+  .closable-btn:after {
+    margin-left:  3px;
+    content: "x";
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
+
+/* tag with triangle */
+.panda-tag.triangle {
+  margin-left: 14px;
+  display: inline-block;
+  position: relative;
+  color: inherit;
+  border-radius: 4px;
+  line-height: none;
+  overflow: inherit;
+  &:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 25%;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-right: 14px solid lighten(@primary-text-color, 40%);
+    border-bottom: 6px solid transparent;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    right: calc(100% - 2px);
+    top: 25%;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent; 
+    border-right: 14px solid #ffffff;
+    border-bottom: 6px solid transparent;
+  }
+}
+.panda-tag.triangle.red {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-red;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.orange {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-orange;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.yellow {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-yellow;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.green {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-green;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.cyan {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-cyan;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.blue {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-blue;
+  }
+  &:after {
+    content: none;
+  }
+}
+.panda-tag.triangle.purple {
+  border: none;
+  &:before {
+    border-right: 14px solid @color-purple;
+  }
+  &:after {
+    content: none;
+  }
+}
+
+/* round tag */
+.panda-tag.round {
+  border-radius: 11px;
+}
+
+.panda-tag.round.triangle {
+  &:before {
+    right: calc(100% - 2px);
+  }
+  &:after {
+    right: calc(100% - 4px);
+  }
 }

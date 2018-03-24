@@ -1,3 +1,46 @@
 .panda-alert {
-  // 
+  padding: 10px 15px;
+  border-radius: 3px;
+  line-height: 1.5;
+  .title {
+    margin: 8px 0;
+  }
+}
+
+.panda-alert.info,
+.panda-alert.success,
+.panda-alert.warning,
+.panda-alert.danger {
+  color: #ffffff;
+}
+
+.panda-alert.info {
+  background-color: #13c2c2;
+}
+.panda-alert.success {
+  background-color: #74cf47;
+}
+.panda-alert.warning {
+  background-color: #fa7649;
+}
+.panda-alert.danger {
+  background-color: #f64e56;
+}
+
+/* closable tag */
+.panda-alert.closable {
+  position: relative;
+  .closable-btn {
+    position: absolute;
+    float: right;
+    top: 10px;
+    right: 15px;
+  }
+  .closable-btn:after {
+    margin-left:  3px;
+    content: "x";
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
 }
