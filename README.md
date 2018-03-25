@@ -5,13 +5,13 @@ A UI Framework for Vue.js
 
 ## 基础
 - [ ] Icon         （图标）
-- [ ] Button       （按钮）
-- [ ] Badge        （徽标）
-- [ ] Tag          （标签）
+- [x] Button       （按钮）
+- [x] Badge        （徽标）
+- [x] Tag          （标签）
 
 
 ## 表单类
-- [ ] Input        （输入框）
+- [x] Input        （输入框）
 - [ ] NumberInput  （数字输入框）
 - [ ] Textarea     （文本输入框）
 - [ ] Radiobox     （单选）
@@ -29,7 +29,7 @@ A UI Framework for Vue.js
 - [ ] Message      （信息）
 - [ ] Notice       （通知）
 - [ ] Modal        （模态框）
-- [ ] Alert        （提示）
+- [x] Alert        （提示）
 - [ ] Progress     （进度条）
 
 

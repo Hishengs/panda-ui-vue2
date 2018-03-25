@@ -1,16 +1,12 @@
 <template>
-  <span class="panda-tag" :class="cClass" :style="cStyle">
-    <!-- <div class="triangle-mark" v-if="triangle"></div> -->
-    <span class="text">
-      <slot></slot>
-    </span>
-    <span class="closable-btn" v-if="closable" @click="onClose"></span>
+  <span class="panda-badge" :class="cClass" :style="cStyle">
+    <slot></slot>
   </span>
 </template>
 
 <script>
   export default {
-    name: 'Tag',
+    name: 'badge',
     props: {
       type: {
         type: String,
@@ -19,28 +15,17 @@
           return ['default', 'dot'].includes(type);
         },
       },
-      size: {
+      /*size: {
         type: String,
         default: 'default',
         validator: size => {
           return ['mini', 'small', 'default', 'large'].includes(size);
         },
-      },
+      },*/
       color: {
         type: String,
         default: '',
       },
-      closable: Boolean,
-      triangle: Boolean,
-      // 三角形指向
-      triangleDirection: {
-        type: String,
-        default: 'left',
-        validator: direction => {
-          return ['left', 'top', 'right', 'bottom'].includes(direction);
-        },
-      },
-      round: Boolean,
     },
     data (){
       return {
@@ -59,10 +44,6 @@
       cClass (){
         return [
           this.type,
-          this.closable ? 'closable' : '',
-          this.triangle ? 'triangle' : '',
-          this.triangle && this.triangleDirection ? ('triangle-' + this.triangleDirection) : '',
-          this.round ? 'round' : '',
           this.builtInColors[this.color] ? this.color : '',
         ].filter(cls => cls !== '').join(' ');
       },
@@ -76,12 +57,6 @@
           style['color'] = 'white';
         }
         return style;
-      },
-    },
-    methods: {
-      onClose (e){
-        console.log('>>> panda-tag@close');
-        this.$emit('close', e);
       },
     },
   };
