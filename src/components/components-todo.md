@@ -1,6 +1,3 @@
-# panda-ui
-A UI Framework for Vue.js
-
 # 待实现组件
 
 ## 基础

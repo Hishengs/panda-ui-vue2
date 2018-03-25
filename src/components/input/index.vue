@@ -1,7 +1,5 @@
 <template>
-  <button class="panda-button" :class="cClass" :disabled="disabled" @click="onclick">
-    <slot></slot>
-  </button>
+  <input class="panda-input" :class="cClass" :disabled="disabled" :value="value" @input="onValueUpdate" />
 </template>
 
 <script>
@@ -26,9 +24,9 @@
           return ['mini', 'small', 'normal', 'large'].includes(size);
         },
       },
-      round: Boolean,
-      block: Boolean,
-      loading: Boolean,
+      value: {
+        type: String,
+      },
     },
     computed: {
       cClass (){
@@ -36,16 +34,19 @@
           this.type,
           this.size,
           this.disabled ? 'disabled' : '',
-          this.round ? 'round' : '',
-          this.block ? 'block' : '',
-          this.loading ? 'loading' : '',
         ].filter(cls => cls !== '').join(' ');
       },
     },
+    // watch: {
+    //   value (newVal){
+    //     console.log('>>> panda-input.watch value: ', newVal);
+    //   },
+    // },
     methods: {
-      onclick (e){
-        console.log('>>> panda-button@close');
-        this.$emit('click', e);
+      onValueUpdate (e){
+        const newVal = e.target.value;
+        // console.log('>>> panda-input.onValueUpdate value: ', newVal);
+        this.$emit('input', newVal);
       },
     },
   };

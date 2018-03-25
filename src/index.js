@@ -1,11 +1,13 @@
 import Button from './components/button/index.js';
 import Tag from './components/tag/index.js';
 import Alert from './components/alert/index.js';
+import Input from './components/input/index.js';
 
 const components = {
   Button,
   Tag,
   Alert,
+  Input,
 };
 
 console.log(components);
