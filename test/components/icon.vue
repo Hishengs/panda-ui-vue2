@@ -1,7 +1,7 @@
 <template>
   <div class="icon-preview">
     <div class="search">
-      <Input placeholder="搜索图标" v-model="searchKey"></Input>
+      <Input placeholder="搜索图标" v-model="searchKey" clearable></Input>
     </div>
     <span class="container" v-for="name,i in icons" @click="copyIcon(name)">
       <Icon :name="name" size="20"></Icon>

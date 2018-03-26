@@ -1,5 +1,8 @@
 <template>
-  <input class="panda-input" :class="cClass" :disabled="disabled" :value="value" @input="onValueUpdate" />
+  <span class="panda-input-wrapper">
+    <input class="panda-input" :class="cClass" :placeholder="placeholder" :disabled="disabled" :value="value" @input="onValueUpdate" ref="input" />
+    <Icon name="x" class="clear-btn" v-if="clearable" @click.native="clearValue"></Icon>
+  </span>
 </template>
 
 <script>
@@ -27,6 +30,10 @@
       value: {
         type: String,
       },
+      placeholder: {
+        type: String,
+      },
+      clearable: Boolean,
     },
     computed: {
       cClass (){
@@ -47,6 +54,10 @@
         const newVal = e.target.value;
         // console.log('>>> panda-input.onValueUpdate value: ', newVal);
         this.$emit('input', newVal);
+      },
+      clearValue (){
+        this.$emit('input', '');
+        this.$refs.input.value = '';
       },
     },
   };

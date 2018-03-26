@@ -17,6 +17,8 @@
     <Input placeholder="输入框尺寸 normal" size="normal"></Input>
     <p>large</p>
     <Input placeholder="输入框尺寸 large" size="large"></Input>
+    <h3>可清空 clearable</h3>
+    <Input placeholder="可清空" clearable></Input>
   </div>
 </template>
 

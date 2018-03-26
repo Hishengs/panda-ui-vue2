@@ -1,3 +1,20 @@
+.panda-input-wrapper {
+  position: relative;
+  .clear-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    margin-top: -6px;
+    cursor: pointer;
+  }
+  &:hover {
+    .clear-btn {
+      display: inline-block;
+    }
+  }
+}
+
 .panda-input {
 	width: 100%;
 	padding: 6px 8px;
