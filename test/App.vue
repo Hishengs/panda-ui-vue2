@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Panda UI</h1>
+    <h1>Panda UI </h1>
 
     <div class="component">
       <h2>Icon 图标</h2>
@@ -32,6 +32,11 @@
       <InputPreview></InputPreview>
     </div>
 
+    <div class="component">
+      <h2>Textarea 多行文本输入框</h2>
+      <TextareaPreview></TextareaPreview>
+    </div>
+
   </div>
 </template>
 
@@ -42,6 +47,7 @@
   import BadgePreview from './components/badge.vue';
   import AlertPreview from './components/alert.vue';
   import InputPreview from './components/input.vue';
+  import TextareaPreview from './components/textarea.vue';
   export default {
     name: 'app',
     components: {
@@ -51,6 +57,7 @@
       BadgePreview,
       AlertPreview,
       InputPreview,
+      TextareaPreview,
     },
   };
 </script>

@@ -4,6 +4,7 @@ import Tag from './components/tag/index.js';
 import Badge from './components/badge/index.js';
 import Alert from './components/alert/index.js';
 import Input from './components/input/index.js';
+import Textarea from './components/textarea/index.js';
 
 const components = {
   Icon,
@@ -12,6 +13,7 @@ const components = {
   Badge,
   Alert,
   Input,
+  Textarea,
 };
 
 console.log(components);
