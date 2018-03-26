@@ -4,7 +4,8 @@
     <span class="text">
       <slot></slot>
     </span>
-    <span class="closable-btn" v-if="closable" @click="onClose"></span>
+    <!-- <span class="closable-btn" v-if="closable" @click="onClose"></span> -->
+    <Icon name="x" class="closable-btn" v-if="closable" @click.native="onClose"></Icon>
   </span>
 </template>
 

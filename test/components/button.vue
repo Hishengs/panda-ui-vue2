@@ -28,5 +28,7 @@
     <Button type="primary" size="small" round>small 按钮 round</Button>
     <Button type="primary" size="normal" round>normal 按钮 round</Button>
     <Button type="primary" size="large" round>large 按钮 round</Button>
+    <h3>6. 图标按钮 icon</h3>
+    <Button type="primary">书籍 <Icon name="book"></Icon></Button> <Button type="success" size="mini">多云 <Icon name="cloud"></Icon></Button>
   </div>
 </template>

@@ -28,6 +28,7 @@
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "feather-icons": "^4.7.0",
     "global": "^4.3.2",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",

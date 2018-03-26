@@ -1,7 +1,7 @@
 # 待实现组件
 
 ## 基础
-- [ ] Icon         （图标）
+- [x] Icon         （图标）
 - [x] Button       （按钮）
 - [x] Badge        （徽标）
 - [x] Tag          （标签）
