@@ -12,7 +12,7 @@ A UI Framework for Vue.js
 
 ## 表单类
 - [x] Input        （输入框）
-- [ ] NumberInput  （数字输入框）
+- [x] NumberInput  （数字输入框）
 - [x] Textarea     （文本输入框）
 - [ ] Radiobox     （单选）
 - [ ] Checkbox     （多选）

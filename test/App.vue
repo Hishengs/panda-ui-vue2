@@ -33,6 +33,11 @@
     </div>
 
     <div class="component">
+      <h2>NumberInput 数字输入框</h2>
+      <NumberInputPreview></NumberInputPreview>
+    </div>
+
+    <div class="component">
       <h2>Textarea 多行文本输入框</h2>
       <TextareaPreview></TextareaPreview>
     </div>
@@ -47,6 +52,7 @@
   import BadgePreview from './components/badge.vue';
   import AlertPreview from './components/alert.vue';
   import InputPreview from './components/input.vue';
+  import NumberInputPreview from './components/number-input.vue';
   import TextareaPreview from './components/textarea.vue';
   export default {
     name: 'app',
@@ -57,6 +63,7 @@
       BadgePreview,
       AlertPreview,
       InputPreview,
+      NumberInputPreview,
       TextareaPreview,
     },
   };
