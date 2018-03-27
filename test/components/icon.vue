@@ -11,21 +11,22 @@
 </template>
 
 <script>
-  import iconTags from './icon-tags.js';
-  const iconNames = Object.keys(iconTags);
+  import { icons } from './icon-tags.js';
+  // const iconNames = Object.keys(iconTags);
   export default {
     name: 'icon-preview',
     data (){
       return {
         searchKey: '',
-        iconNames,
+        // iconNames,
+        iconList: icons,
       };
     },
     computed: {
       icons (){
-        return this.searchKey.trim() ? this.iconNames.filter(name => {
+        return this.searchKey.trim() ? this.iconList.filter(name => {
           return name.includes(this.searchKey.trim());
-        }) : this.iconNames;
+        }) : this.iconList;
       }
     },
     methods: {
