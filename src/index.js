@@ -6,6 +6,7 @@ import Alert from './components/alert/index.js';
 import Input from './components/input/index.js';
 import NumberInput from './components/number-input/index.js';
 import Textarea from './components/textarea/index.js';
+import Radio from './components/radio/index.js';
 
 const components = {
   Icon,
@@ -16,6 +17,7 @@ const components = {
   Input,
   NumberInput,
   Textarea,
+  Radio,
 };
 
 console.log(components);

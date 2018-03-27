@@ -42,6 +42,11 @@
       <TextareaPreview></TextareaPreview>
     </div>
 
+    <div class="component">
+      <h2>Radio 单选框</h2>
+      <RadioPreview></RadioPreview>
+    </div>
+
   </div>
 </template>
 
@@ -54,6 +59,7 @@
   import InputPreview from './components/input.vue';
   import NumberInputPreview from './components/number-input.vue';
   import TextareaPreview from './components/textarea.vue';
+  import RadioPreview from './components/radio.vue';
   export default {
     name: 'app',
     components: {
@@ -65,6 +71,7 @@
       InputPreview,
       NumberInputPreview,
       TextareaPreview,
+      RadioPreview,
     },
   };
 </script>
