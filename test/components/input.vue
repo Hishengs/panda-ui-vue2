@@ -1,5 +1,7 @@
 <template>
-  <div class="input">
+  <div id="Input">
+    <h2>Input 输入框</h2>
+    
     <h3>基本输入框</h3>
     <p><i>使用 v-model 双向绑定</i> {{ val }}</p>
     <!-- <textarea class="code" disabled>

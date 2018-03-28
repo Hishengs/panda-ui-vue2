@@ -1,5 +1,7 @@
 <template>
-  <div class="number-input preview">
+  <div id="NumberInput">
+    <h2>NumberInput 数字输入框</h2>
+    
     <h3>默认</h3>
     <NumberInput placeholder="数字输入框" v-model="val"></NumberInput>
     <h3>禁用</h3>

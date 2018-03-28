@@ -1,5 +1,6 @@
 <template>
-  <div class="icon-preview">
+  <div id="Icon">
+    <h2>Icon 图标</h2>
     <div class="search">
       <Input placeholder="搜索图标" v-model="searchKey" clearable></Input>
     </div>
@@ -39,7 +40,7 @@
 </script>
 
 <style lang= "less" scoped>
-  .icon-preview {
+  #Icon {
     padding: 0 10px;
     .container {
       display: inline-block;

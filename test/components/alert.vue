@@ -1,5 +1,7 @@
 <template>
-  <div class="alert">
+  <div id="Alert">
+    <h2>Alert 警告</h2>
+    
     <h3>类型 type</h3>
     <p>info</p>
     <Alert type="info">这是一条信息提示</Alert>

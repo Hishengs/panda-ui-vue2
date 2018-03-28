@@ -1,5 +1,7 @@
 <template>
-  <div class="badge">
+  <div id="Badge">
+    <h2>Badge 徽标</h2>
+    
     <h3>默认徽标</h3>
     <Badge>2</Badge> <Badge>23</Badge> <Badge>233</Badge> <Badge>999+</Badge> <Badge>新</Badge> <Badge>折</Badge>
     <h3>内置颜色</h3>

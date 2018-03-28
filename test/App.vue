@@ -1,52 +1,56 @@
 <template>
   <div id="app">
-    <h1>Panda UI </h1>
+    <h1 id="logo">Panda UI <img src="./panda.png"></h1>
 
     <div class="component">
-      <h2>Icon 图标</h2>
       <IconPreview></IconPreview>
     </div>
 
     <div class="component">
-      <h2>Button 按钮</h2>
       <ButtonPreview></ButtonPreview>
     </div>
 
     <div class="component">
-      <h2>Tag 标签</h2>
       <TagPreview></TagPreview>
     </div>
 
     <div class="component">
-      <h2>Badge 徽标</h2>
       <BadgePreview></BadgePreview>
     </div>
 
     <div class="component">
-      <h2>Alert 警告</h2>
-      <AlertPreview></AlertPreview>
-    </div>
-
-    <div class="component">
-      <h2>Input 输入框</h2>
       <InputPreview></InputPreview>
     </div>
 
     <div class="component">
-      <h2>NumberInput 数字输入框</h2>
       <NumberInputPreview></NumberInputPreview>
     </div>
 
     <div class="component">
-      <h2>Textarea 多行文本输入框</h2>
       <TextareaPreview></TextareaPreview>
     </div>
 
     <div class="component">
-      <h2>Radio 单选框</h2>
       <RadioPreview></RadioPreview>
     </div>
 
+    <div class="component">
+      <AlertPreview></AlertPreview>
+    </div>
+
+    <!-- 菜单 -->
+    <ul class="menu">
+      <a href="#logo"><li>Panda UI</li></a>
+      <a href="#Icon"><li>Icon（图标）</li></a>
+      <a href="#Button"><li>Button（按钮）</li></a>
+      <a href="#Badge"><li>Badge（徽标）</li></a>
+      <a href="#Tag"><li>Tag（标签）</li></a>
+      <a href="#Input"><li>Input（输入框）</li></a>
+      <a href="#NumberInput"><li>NumberInput（数字输入框）</li></a>
+      <a href="#Textarea"><li>Textarea（文本输入框）</li></a>
+      <a href="#Radiobox"><li>Radiobox（单选）</li></a>
+      <a href="#Alert"><li>Alert（提示）</li></a>
+    </ul>
   </div>
 </template>
 
@@ -79,9 +83,38 @@
 <style lang= "less">
   #app {
     padding: 20px;
-    color: #444;
+    color: #555;
     width: 800px;
     margin: 0 auto;
+    > h1 {
+      line-height: 40px;
+      img {
+        height: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -5px;
+      }
+    }
+    .menu {
+      position: fixed;
+      top: 25%;
+      left: 50%;
+      margin-left: -700px;
+      width: 300px;
+      list-style: none;
+      padding: 0;
+      a {
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+          color: #222;
+        }
+        li {
+          font-size: 14px;
+          margin: 15px 0;
+        }
+      }
+    }
     .component {
       margin-top: 50px;
       margin-bottom: 150px;
@@ -91,11 +124,14 @@
         border-top: 1px solid #dedede;
       }
       h3 {
-        margin-top: 30px;
+        margin-top: 50px;
       }
     }
     code {
       font-family: Consolas, 'Microsoft Yahei';
+    }
+    h1, h2, h3, h4 {
+      font-weight: normal;
     }
   }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <div class="textarea-preview">
+  <div id="Textarea">
+    <h2>Textarea 多行文本输入框</h2>
+    
     <h3>默认</h3>
     <Textarea v-model="val"></Textarea>
     <h3>禁用</h3>

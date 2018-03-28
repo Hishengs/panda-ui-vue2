@@ -1,5 +1,6 @@
 <template>
-  <div class="button">
+  <div id="Button">
+    <h2>Button 按钮</h2>
     <h3>1. 按钮种类 type</h3>
     <Button type="default">默认按钮</Button>
     <Button type="primary">主要按钮</Button>

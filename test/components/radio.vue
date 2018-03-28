@@ -1,5 +1,7 @@
 <template>
-  <div class="radio-preview">
+  <div id="Radiobox">
+    <h2>Radio 单选框</h2>
+    
     <h3>默认</h3>
     <p>喜欢的饮料，你选择了：{{ drink }}</p>
     <Radio v-model="drink" label="果汁">果汁</Radio>

@@ -1,5 +1,7 @@
 <template>
-  <div class="tag">
+  <div id="Tag">
+    <h2>Tag 标签</h2>
+    
     <h3>默认标签</h3>
     <Tag>默认标签</Tag>
     <h3>内置颜色标签</h3>
