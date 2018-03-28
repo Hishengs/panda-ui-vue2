@@ -14,7 +14,7 @@ A UI Framework for Vue.js
 - [x] Input        （输入框）
 - [x] NumberInput  （数字输入框）
 - [x] Textarea     （文本输入框）
-- [ ] Radiobox     （单选）
+- [x] Radiobox     （单选）
 - [ ] Checkbox     （多选）
 - [ ] Select       （下拉）
 - [ ] Upload       （上传）
