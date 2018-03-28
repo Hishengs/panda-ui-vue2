@@ -1,7 +1,7 @@
 <template>
   <span class="panda-radio" :class="cClass" @click.prevent="onCheck">
     <span class="panda-radio-wrapper">
-      <input type="radio" :checked="checked" :disabled="disabled">
+      <input type="radio" :name="name" :checked="checked" :disabled="disabled">
     </span>
     <slot></slot>
   </span>
@@ -11,6 +11,7 @@
   export default {
     name: 'panda-radio',
     props: {
+      name: String,
       value: {
         type: [String, Boolean, Number],
         default: null,

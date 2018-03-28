@@ -94,19 +94,8 @@
         margin-top: 30px;
       }
     }
-    .code {
-      color: #ffffff;
-      background-color: #333;
-      width: 100%;
-      padding: 10px 0;
-      margin: 10px 0;
-      resize: none;
-      border-radius: 3px;
-      line-height: 1.5;
-      font-family: 'Microsoft Yahei';
-      &:hover, &:focus {
-        outline: none;
-      }
+    code {
+      font-family: Consolas, 'Microsoft Yahei';
     }
   }
 </style>
