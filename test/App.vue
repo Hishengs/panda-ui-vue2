@@ -38,6 +38,10 @@
       <AlertPreview></AlertPreview>
     </div>
 
+    <div class="component">
+      <TagInputPreview></TagInputPreview>
+    </div>
+
     <!-- 菜单 -->
     <ul class="menu">
       <a href="#logo"><li>Panda UI</li></a>
@@ -50,6 +54,7 @@
       <a href="#Textarea"><li>Textarea（文本输入框）</li></a>
       <a href="#Radiobox"><li>Radiobox（单选）</li></a>
       <a href="#Alert"><li>Alert（提示）</li></a>
+      <a href="#TagInput"><li>TagInput（标签输入框）</li></a>
     </ul>
   </div>
 </template>
@@ -64,6 +69,7 @@
   import NumberInputPreview from './components/number-input.vue';
   import TextareaPreview from './components/textarea.vue';
   import RadioPreview from './components/radio.vue';
+  import TagInputPreview from './components/tag-input.vue';
   export default {
     name: 'app',
     components: {
@@ -76,6 +82,7 @@
       NumberInputPreview,
       TextareaPreview,
       RadioPreview,
+      TagInputPreview,
     },
   };
 </script>
@@ -132,6 +139,16 @@
     }
     h1, h2, h3, h4 {
       font-weight: normal;
+    }
+    table {
+      width: 100%;
+      border-collapse:collapse;
+      border: 1px solid #dfdfdf;
+      th, td {
+        border: 1px solid #dfdfdf;
+        padding: 10px;
+        text-align: center;
+      }
     }
   }
 </style>

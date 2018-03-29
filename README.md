@@ -23,6 +23,7 @@ A UI Framework for Vue.js
 - [ ] TimePicker   （时间选择器）
 - [ ] Slider       （滑块）
 - [ ] Switch       （开关）
+- [x] TagInput     （标签输入框）
 
 
 ## 反馈类
