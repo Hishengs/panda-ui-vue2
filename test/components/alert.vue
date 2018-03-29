@@ -30,5 +30,27 @@
         这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。
     </Alert>
     </p>
+
+    <h4>Props</h4>
+    <table>
+      <tr>
+        <th>名称</th>
+        <th>说明</th>
+        <th>类型</th>
+        <th>默认值</th>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td>类型，info, success, warning, danger</td>
+        <td>String</td>
+        <td>info</td>
+      </tr>
+      <tr>
+        <td>closable</td>
+        <td>是否可关闭</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+    </table>
   </div>
 </template>

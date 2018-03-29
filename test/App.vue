@@ -134,6 +134,9 @@
         margin-top: 50px;
       }
     }
+    pre {
+      margin: 0;
+    }
     code {
       font-family: Consolas, 'Microsoft Yahei';
     }
