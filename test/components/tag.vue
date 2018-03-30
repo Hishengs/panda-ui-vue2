@@ -30,5 +30,38 @@
     <h4>三角方向</h4>
     <Tag triangle  triangle-direction="right">带三角的标签</Tag>
     <Tag color="red" triangle closable  triangle-direction="right">首单减15</Tag>
+    <h3>Props</h3>
+    <table>
+      <tr>
+        <th>名称</th>
+        <th>说明</th>
+        <th>类型</th>
+        <th>默认值</th>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td>标签颜色，red, orange, yellow, green, cyan, blue, purple</td>
+        <td>String</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>round</td>
+        <td>是否显示为圆角</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>closable</td>
+        <td>是否可关闭</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>triangle</td>
+        <td>是否显示为带三角的标签</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+    </table>
   </div>
 </template>

@@ -8,6 +8,27 @@
       <Icon :name="name" size="20"></Icon>
       <label class="name">{{ name }}</label>
     </span>
+    <h3>Props</h3>
+    <table>
+      <tr>
+        <th>名称</th>
+        <th>说明</th>
+        <th>类型</th>
+        <th>默认值</th>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>icon 名称</td>
+        <td>String</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td>icon 大小</td>
+        <td>Number</td>
+        <td>--</td>
+      </tr>
+    </table>
   </div>
 </template>
 

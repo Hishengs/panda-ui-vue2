@@ -31,5 +31,44 @@
     <Button type="primary" size="large" round>large 按钮 round</Button>
     <h3>6. 图标按钮 icon</h3>
     <Button type="primary">书籍 <Icon name="book"></Icon></Button> <Button type="success" size="mini">多云 <Icon name="cloud"></Icon></Button>
+    <h3>Props</h3>
+    <table>
+      <tr>
+        <th>名称</th>
+        <th>说明</th>
+        <th>类型</th>
+        <th>默认值</th>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td>按钮类型，default, primary, info, warning, danger</td>
+        <td>String</td>
+        <td>default</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td>按钮大小，mini, small, normal, large</td>
+        <td>String</td>
+        <td>normal</td>
+      </tr>
+      <tr>
+        <td>block</td>
+        <td>是否为块级按钮</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td>是否禁用</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>round</td>
+        <td>是否为圆角</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
+    </table>
   </div>
 </template>
