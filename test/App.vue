@@ -106,8 +106,9 @@
       position: fixed;
       top: 25%;
       left: 50%;
-      margin-left: -700px;
-      width: 300px;
+      margin: 0;
+      margin-left: -620px;
+      width: 220px;
       list-style: none;
       padding: 0;
       a {

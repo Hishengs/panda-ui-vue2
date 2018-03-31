@@ -4,7 +4,7 @@
   "description": "A UI Framework for Vue.js",
   "main": "src/index.js",
   "scripts": {
-    "parcel": "parcel ./test/index.html --open",
+    "parcel": "parcel ./test/index-parcel.html --open",
     "webpack": "webpack-dev-server --colors --hot --config=./test/webpack.config.js --open"
   },
   "repository": {
