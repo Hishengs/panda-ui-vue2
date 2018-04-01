@@ -24,13 +24,13 @@ const components = {
 
 console.log(components);
 
-const install = function(Vue, options){
+function install(Vue) {
   const componentKeys = Object.keys(components);
-  for(const key of componentKeys){
+  for (const key of componentKeys) {
     console.log('>>> key: ', key);
     Vue.component(key, components[key]);
   }
-};
+}
 
 export default {
   install,
