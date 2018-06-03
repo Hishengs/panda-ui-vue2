@@ -23,5 +23,6 @@ module.exports = {
     "space-before-function-paren": "off",
     // 在函数体花括号前必须有一个空格
     "space-before-blocks": "off",
+    "max-len": "off",
   },
 };

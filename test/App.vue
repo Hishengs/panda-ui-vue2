@@ -1,49 +1,58 @@
 <template>
   <div id="app">
-    <h1 id="logo">Panda UI <img src="./panda.png"></h1>
 
-    <div class="component">
-      <IconPreview></IconPreview>
+    <div id="nav">
+      <h1 id="logo">Panda UI <img src="./panda.png"></h1>
     </div>
 
-    <div class="component">
-      <ButtonPreview></ButtonPreview>
-    </div>
+    <div id="main">
+      <div class="component">
+        <IconPreview></IconPreview>
+      </div>
 
-    <div class="component">
-      <TagPreview></TagPreview>
-    </div>
+      <div class="component">
+        <ButtonPreview></ButtonPreview>
+      </div>
 
-    <div class="component">
-      <BadgePreview></BadgePreview>
-    </div>
+      <div class="component">
+        <TagPreview></TagPreview>
+      </div>
 
-    <div class="component">
-      <InputPreview></InputPreview>
-    </div>
+      <div class="component">
+        <BadgePreview></BadgePreview>
+      </div>
 
-    <div class="component">
-      <NumberInputPreview></NumberInputPreview>
-    </div>
+      <div class="component">
+        <InputPreview></InputPreview>
+      </div>
 
-    <div class="component">
-      <TextareaPreview></TextareaPreview>
-    </div>
+      <div class="component">
+        <NumberInputPreview></NumberInputPreview>
+      </div>
 
-    <div class="component">
-      <RadioPreview></RadioPreview>
-    </div>
+      <div class="component">
+        <TextareaPreview></TextareaPreview>
+      </div>
 
-    <div class="component">
-      <AlertPreview></AlertPreview>
-    </div>
+      <div class="component">
+        <RadioPreview></RadioPreview>
+      </div>
 
-    <div class="component">
-      <TagInputPreview></TagInputPreview>
+      <div class="component">
+        <AlertPreview></AlertPreview>
+      </div>
+
+      <div class="component">
+        <TagInputPreview></TagInputPreview>
+      </div>
+
+      <div class="component">
+        <TablePreview></TablePreview>
+      </div>
     </div>
 
     <!-- 菜单 -->
-    <ul class="menu">
+    <ul id="menu">
       <a href="#logo"><li>Panda UI</li></a>
       <a href="#Icon"><li>Icon（图标）</li></a>
       <a href="#Button"><li>Button（按钮）</li></a>
@@ -55,6 +64,7 @@
       <a href="#Radiobox"><li>Radiobox（单选）</li></a>
       <a href="#Alert"><li>Alert（提示）</li></a>
       <a href="#TagInput"><li>TagInput（标签输入框）</li></a>
+      <a href="#Table"><li>Table（表格）</li></a>
     </ul>
   </div>
 </template>
@@ -70,6 +80,7 @@
   import TextareaPreview from './components/textarea.vue';
   import RadioPreview from './components/radio.vue';
   import TagInputPreview from './components/tag-input.vue';
+  import TablePreview from './components/table.vue';
   export default {
     name: 'app',
     components: {
@@ -83,26 +94,37 @@
       TextareaPreview,
       RadioPreview,
       TagInputPreview,
+      TablePreview,
     },
   };
 </script>
 
 <style lang= "less">
   #app {
-    padding: 20px;
+    /* padding: 20px; */
     color: #555;
     width: 800px;
     margin: 0 auto;
-    > h1 {
-      line-height: 40px;
-      img {
-        height: 40px;
-        display: inline-block;
-        vertical-align: middle;
-        margin-top: -5px;
+    #nav {
+      position: fixed;
+      top: 0;
+      background-color: white;
+      z-index: 1;
+      width: 800px;
+      #logo {
+        line-height: 40px;
+        img {
+          height: 40px;
+          display: inline-block;
+          vertical-align: middle;
+          margin-top: -5px;
+        }
       }
     }
-    .menu {
+    #main {
+      /*  */
+    }
+    #menu {
       position: fixed;
       top: 25%;
       left: 50%;
@@ -129,7 +151,7 @@
       h2 {
         margin-bottom: 40px;
         padding-top: 40px;
-        border-top: 1px solid #dedede;
+        /* border-top: 1px solid #dedede; */
       }
       h3 {
         margin-top: 50px;
@@ -144,7 +166,7 @@
     h1, h2, h3, h4 {
       font-weight: normal;
     }
-    table {
+    /* table {
       width: 100%;
       border-collapse:collapse;
       border: 1px solid #dfdfdf;
@@ -153,7 +175,7 @@
         padding: 10px;
         text-align: center;
       }
-    }
+    } */
   }
 </style>
 
