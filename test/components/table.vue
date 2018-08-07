@@ -29,6 +29,8 @@
     <Table :columns="widthColumns" :data="moreData" height="300px" stripe></Table>
     <h3>9. 固定列</h3>
     <Table :columns="fixedColumns" :data="moreData" height="300px" stripe></Table>
+    <h3>10. 数据片段（大数据渲染）</h3>
+    <Table :columns="widthColumns" :data="hugeData(100)" height="300px" :enable-segment="true" stripe></Table>
   </div>
 </template>
 
@@ -131,11 +133,12 @@
       hugeData (len){
         let data = [];
         for (let i = 0; i < len; i++){
+          const id = Math.random().toString().slice(2, 6);
           data = data.concat([
-            { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
-            { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
-            { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
-            { name: '匿名者', age: 29, education: '未知', address: '海底两万里', },
+            { name: `张小帅${id}`, age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
+            { name: `王大锤${id}`, age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
+            { name: `周星星${id}`, age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
+            { name: `匿名者${id}`, age: 29, education: '未知', address: '海底两万里', },
           ]);
         }
         return data;

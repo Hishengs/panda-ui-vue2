@@ -8,7 +8,7 @@
     <thead>
       <tr>
         <th v-for="(column, i) in columns" :key="i">
-          <div class="inner" :style="{width: column.width ? parseFloat(column.width) + 'px' : ''}">
+          <div class="inner" :style="{width: column.width ? parseInt(column.width, 10) + 'px' : ''}">
             {{ typeof column.title === 'function' ? column.title() : column.title }}
           </div>
         </th>

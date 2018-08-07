@@ -24,5 +24,8 @@ module.exports = {
     // 在函数体花括号前必须有一个空格
     "space-before-blocks": "off",
     "max-len": "off",
+    "eol-last": "off",
+    "no-plusplus": "off",
+    "no-else-return": "off",
   },
 };

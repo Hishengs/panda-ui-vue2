@@ -6,7 +6,7 @@
           v-for="(column, j) in columns" 
           :key="i+'-'+j" 
         >
-          <div class="inner" :style="{width: column.width ? parseFloat(column.width) + 'px' : ''}">
+          <div class="inner" :style="{width: column.width ? parseInt(column.width, 10) + 'px' : ''}">
             {{ item[columns[j]['key']] }}
           </div>
         </td>
