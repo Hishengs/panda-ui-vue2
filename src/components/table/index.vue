@@ -36,8 +36,6 @@
         </div>
       </div>
     </div>
-    <!-- hasScrollBarX: {{hasScrollBarX.toString()}}
-    hasScrollBarY: {{hasScrollBarY.toString()}} -->
 	</div>
 </template>
 
@@ -96,6 +94,8 @@
       },
       // 是否启用数据片段进行大数据量优化
       enableSegment: Boolean,
+      // 是否懒加载
+      lazyLoad: Boolean,
     },
     computed: {
       cClass () {
@@ -128,7 +128,7 @@
       tableStyle () {
         return {
           marginTop: `${this.segment.enabled ? this.segment.marginTop : 0}px`,
-          marginBottom: `${this.segment.enabled ? this.segment.paddingBottom : 0}px`,
+          marginBottom: `${this.segment.enabled ? this.segment.marginBottom : 0}px`,
           height: `${this.bodyHeight}px`,
         };
       },
@@ -167,7 +167,7 @@
       },
       // 当前显示的数据
       showData () {
-        return this.segment.enabled ? this.segment.data : this.data;
+        return this.lazyLoad ? this.data.slice(this.lazyLoadConfig.offsetLeft, this.lazyLoadConfig.offsetRight) : this.data;
       },
     },
     data (){
@@ -201,6 +201,11 @@
           cursorBottom: 0,
           lastUpdate: (new Date()).getTime(),
         },
+        lazyLoadConfig: {
+          lastScrollTop: 0,
+          offsetLeft: 0,
+          offsetRight: 0,
+        },
       };
     },
     watch: {
@@ -211,8 +216,11 @@
       },
     },
     created () {
-      if (this.enableSegment) {
+      /* if (this.enableSegment) {
         this.initSegment();
+      } */
+      if (this.lazyLoad) {
+        this.lazyLoadConfig.offsetRight = this.height ? Math.ceil(parseInt(this.height, 10) / this.rowHeight) * 2 : 20;
       }
     },
     mounted () {
@@ -229,10 +237,11 @@
           const showRows = Math.ceil(parseInt(this.height, 10) / this.rowHeight);
           const dataLen = this.data.length;
           if (dataLen / showRows >= 5) { // 达到一定数据量才使用数据片段优化
+            console.log('>>> 开始结束数据', this.data[0], this.data[this.data.length - 2], this.data[this.data.length - 1]);
             // 其它未显示的计算出 margin 空间
             this.segment.marginTotal = (dataLen - showRows) * this.rowHeight;
             this.segment.marginTop = 0;
-            this.segment.paddingBottom = this.segment.marginTotal;
+            this.segment.marginBottom = this.segment.marginTotal;
             // 记录数据的 slice 游标
             this.segment.cursorTop = 0;
             this.segment.cursorBottom = showRows;
@@ -250,19 +259,17 @@
           return;
         } else this.segment.lastUpdate = now; */
         const distance = scrollTop - this.segment.marginTop;
-        const direction = distance > 0 ? 'bottom' : 'top';
-        /* if (distance >= this.rowHeight) {
-          console.log('可以更新数据');
-        } */
-        // 计算出偏移量
-        // if (direction === 'bottom') {
-        //   this.segment.data = this.data.slice(this.segment.cursorTop + this.segment.step, this.segment.cursorBottom + this.segment.step);
-        // } else {
-        //   this.segment.data = this.data.slice(this.segment.cursorTop - this.segment.step, this.segment.cursorBottom - this.segment.step);
-        // }
-        console.log(direction, distance);
-        /* this.segment.marginTop = scrollTop;
-        this.segment.paddingBottom = this.segment.paddingTotal - this.segment.marginTop; */
+        if (Math.abs(distance) >= this.rowHeight) {
+          const direction = distance > 0 ? 'bottom' : 'top';
+          const moveOffset = parseInt(distance / this.rowHeight, 10);
+          // const leftDistance = distance % this.rowHeight;
+          this.segment.cursorTop = this.segment.cursorTop + moveOffset;
+          this.segment.cursorBottom = this.segment.cursorBottom + moveOffset;
+          this.segment.data = this.data.slice(this.segment.cursorTop, this.segment.cursorBottom);
+          this.segment.marginTop = this.segment.marginTop + (moveOffset * this.rowHeight);
+          this.segment.marginBottom = this.segment.marginBottom - (moveOffset * this.rowHeight);
+          console.log(direction, distance, moveOffset * this.rowHeight, this.segment.marginTop, this.segment.marginBottom);
+        }
       },
       rerender () {
         this.detectHasScrollBar();
@@ -297,11 +304,23 @@
       onTableScroll (e) {
         e.preventDefault();
         e.stopPropagation();
-        const distanceToBottom = e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight);
+        if (this.lazyLoad) {
+          const distance = e.target.scrollTop - this.lazyLoadConfig.lastScrollTop;
+          const halfRowHeight = parseInt(this.rowHeight / 1.15, 10);
+          console.log('>>> lazyLoad', e.target.scrollTop, this.lazyLoadConfig.lastScrollTop, distance, halfRowHeight);
+          if (Math.abs(distance) >= halfRowHeight) {
+            const offset = parseInt(distance / halfRowHeight, 10);
+            /* const offsetLeft = this.lazyLoadConfig.offsetLeft + offset;
+            this.lazyLoadConfig.offsetLeft = offsetLeft >= 0 ? offsetLeft : 0; */
+            const offsetRight = this.lazyLoadConfig.offsetRight + offset;
+            this.lazyLoadConfig.offsetRight = offsetRight < this.data.length ? offsetRight : this.data.length - 1;
+            this.lazyLoadConfig.lastScrollTop = e.target.scrollTop;
+          }
+        }
+        /* const distanceToBottom = e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight);
         if (this.enableSegment && this.segment.enabled) {
           this.updateSegment(e.target.scrollTop);
-        }
-        // console.log('>>> onTableScroll, distanceToBottom', distanceToBottom, this.segment.marginTop, this.segment.paddingBottom);
+        } */
         // 同步左右固定表格滚动事件
         // 保持表格头部与表格一起滚动
         this.$refs.head.scrollLeft = this.$refs.body.scrollLeft;
