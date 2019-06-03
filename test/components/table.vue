@@ -9,9 +9,11 @@
     <Table :columns="columns" :data="data" stripe></Table>
     <h3>4. 对齐方式 align="left|center|right" 默认居中</h3>
     <Table :columns="columns" :data="data" align="left"></Table>
+    <Table :columns="columns" :data="data" align="center"></Table>
+    <Table :columns="columns" :data="data" align="right"></Table>
     <h3>5. 设置高度 固定表头</h3>
     <h4>height</h4>
-    <Table :columns="columns" :data="hugeData(1000)" height="300px" align="left" border></Table>
+    <Table :columns="columns" :data="hugeData(100)" height="300px" align="left" border></Table>
     <h4>min-height</h4>
     <Table :columns="columns" :data="lessData" min-height="100px"></Table>
     <h3>6. 大小 size="normal | large | small | mini"</h3>
@@ -28,7 +30,7 @@
     <h3>8. 超出外层宽度</h3>
     <Table :columns="widthColumns" :data="moreData" height="300px" stripe></Table>
     <h3>9. 固定列</h3>
-    <Table :columns="fixedColumns" :data="moreData" height="300px" stripe></Table>
+    <Table :columns="fixedColumns" :data="moreData" height="300px" border></Table>
     <h3>10. 数据懒加载</h3>
     <Table :columns="columns" :data="hugeData(2000)" :lazy-load="true" height="300px" align="left" border></Table>
   </div>
@@ -51,6 +53,7 @@
           {
             title: '学历',
             key: 'education',
+            className: 'education',
           },
           {
             title: '住址',
@@ -105,7 +108,7 @@
           },
         ],
         data: [
-          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
+          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', className: '张小帅', },
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
           { name: '匿名者', age: 29, education: '未知', address: '海底两万里', },
@@ -114,7 +117,7 @@
           { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
         ],
         moreData: [
-          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
+          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋，北京朝阳区幸福里小区7栋', },
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
           { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
