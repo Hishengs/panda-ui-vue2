@@ -13,7 +13,7 @@ import CheckboxGroup from './components/checkbox-group/index.js';
 import Switch from './components/switch/index.js';
 import Slider from './components/slider/index.js';
 import TagInput from './components/tag-input/index.js';
-import Table from './components/table/index.js';
+import Table from './components/table/new/index.js';
 
 const components = {
   Icon,

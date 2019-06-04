@@ -6,33 +6,84 @@
 // 定义高度宽度
 // 多级表头
 // 展开行 expand
-</script>
+// 加载中
 
 <template>
 	<div class="panda-table" :class="cClass">
-    <div class="main table-wrapper">
+    <!-- loading mask -->
+    <div class="panda-table_loading-mask"></div>
+    <div class="panda-table_wrapper">
       <!-- head -->
-      <div class="head" ref="head" :style="headStyle" v-if="showHeader">
+      <div class="panda-table_head" ref="head" :style="headStyle" v-if="showHeader">
         <!-- left fixed head -->
-        <div class="left-fixed" ref="leftFixedHead" v-if="hasLeftFixed" :class="{ scrolled: !!scrollLeft }" :style="{ height: `${headHeight}px` }">
+        <div class="left-fixed" ref="leftFixedHead" v-if="hasLeftFixed" :class="{ scrolled: !!scrollLeft }">
           <table-head :columns="leftFixedColumns"></table-head>
         </div>
-        <table-head ref="mainHead" :columns="mainColumns" :column-widths="columnWidths" :has-scrollbar="hasScrollBarY"></table-head>
+        <!-- main table head -->
+        <table-head
+          ref="mainHead"
+          :columns="columns"
+          :column-widths="columnWidths"
+          :scrollbar="{
+            x: hasScrollBarX,
+            y: hasScrollBarY,
+            width: scrollBarWidth
+          }"
+        ></table-head>
         <!-- right fixed head -->
-        <div class="right-fixed" ref="rightFixedHead" v-if="hasRightFixed"  :class="{ scrolled: !!scrollLeft }" :style="{ height: `${headHeight}px` }">
-          <table-head :columns="rightFixedColumns"></table-head>
+        <div class="right-fixed" ref="rightFixedHead" v-if="hasRightFixed"  :class="{ scrolled: !!scrollLeft }">
+          <table-head
+            :columns="rightFixedColumns"
+            :scrollbar="{
+              x: hasScrollBarX,
+              y: hasScrollBarY,
+              width: scrollBarWidth
+            }"
+          ></table-head>
         </div>
       </div>
       <!-- body -->
-      <div class="body" ref="body" :style="bodyStyle">
+      <div class="panda-table_body" ref="body" :style="bodyStyle">
         <!-- left fixed body -->
-        <div class="left-fixed" ref="leftFixedBody" v-if="hasLeftFixed" :class="{ scrolled: !!scrollLeft }" :style="{ width: `${leftFixedWidth}px`, top: `${headHeight}px` }">
-          <table-body :columns="leftFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"></table-body>
+        <div
+          class="left-fixed" ref="leftFixedBody"
+          v-if="hasLeftFixed"
+          :class="{ scrolled: !!scrollLeft }"
+          :style="{ width: `${leftFixedWidth}px`, top: `${this.border ? headHeight + 1 : headHeight}px` }"
+        >
+          <table-body
+            :columns="leftFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"
+            @row-enter="index => setRowHover(index, true)"
+            @row-leave="index => setRowHover(index, false)"
+          ></table-body>
         </div>
-        <table-body ref="mainBody" :columns="mainColumns" :data="showData" :style="tableStyle"></table-body>
+        <!-- main table body -->
+        <table-body
+          ref="mainBody"
+          :columns="columns"
+          :column-widths="columnWidths"
+          :data="showData"
+          :scrollbar="{
+            x: hasScrollBarX,
+            y: hasScrollBarY,
+            width: scrollBarWidth
+          }"
+          :style="tableStyle"
+          @row-enter="index => setRowHover(index, true)"
+          @row-leave="index => setRowHover(index, false)"
+        ></table-body>
         <!-- right fixed body -->
-        <div class="right-fixed" ref="rightFixedBody" v-if="hasRightFixed" :class="{ scrolled: !!scrollLeft }" :style="{ width: `${rightFixedWidth}px`, top: `${headHeight}px` }">
-          <table-body :columns="rightFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"></table-body>
+        <div
+          class="right-fixed" ref="rightFixedBody"
+          v-if="hasRightFixed"
+          :class="{ scrolled: !!scrollLeft }"
+          :style="{ width: `${rightFixedWidth}px`, top: `${this.border ? headHeight + 1 : headHeight}px` }"
+        >
+          <table-body
+            :columns="rightFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"
+            @row-enter="index => setRowHover(index, true)"
+            @row-leave="index => setRowHover(index, false)"
+          ></table-body>
         </div>
       </div>
     </div>
@@ -42,6 +93,8 @@
 <script>
   import tableHead from './table-head.vue';
   import tableBody from './table-body.vue';
+  import { getComputedStyle, addClass, removeClass } from '../../utils/dom.js';
+
   export default {
     name: 'panda-table',
     components: {
@@ -106,12 +159,14 @@
           this.align ? `align-${this.align}` : '',
           this.height ? 'height' : '',
           this.loading ? 'loading' : '',
+          this.hasScrollBarX ? 'scroll-x' : '',
+          this.hasScrollBarY ? 'scroll-y' : '',
         ].filter(cls => cls !== '').join(' ').trim();
       },
       headStyle () {
         return {
-          paddingLeft: `${this.leftFixedWidth}px`,
-          paddingRight: `${this.rightFixedWidth}px`,
+          // paddingLeft: `${this.leftFixedWidth}px`,
+          // paddingRight: `${this.rightFixedWidth}px`,
           // marginBottom: this.hasScrollBarX ? `-${this.scrollBarWidth}px` : '',
         };
       },
@@ -120,8 +175,9 @@
           height: this.height,
           maxHeight: this.maxHeight || this.height,
           minHeight: this.minHeight,
-          paddingLeft: `${this.leftFixedWidth}px`,
-          paddingRight: `${this.rightFixedWidth}px`,
+          // paddingLeft: `${this.leftFixedWidth}px`,
+          // paddingRight: `${this.rightFixedWidth}px`,
+          // paddingRight: this.hasScrollBarY ? `${this.rightFixedWidth - this.scrollBarWidth}px` : `${this.rightFixedWidth}px`,
           marginRight: `-${this.hasScrollBarX ? this.scrollBarWidth : 0}px`,
         };
       },
@@ -209,7 +265,7 @@
       };
     },
     watch: {
-      data (newData){
+      data (/* newData */){
         this.$nextTick(() => {
           this.rerender();
         });
@@ -225,9 +281,30 @@
     },
     mounted () {
       this.rerender();
+      /* global document */
+      /* document.addEventListener('scroll', e => {
+        if (this.$refs.leftFixedBody) {
+          let { target } = e;
+          while (target) {
+            if (target === this.$refs.leftFixedBody) {
+              e.preventDefault();
+              e.stopPropagation();
+              debugger;
+              break;
+            }
+            target = target.parentNode;
+          }
+        }
+      }); */
     },
     beforeDestroy () {
-      this.$refs.body.removeEventListener('scroll', this.onTableScroll);
+      this.$refs.body.removeEventListener('scroll', this.onMainTableScroll);
+      if (this.$refs.leftFixedBody) {
+        this.$refs.leftFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+      }
+      if (this.$refs.rightFixedBody) {
+        this.$refs.rightFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+      }
     },
     methods: {
       // 设置数据片段
@@ -274,34 +351,43 @@
       rerender () {
         this.detectHasScrollBar();
         // 添加表格滚动事件
-        this.$refs.body.removeEventListener('scroll', this.onTableScroll);
-        if (this.hasScrollBarY) {
-          this.$refs.body.addEventListener('scroll', this.onTableScroll);
-        }
+        this.syncTableScroll();
         // 计算各列的实际宽度
         this.calculateColumnsWidth();
         // 如果有左右固定
         if (this.hasLeftFixed || this.hasRightFixed) {
           this.setFixedTableStyle();
+          this.syncRowHeight();
         }
       },
       // 判断是否出现滚动条
       detectHasScrollBar () {
-        if (this.height) {
-          if (this.$refs.body) {
-            this.hasScrollBarY = this.$refs.body.scrollHeight > this.$refs.body.offsetHeight;
-            this.hasScrollBarX = this.$refs.body.scrollWidth > this.$refs.body.offsetWidth;
-          } else {
-            this.hasScrollBarY = false;
-            this.hasScrollBarX = false;
-          }
+        if (this.$refs.body) {
+          this.hasScrollBarY = this.$refs.body.scrollHeight > this.$refs.body.offsetHeight;
+          this.hasScrollBarX = this.$refs.body.scrollWidth > this.$refs.body.offsetWidth;
         } else {
           this.hasScrollBarY = false;
           this.hasScrollBarX = false;
         }
       },
+      // 同步左中右表格滚动事件
+      syncTableScroll () {
+        if (this.hasScrollBarY) {
+          this.$refs.body.removeEventListener('scroll', this.onMainTableScroll);
+          this.$refs.body.addEventListener('scroll', this.onMainTableScroll);
+        }
+        if (this.hasScrollBarY && this.hasLeftFixed && this.$refs.leftFixedBody) {
+          this.$refs.leftFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+          this.$refs.leftFixedBody.addEventListener('scroll', this.onLeftTableScroll);
+        }
+        if (this.hasScrollBarY && this.hasRightFixed && this.$refs.rightFixedBody) {
+          this.$refs.rightFixedBody.removeEventListener('scroll', this.onRightTableScroll);
+          this.$refs.rightFixedBody.addEventListener('scroll', this.onRightTableScroll);
+        }
+      },
       // table 滚动事件
-      onTableScroll (e) {
+      onMainTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
         e.preventDefault();
         e.stopPropagation();
         if (this.lazyLoad) {
@@ -335,53 +421,66 @@
           this.scrollLeft = this.$refs.body.scrollLeft;
         }
       },
-      // 计算各列的宽度
+      onLeftTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.$refs.body.scrollTop = this.$refs.leftFixedBody.scrollTop;
+      },
+      onRightTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.$refs.body.scrollTop = this.$refs.rightFixedBody.scrollTop;
+      },
+      /**
+      * 根据主表格第一行计算出各列的宽度
+      */
       calculateColumnsWidth () {
         const tds = this.$refs.body.querySelector('tr:first-child').querySelectorAll('td');
         for (let i = 0, len = tds.length; i < len; i++) {
           const td = tds[i];
-          const style = global.getComputedStyle(td);
+          const style = getComputedStyle(td);
           const width =
             parseFloat(style.borderLeftWidth)
             + parseFloat(style.paddingLeft)
             + parseFloat(style.width)
-            + parseFloat(style.paddingRight)
-            + ((this.height && i === len - 1) ? parseFloat(style.borderRightWidth) : 0);
+            + parseFloat(style.paddingRight);
           this.columnWidths.push(width);
         }
       },
       // 设置左右固定表格的样式
       setFixedTableStyle () {
         // 主表格表头高度
-        const mHeadHeight = this.$refs.mainHead ? parseInt(this.getStyle(this.$refs.mainHead.$el, 'height'), 10) : 0;
+        const mHeadHeight = this.$refs.mainHead ? parseInt(getComputedStyle(this.$refs.mainHead.$el, 'height'), 10) : 0;
         let maxHeadHeight = mHeadHeight;
 
         // 主表格主体高度
-        const mBodyHeight = this.$refs.mainBody ? parseInt(this.getStyle(this.$refs.mainBody.$el, 'height'), 10) : 0;
+        const mBodyHeight = this.$refs.mainBody ? parseInt(getComputedStyle(this.$refs.mainBody.$el, 'height'), 10) : 0;
         let maxBodyHeight = mBodyHeight;
 
         if (this.hasLeftFixed) {
-          const lHeadHeight = this.$refs.leftFixedHead ? parseInt(this.getStyle(this.$refs.leftFixedHead, 'height'), 10) : 0;
+          const lHeadHeight = this.$refs.leftFixedHead ? parseInt(getComputedStyle(this.$refs.leftFixedHead, 'height'), 10) : 0;
           maxHeadHeight = this.getMaxOf([maxHeadHeight, lHeadHeight]);
-          const lBodyHeight = this.$refs.leftFixedBody ? parseInt(this.getStyle(this.$refs.leftFixedBody.querySelector('table'), 'height'), 10) : 0;
+          const lBodyHeight = this.$refs.leftFixedBody ? parseInt(getComputedStyle(this.$refs.leftFixedBody.querySelector('table'), 'height'), 10) : 0;
           maxBodyHeight = this.getMaxOf([maxBodyHeight, lBodyHeight]);
           // 设置左表格的宽度
-          this.leftFixedWidth = this.$refs.leftFixedHead ? parseInt(this.getStyle(this.$refs.leftFixedHead, 'width'), 10) : 0;
+          this.leftFixedWidth = this.$refs.leftFixedHead ? parseInt(getComputedStyle(this.$refs.leftFixedHead, 'width'), 10) : 0;
         }
         if (this.hasRightFixed) {
-          const rHeadHeight = this.$refs.rightFixedHead ? parseInt(this.getStyle(this.$refs.rightFixedHead, 'height'), 10) : 0;
+          const rHeadHeight = this.$refs.rightFixedHead ? parseInt(getComputedStyle(this.$refs.rightFixedHead, 'height'), 10) : 0;
           maxHeadHeight = this.getMaxOf([maxHeadHeight, rHeadHeight]);
-          const rBodyHeight = this.$refs.rightFixedBody ? parseInt(this.getStyle(this.$refs.rightFixedBody.querySelector('table'), 'height'), 10) : 0;
+          const rBodyHeight = this.$refs.rightFixedBody ? parseInt(getComputedStyle(this.$refs.rightFixedBody.querySelector('table'), 'height'), 10) : 0;
           maxBodyHeight = this.getMaxOf([maxBodyHeight, rBodyHeight]);
           // 设置右表格的宽度
-          this.rightFixedWidth = this.$refs.rightFixedHead ? parseInt(this.getStyle(this.$refs.rightFixedHead, 'width'), 10) : 0;
+          this.rightFixedWidth = this.$refs.rightFixedHead ? parseInt(getComputedStyle(this.$refs.rightFixedHead, 'width'), 10) : 0;
         }
         // 设置表格头部高度
         this.headHeight = maxHeadHeight;
         this.bodyHeight = maxBodyHeight;
       },
       getStyle (el, style) {
-        return global.document.defaultView.getComputedStyle(el)[style];
+        return style ? global.document.defaultView.getComputedStyle(el)[style] : global.document.defaultView.getComputedStyle(el);
       },
       getMaxOf (nums) {
         let max = 0;
@@ -391,6 +490,72 @@
           }
         }
         return max;
+      },
+      // 同步各行高度
+      syncRowHeight () {
+        let maxHeight = 0;
+        if (this.hasLeftFixed && this.$refs.leftFixedBody) {
+          const leftMaxRowHeight = Array.from(this.$refs.leftFixedBody.querySelectorAll('table tr')).map(tr => {
+            return parseInt(getComputedStyle(tr, 'height'), 10);
+          }).sort((a, b) => {
+            return a > b ? -1 : 1;
+          })[0];
+          maxHeight = this.getMaxOf([maxHeight, leftMaxRowHeight]);
+        }
+        if (this.hasRightFixed && this.$refs.rightFixedBody) {
+          const rightMaxRowHeight = Array.from(this.$refs.rightFixedBody.querySelectorAll('table tr')).map(tr => {
+            return parseInt(getComputedStyle(tr, 'height'), 10);
+          }).sort((a, b) => {
+            return a > b ? -1 : 1;
+          })[0];
+          maxHeight = this.getMaxOf([maxHeight, rightMaxRowHeight]);
+        }
+        if (this.$refs.mainBody) {
+          const mainMaxRowHeight = Array.from(this.$refs.mainBody.$el.querySelectorAll('table tr')).map(tr => {
+            return parseInt(getComputedStyle(tr, 'height'), 10);
+          }).sort((a, b) => {
+            return a > b ? -1 : 1;
+          })[0];
+          maxHeight = this.getMaxOf([maxHeight, mainMaxRowHeight]);
+        }
+        // 补上 1px 的 border
+        ++maxHeight;
+        if (this.$refs.leftFixedBody) {
+          this.$refs.leftFixedBody.querySelectorAll('table tr').forEach(tr => {
+            const $tr = tr;
+            $tr.style.height = `${maxHeight}px`;
+          });
+        }
+        if (this.$refs.rightFixedBody) {
+          this.$refs.rightFixedBody.querySelectorAll('table tr').forEach(tr => {
+            const $tr = tr;
+            $tr.style.height = `${maxHeight}px`;
+          });
+        }
+        if (this.$refs.mainBody) {
+          this.$refs.mainBody.$el.querySelectorAll('table tr').forEach(tr => {
+            const $tr = tr;
+            $tr.style.height = `${maxHeight}px`;
+          });
+        }
+      },
+      // 左右固定的表格与主表格保持一致的 hover 效果
+      setRowHover (rowIndex, hover = true) {
+        function setHover (targetRow) {
+          if (hover) {
+            addClass(targetRow, 'row-hover');
+          } else removeClass(targetRow, 'row-hover');
+        }
+        const mainRows = this.$refs.mainBody.$el.querySelectorAll('tr');
+        setHover(mainRows[rowIndex]);
+        if (this.$refs.leftFixedBody) {
+          const leftFixedRows = this.$refs.leftFixedBody.querySelectorAll('tr');
+          setHover(leftFixedRows[rowIndex]);
+        }
+        if (this.$refs.rightFixedBody) {
+          const rightFixedRows = this.$refs.rightFixedBody.querySelectorAll('tr');
+          setHover(rightFixedRows[rowIndex]);
+        }
       },
     },
   };
