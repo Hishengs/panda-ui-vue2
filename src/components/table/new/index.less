@@ -1,0 +1,176 @@
+@border-color: #dfdfdf;
+@scrollbar-width: 17px;
+
+.panda-table {
+  width: 100%;
+  position: relative;
+  .panda-table_wrapper {
+    > .panda-table_left-fixed, > .panda-table_right-fixed {
+      position: absolute;
+      top: 0;
+      bottom: @scrollbar-width;
+      overflow: hidden;
+      .panda-table_common-table {
+        .panda-table_common-table_body table {
+          margin-bottom: @scrollbar-width;
+        }
+      }
+    }
+    > .panda-table_left-fixed {
+      left: 0;
+      box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+      .panda-table_common-table {
+        margin-right: -@scrollbar-width;
+      }
+    }
+    > .panda-table_main {
+      //
+    }
+    > .panda-table_right-fixed {
+      right: 0;
+      box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+    }
+    .panda-table_common-table {
+      > .panda-table_common-table_head {
+        overflow: hidden;
+      }
+      > .panda-table_common-table_body {
+        overflow: auto;
+      }
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    tr {
+      border-bottom: 1px solid @border-color;
+    }
+    th, td {
+      padding: 0;
+      text-align: center;
+    }
+    tbody tr.row-hover {
+      background-color: #fff2e8;
+    }
+  }
+}
+
+.panda-table.scroller-on-start {
+  .panda-table_wrapper {
+    > .panda-table_left-fixed {
+      box-shadow: none;
+    }
+    > .panda-table_right-fixed {
+      box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+.panda-table.scroller-on-end {
+  .panda-table_wrapper {
+    > .panda-table_right-fixed {
+      box-shadow: none;
+    }
+    > .panda-table_left-fixed {
+      box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// 边框
+.panda-table.border {
+  .panda-table_wrapper {
+    border: 1px solid @border-color;
+    > .panda-table_left-fixed, > .panda-table_right-fixed {
+      top: 1px;
+    }
+    > .panda-table_left-fixed {
+      left: 1px;
+    }
+    > .panda-table_right-fixed {
+      right: 1px;
+    }
+    table {
+      thead {
+        tr th:not(:first-child) {
+          border-left: 1px solid @border-color;
+          border-right: none;
+        }
+      }
+      tbody {
+        tr td:not(:first-child) {
+          border-left: 1px solid @border-color;
+          border-right: none;
+        }
+        tr:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+// 斑马纹
+.panda-table.stripe {
+  .panda-table_wrapper {
+    table {
+      tbody tr:nth-child(even) {
+        background-color: #f8f8f8;
+      }
+    }
+  }
+}
+
+// 对齐方式
+.panda-table.align-left {
+  th, td {
+    text-align: left;
+  }
+}
+.panda-table.align-right {
+  th, td {
+    text-align: right;
+  }
+}
+
+// 大小
+.panda-table,
+.panda-table.normal {
+  table {
+    th, td {
+      .inner {
+        padding: 10px;
+      }
+    }
+  }
+}
+.panda-table.mini {
+  table {
+    font-size: 1.3rem;
+    th, td {
+      .inner {
+        padding: 4px 6px;
+      }
+    }
+  }
+}
+.panda-table.small {
+  table {
+    th, td {
+      .inner {
+        padding: 6px 8px;
+      }
+    }
+  }
+}
+.panda-table.large {
+  table {
+    font-size: 1.6rem;
+    th, td {
+      .inner {
+        padding: 12px 14px;
+      }
+    }
+  }
+}

@@ -13,9 +13,9 @@
     <Table :columns="columns" :data="data" align="right"></Table>
     <h3>5. 设置高度 固定表头</h3>
     <h4>height</h4>
-    <Table :columns="columns" :data="hugeData(100)" height="300px" align="left" border></Table>
-    <h4>min-height</h4>
-    <Table :columns="columns" :data="lessData" min-height="100px"></Table>
+    <Table :columns="columns" :data="hugeData(50000)" height="300px" align="left" border virtual></Table>
+    <h4>max-height</h4>
+    <Table :columns="columns" :data="hugeData(300)" max-height="500px"></Table>
     <h3>6. 大小 size="normal | large | small | mini"</h3>
     <h4>mini</h4>
     <Table :columns="columns" :data="data" size="mini"></Table>
@@ -26,13 +26,13 @@
     <h4>large</h4>
     <Table :columns="columns" :data="data" size="large"></Table>
     <h3>7. 隐藏表头 show-header="false"</h3>
-    <Table :columns="columns" :data="data" stripe :show-header="false"></Table>
+    <!-- <Table :columns="columns" :data="data" stripe :show-header="false"></Table> -->
     <h3>8. 超出外层宽度</h3>
-    <Table :columns="widthColumns" :data="moreData" height="300px" stripe></Table>
+    <Table :columns="widthColumns" :data="moreData" height="300px" stripe border></Table>
     <h3>9. 固定列</h3>
-    <Table :columns="fixedColumns" :data="moreData" height="300px" border></Table>
+    <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table>
     <h3>10. 数据懒加载</h3>
-    <Table :columns="columns" :data="hugeData(2000)" :lazy-load="true" height="300px" align="left" border></Table>
+    <!-- <Table :columns="columns" :data="hugeData(2000)" :lazy-load="true" height="300px" align="left" border></Table> -->
   </div>
 </template>
 
@@ -108,7 +108,7 @@
           },
         ],
         data: [
-          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', className: '张小帅', },
+          { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', className: '张小帅' },
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
           { name: '匿名者', age: 29, education: '未知', address: '海底两万里', },

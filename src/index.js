@@ -8,7 +8,7 @@ import NumberInput from './components/number-input/index.js';
 import Textarea from './components/textarea/index.js';
 import Radio from './components/radio/index.js';
 import TagInput from './components/tag-input/index.js';
-import Table from './components/table/index.js';
+import Table from './components/table/new/index.js';
 
 const components = {
   Icon,

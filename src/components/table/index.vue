@@ -6,13 +6,15 @@
 // 定义高度宽度
 // 多级表头
 // 展开行 expand
-</script>
+// 加载中
 
 <template>
 	<div class="panda-table" :class="cClass">
-    <div class="main table-wrapper">
+    <!-- loading mask -->
+    <div class="panda-table_loading-mask"></div>
+    <div class="panda-table_wrapper">
       <!-- head -->
-      <div class="head" ref="head" :style="headStyle" v-if="showHeader">
+      <div class="panda-table_head" ref="head" :style="headStyle" v-if="showHeader">
         <!-- left fixed head -->
         <div class="left-fixed" ref="leftFixedHead" v-if="hasLeftFixed" :class="{ scrolled: !!scrollLeft }">
           <table-head :columns="leftFixedColumns"></table-head>
@@ -41,7 +43,7 @@
         </div>
       </div>
       <!-- body -->
-      <div class="body" ref="body" :style="bodyStyle">
+      <div class="panda-table_body" ref="body" :style="bodyStyle">
         <!-- left fixed body -->
         <div
           class="left-fixed" ref="leftFixedBody"
@@ -49,7 +51,11 @@
           :class="{ scrolled: !!scrollLeft }"
           :style="{ width: `${leftFixedWidth}px`, top: `${this.border ? headHeight + 1 : headHeight}px` }"
         >
-          <table-body :columns="leftFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"></table-body>
+          <table-body
+            :columns="leftFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"
+            @row-enter="index => setRowHover(index, true)"
+            @row-leave="index => setRowHover(index, false)"
+          ></table-body>
         </div>
         <!-- main table body -->
         <table-body
@@ -63,6 +69,8 @@
             width: scrollBarWidth
           }"
           :style="tableStyle"
+          @row-enter="index => setRowHover(index, true)"
+          @row-leave="index => setRowHover(index, false)"
         ></table-body>
         <!-- right fixed body -->
         <div
@@ -71,7 +79,11 @@
           :class="{ scrolled: !!scrollLeft }"
           :style="{ width: `${rightFixedWidth}px`, top: `${this.border ? headHeight + 1 : headHeight}px` }"
         >
-          <table-body :columns="rightFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"></table-body>
+          <table-body
+            :columns="rightFixedColumns" :data="showData" :style="{ height: `${bodyHeight}px` }"
+            @row-enter="index => setRowHover(index, true)"
+            @row-leave="index => setRowHover(index, false)"
+          ></table-body>
         </div>
       </div>
     </div>
@@ -81,7 +93,7 @@
 <script>
   import tableHead from './table-head.vue';
   import tableBody from './table-body.vue';
-  import { getComputedStyle } from '../../utils/dom.js';
+  import { getComputedStyle, addClass, removeClass } from '../../utils/dom.js';
 
   export default {
     name: 'panda-table',
@@ -253,7 +265,7 @@
       };
     },
     watch: {
-      data (newData){
+      data (/* newData */){
         this.$nextTick(() => {
           this.rerender();
         });
@@ -269,9 +281,30 @@
     },
     mounted () {
       this.rerender();
+      /* global document */
+      /* document.addEventListener('scroll', e => {
+        if (this.$refs.leftFixedBody) {
+          let { target } = e;
+          while (target) {
+            if (target === this.$refs.leftFixedBody) {
+              e.preventDefault();
+              e.stopPropagation();
+              debugger;
+              break;
+            }
+            target = target.parentNode;
+          }
+        }
+      }); */
     },
     beforeDestroy () {
-      this.$refs.body.removeEventListener('scroll', this.onTableScroll);
+      this.$refs.body.removeEventListener('scroll', this.onMainTableScroll);
+      if (this.$refs.leftFixedBody) {
+        this.$refs.leftFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+      }
+      if (this.$refs.rightFixedBody) {
+        this.$refs.rightFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+      }
     },
     methods: {
       // 设置数据片段
@@ -318,10 +351,7 @@
       rerender () {
         this.detectHasScrollBar();
         // 添加表格滚动事件
-        this.$refs.body.removeEventListener('scroll', this.onTableScroll);
-        if (this.hasScrollBarY) {
-          this.$refs.body.addEventListener('scroll', this.onTableScroll);
-        }
+        this.syncTableScroll();
         // 计算各列的实际宽度
         this.calculateColumnsWidth();
         // 如果有左右固定
@@ -340,8 +370,24 @@
           this.hasScrollBarX = false;
         }
       },
+      // 同步左中右表格滚动事件
+      syncTableScroll () {
+        if (this.hasScrollBarY) {
+          this.$refs.body.removeEventListener('scroll', this.onMainTableScroll);
+          this.$refs.body.addEventListener('scroll', this.onMainTableScroll);
+        }
+        if (this.hasScrollBarY && this.hasLeftFixed && this.$refs.leftFixedBody) {
+          this.$refs.leftFixedBody.removeEventListener('scroll', this.onLeftTableScroll);
+          this.$refs.leftFixedBody.addEventListener('scroll', this.onLeftTableScroll);
+        }
+        if (this.hasScrollBarY && this.hasRightFixed && this.$refs.rightFixedBody) {
+          this.$refs.rightFixedBody.removeEventListener('scroll', this.onRightTableScroll);
+          this.$refs.rightFixedBody.addEventListener('scroll', this.onRightTableScroll);
+        }
+      },
       // table 滚动事件
-      onTableScroll (e) {
+      onMainTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
         e.preventDefault();
         e.stopPropagation();
         if (this.lazyLoad) {
@@ -374,6 +420,18 @@
           }
           this.scrollLeft = this.$refs.body.scrollLeft;
         }
+      },
+      onLeftTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.$refs.body.scrollTop = this.$refs.leftFixedBody.scrollTop;
+      },
+      onRightTableScroll (e) {
+        if (e.currentTarget !== this.$refs.body) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.$refs.body.scrollTop = this.$refs.rightFixedBody.scrollTop;
       },
       /**
       * 根据主表格第一行计算出各列的宽度
@@ -479,6 +537,24 @@
             const $tr = tr;
             $tr.style.height = `${maxHeight}px`;
           });
+        }
+      },
+      // 左右固定的表格与主表格保持一致的 hover 效果
+      setRowHover (rowIndex, hover = true) {
+        function setHover (targetRow) {
+          if (hover) {
+            addClass(targetRow, 'row-hover');
+          } else removeClass(targetRow, 'row-hover');
+        }
+        const mainRows = this.$refs.mainBody.$el.querySelectorAll('tr');
+        setHover(mainRows[rowIndex]);
+        if (this.$refs.leftFixedBody) {
+          const leftFixedRows = this.$refs.leftFixedBody.querySelectorAll('tr');
+          setHover(leftFixedRows[rowIndex]);
+        }
+        if (this.$refs.rightFixedBody) {
+          const rightFixedRows = this.$refs.rightFixedBody.querySelectorAll('tr');
+          setHover(rightFixedRows[rowIndex]);
         }
       },
     },

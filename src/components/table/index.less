@@ -5,9 +5,9 @@
 .panda-table {
   width: 100%;
   position: relative;
-  .table-wrapper {
+  .panda-table_wrapper {
     width: 100%;
-    > .head {
+    > .panda-table_head {
       width: 100%;
       overflow-x: hidden;
       .left-fixed, .right-fixed {
@@ -27,7 +27,7 @@
         box-shadow: -2px 0 5px rgba(0,0,0,.1);
       }
     }
-    > .body {
+    > .panda-table_body {
       width: 100%;
       overflow: auto;
       z-index: 99;
@@ -61,7 +61,7 @@
       padding: 0;
       text-align: center;
     }
-    tbody tr:hover {
+    tbody tr.row-hover {
       background-color: #fff2e8;
     }
   }
@@ -69,9 +69,9 @@
 
 // 边框
 .panda-table.border {
-  .table-wrapper {
+  .panda-table_wrapper {
     border: 1px solid @border-color;
-    .head {
+    .panda-table_head {
       .left-fixed, .right-fixed {
         top: 1px;
       }
@@ -88,7 +88,7 @@
         }
       }
     }
-    .body {
+    .panda-table_body {
       .left-fixed {
         left: 1px;
       }
@@ -110,8 +110,8 @@
 
 // 斑马纹
 .panda-table.stripe {
-  .table-wrapper {
-    .body {
+  .panda-table_wrapper {
+    .panda-table_body {
       table {
         tbody tr:nth-child(even) {
           background-color: #f8f8f8;
@@ -135,8 +135,8 @@
 
 // 固定高度
 .panda-table.height {
-  .table-wrapper {
-    .head {
+  .panda-table_wrapper {
+    .panda-table_head {
       table {
         thead {
           tr th:nth-last-child(1) {
