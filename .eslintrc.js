@@ -27,5 +27,9 @@ module.exports = {
     "eol-last": "off",
     "no-plusplus": "off",
     "no-else-return": "off",
+    "no-underscore-dangle": "off",
+    "comma-dangle": "off",
+    "no-param-reassign": "off",
+    "no-lonely-if": "off",
   },
 };

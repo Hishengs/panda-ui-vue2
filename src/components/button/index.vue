@@ -44,7 +44,6 @@
     },
     methods: {
       onclick (e){
-        console.log('>>> panda-button@close');
         this.$emit('click', e);
       },
     },

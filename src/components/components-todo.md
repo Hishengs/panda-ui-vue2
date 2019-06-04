@@ -12,14 +12,14 @@
 - [x] NumberInput  （数字输入框）
 - [x] Textarea     （文本输入框）
 - [x] Radiobox     （单选）
-- [ ] Checkbox     （多选）
-- [ ] Select       （下拉）
+- [x] Checkbox     （多选）
+- [x] Select       （下拉）
 - [ ] Upload       （上传）
 - [ ] Cascader     （级联选择器）
 - [ ] DatePicker   （日期选择器）
 - [ ] TimePicker   （时间选择器）
 - [ ] Slider       （滑块）
-- [ ] Switch       （开关）
+- [x] Switch       （开关）
 - [x] TagInput     （标签输入框）
 
 

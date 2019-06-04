@@ -6,6 +6,7 @@
 
 <script>
   import feather from 'feather-icons';
+
   export default {
     name: 'panda-icon',
     props: {
@@ -27,11 +28,11 @@
           width: 14,
           height: 14,
         };
-        if(this.color){
+        if (this.color) {
           opt.color = this.color.trim();
         }
-        if(this.size){
-          const size = parseInt(this.size);
+        if (this.size) {
+          const size = parseInt(this.size, 10);
           opt.width = size;
           opt.height = size;
         }

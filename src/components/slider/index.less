@@ -1,0 +1,29 @@
+.panda-slider {
+  height: 10px;
+  line-height: 10px;
+  border-radius: 50%;
+  background-color: @bg-color-secondary;
+  color: white;
+  .panda-slider-inner {
+    height: 100%;
+    border-radius: 5px;
+    background-color: @color-primary;
+    position: relative;
+    .panda-slider-handler {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      line-height: 1;
+      border-radius: 50%;
+      background-color: white;
+      border: 2px solid @color-primary;
+      position: absolute;
+      right: 0;
+      top: -5px;
+      &:hover {
+        border-width: 3px;
+        cursor: pointer;
+      }
+    }
+  }
+}

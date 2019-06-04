@@ -34,12 +34,12 @@
       },
     },
     methods: {
-      onCheck (e){
-        if(this.disabled){
+      onCheck (e) {
+        if (this.disabled) {
           return;
         }
         console.log('>>> panda-radio.onCheck', e, this.value, this.label);
-        if(this.label && !(this.checked)){
+        if (this.label && !(this.checked)) {
           this.$emit('input', this.label);
         }
       }

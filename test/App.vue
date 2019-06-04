@@ -31,11 +31,27 @@
       </div>
 
       <div class="component">
+        <SelectPreview></SelectPreview>
+      </div>
+
+      <div class="component">
         <TextareaPreview></TextareaPreview>
       </div>
 
       <div class="component">
         <RadioPreview></RadioPreview>
+      </div>
+
+      <div class="component">
+        <CheckboxPreview></CheckboxPreview>
+      </div>
+
+      <div class="component">
+        <SwitchPreview></SwitchPreview>
+      </div>
+
+      <div class="component">
+        <SliderPreview></SliderPreview>
       </div>
 
       <div class="component">
@@ -60,8 +76,12 @@
       <a href="#Tag"><li>Tag（标签）</li></a>
       <a href="#Input"><li>Input（输入框）</li></a>
       <a href="#NumberInput"><li>NumberInput（数字输入框）</li></a>
+      <a href="#Select"><li>Select（下拉框）</li></a>
       <a href="#Textarea"><li>Textarea（文本输入框）</li></a>
       <a href="#Radiobox"><li>Radiobox（单选）</li></a>
+      <a href="#Checkbox"><li>Checkbox（多选）</li></a>
+      <a href="#Switch"><li>Switch（开关）</li></a>
+      <a href="#Slider"><li>Slider（滑块）</li></a>
       <a href="#Alert"><li>Alert（提示）</li></a>
       <a href="#TagInput"><li>TagInput（标签输入框）</li></a>
       <a href="#Table"><li>Table（表格）</li></a>
@@ -77,10 +97,15 @@
   import AlertPreview from './components/alert.vue';
   import InputPreview from './components/input.vue';
   import NumberInputPreview from './components/number-input.vue';
+  import SelectPreview from './components/select.vue';
   import TextareaPreview from './components/textarea.vue';
   import RadioPreview from './components/radio.vue';
+  import CheckboxPreview from './components/checkbox.vue';
+  import SwitchPreview from './components/switch.vue';
+  import SliderPreview from './components/slider.vue';
   import TagInputPreview from './components/tag-input.vue';
   import TablePreview from './components/table.vue';
+
   export default {
     name: 'app',
     components: {
@@ -91,8 +116,12 @@
       AlertPreview,
       InputPreview,
       NumberInputPreview,
+      SelectPreview,
       TextareaPreview,
       RadioPreview,
+      CheckboxPreview,
+      SwitchPreview,
+      SliderPreview,
       TagInputPreview,
       TablePreview,
     },

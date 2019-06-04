@@ -1,0 +1,25 @@
+<template>
+  <div id="Slider">
+    <h2>Slider 滑块</h2>
+    
+    <h3>默认</h3>
+    <Slider v-model="progress"></Slider>
+    <!-- code -->
+    <!-- <pre>
+      <code class="html">
+        &lt;Checkbox v-model="checked"&gt;果汁&lt;/Checkbox&gt;
+      </code>
+    </pre> -->
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'checkbox-preview',
+    data (){
+      return {
+        progress: 10,
+      };
+    },
+  };
+</script>
