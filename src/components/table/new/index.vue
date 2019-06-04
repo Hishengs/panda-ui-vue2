@@ -1,21 +1,26 @@
 <template>
   <div class="panda-table" :class="cClass">
-    <p>数据：{{ totalRows }}</p>
     <div class="panda-table_wrapper">
       <!-- 左 -->
       <div class="panda-table_left-fixed" ref="leftFixed" v-if="hasLeftFixed">
         <common-table
           ref="leftFixedTable"
           :columns="leftFixedColumns"
-          :data="data"
+          :data="showData"
+          :column-widths="columnWidths"
           :height="height"
           :max-height="maxHeight"
-          @row-enter="index => setRowHover(index, true)"
-          @row-leave="index => setRowHover(index, false)"
+          :hover-index="hoverIndex"
+          :hide-header="hideHeader"
+          @row-hover="index => hoverIndex = index"
           @scroll="(e, scrollTop) => {
             this.$refs.mainTable.$refs.body.scrollTop = scrollTop;
-            this.$refs.rightFixedTable.$refs.body.scrollTop = scrollTop;
-            this.onTableScroll(e);
+            if (this.$refs.rightFixedTable) {
+              this.$refs.rightFixedTable.$refs.body.scrollTop = scrollTop;
+            }
+            if (this.virtual) {
+              this.onVirtualTableScroll(e);
+            }
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
@@ -26,11 +31,13 @@
         <common-table
           ref="mainTable"
           :columns="columns"
-          :data="data"
+          :data="showData"
+          :column-widths="columnWidths"
           :height="height"
           :max-height="maxHeight"
-          @row-enter="index => setRowHover(index, true)"
-          @row-leave="index => setRowHover(index, false)"
+          :hide-header="hideHeader"
+          :hover-index="hoverIndex"
+          @row-hover="index => hoverIndex = index"
           @scroll="(e, scrollTop) => {
             if (this.$refs.leftFixedTable) {
               this.$refs.leftFixedTable.$refs.body.scrollTop = scrollTop;
@@ -39,9 +46,11 @@
               this.$refs.rightFixedTable.$refs.body.scrollTop = scrollTop;
             }
             const { scrollLeft, clientWidth, scrollWidth } = e.target;
-            this.scrollerOnStart = scrollLeft === 0;
-            this.scrollerOnEnd = scrollLeft + clientWidth === scrollWidth;
-            this.onTableScroll(e);
+            this.scrollerAtStart = scrollLeft === 0;
+            this.scrollerAtEnd = scrollLeft + clientWidth === scrollWidth;
+            if (this.virtual) {
+              this.onVirtualTableScroll(e);
+            }
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
@@ -52,15 +61,21 @@
         <common-table
           ref="rightFixedTable"
           :columns="rightFixedColumns"
-          :data="data"
+          :data="showData"
+          :column-widths="columnWidths"
           :height="height"
           :max-height="maxHeight"
-          @row-enter="index => setRowHover(index, true)"
-          @row-leave="index => setRowHover(index, false)"
+          :hide-header="hideHeader"
+          :hover-index="hoverIndex"
+          @row-hover="index => hoverIndex = index"
           @scroll="(e, scrollTop) => {
-            this.$refs.leftFixedTable.$refs.body.scrollTop = scrollTop;
+            if (this.$refs.leftFixedTable) {
+              this.$refs.leftFixedTable.$refs.body.scrollTop = scrollTop;
+            }
             this.$refs.mainTable.$refs.body.scrollTop = scrollTop;
-            this.onTableScroll(e);
+            if (this.virtual) {
+              this.onVirtualTableScroll(e);
+            }
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
@@ -73,6 +88,7 @@
 <script>
   import commonTable from './common-table.vue';
   import { getComputedStyle, addClass, removeClass } from '../../../utils/dom.js';
+  import { getMaxOf, debounce } from '../../../utils/index.js';
 
   export default {
     name: 'panda-table',
@@ -115,21 +131,36 @@
           return ['center', 'left', 'right'].includes(align);
         },
       },
+      // 隐藏表头
+      hideHeader: Boolean,
       // 虚拟列表
       virtual: Boolean,
     },
     data () {
       return {
-        scrollerOnStart: false,
-        scrollerOnEnd: false,
+        // 当前 hover 的行索引
+        hoverIndex: -1,
+        // 当前滚动条（x 轴）是否在起点
+        scrollerAtStart: true,
+        // 当前滚动条（x 轴）是否在终点
+        scrollerAtEnd: false,
+        // 计算得出主表格的各列宽度
+        columnWidths: [],
+        // 虚拟表格配置
         virtualOptions: {
+          // 可见节点数
           visibleNum: 20,
           /* topPadNum: 5,
           bottomPadNum: 5, */
+          // 记录表格所占高度空间
           tableHeight: 0,
+          // 计算得到的平均行高
           rowHeight: 0,
+          // 向上补齐的高度空间
           paddingTop: 0,
+          // 向下补齐的高度空间
           paddingBottom: 0,
+          // 当前数据项的偏移
           offset: 0,
         },
       };
@@ -143,10 +174,8 @@
           this.align ? `align-${this.align}` : '',
           this.height ? 'height' : '',
           this.loading ? 'loading' : '',
-          this.hasScrollBarX ? 'scroll-x' : '',
-          this.hasScrollBarY ? 'scroll-y' : '',
-          this.scrollerOnStart ? 'scroller-on-start' : '',
-          this.scrollerOnEnd ? 'scroller-on-end' : '',
+          this.scrollerAtStart ? 'scroller-at-start' : '',
+          this.scrollerAtEnd ? 'scroller-at-end' : '',
         ].filter(cls => cls !== '').join(' ').trim();
       },
       // 固定于左边的表格
@@ -167,94 +196,123 @@
       hasRightFixed () {
         return this.rightFixedColumns.length !== 0;
       },
+      // 总的行数
       totalRows () {
         return this.data.length;
       },
+      showData () {
+        return this.virtual
+          ? this.data.slice(this.virtualOptions.offset, this.virtualOptions.offset + this.virtualOptions.visibleNum)
+          : this.data;
+      },
     },
     mounted () {
+      this.calcMainTableColumnWidths();
       if (this.hasLeftFixed || this.hasRightFixed) {
-        this.scrollerOnStart = true;
-        this.syncRowHeight();
+        // 同步一下左中右三个表格表头的高度
+        this.syncHeadHeightWithFixed();
+        // 同步一下左中右三个表格各行的高度
+        this.syncBodyRowHeightWithFixed();
       }
       if (this.virtual) {
+        // 计算虚拟表格平均行高
         this.calcVirtualRowHeight();
+        // 计算需要向下补齐的空间
         this.calcVirtualPaddingBottom();
       }
     },
     methods: {
-      // 左右固定的表格与主表格保持一致的 hover 效果
-      setRowHover (rowIndex, hover = true) {
-        function setHover (targetRow) {
-          if (hover) {
-            addClass(targetRow, 'row-hover');
-          } else removeClass(targetRow, 'row-hover');
-        }
-        const mainRows = this.$refs.main.querySelectorAll('tbody tr');
-        setHover(mainRows[rowIndex]);
-        if (this.$refs.leftFixed) {
-          const leftFixedRows = this.$refs.leftFixed.querySelectorAll('tbody tr');
-          setHover(leftFixedRows[rowIndex]);
-        }
-        if (this.$refs.rightFixed) {
-          const rightFixedRows = this.$refs.rightFixed.querySelectorAll('tbody tr');
-          setHover(rightFixedRows[rowIndex]);
-        }
-      },
-      getMaxOf (nums) {
-        let max = 0;
-        for (const num of nums){
-          if (num > max){
-            max = num;
-          }
-        }
-        return max;
-      },
-      // 同步各行高度
-      syncRowHeight () {
-        let maxHeight = 0;
+      // 同步表头高度
+      syncHeadHeightWithFixed () {
+        let leftHeadHeight = 0;
+        let leftHeadTr;
         if (this.hasLeftFixed && this.$refs.leftFixedTable) {
-          const leftMaxRowHeight = Array.from(this.$refs.leftFixedTable.$el.querySelectorAll('tbody tr')).map(tr => {
+          leftHeadTr = this.$refs.leftFixedTable.$el.querySelector('thead tr');
+          leftHeadHeight = parseInt(getComputedStyle(leftHeadTr, 'height'), 10);
+        }
+        let rightHeadHeight = 0;
+        let rightHeadTr;
+        if (this.hasRightFixed && this.$refs.rightFixedTable) {
+          rightHeadTr = this.$refs.rightFixedTable.$el.querySelector('thead tr');
+          rightHeadHeight = parseInt(getComputedStyle(rightHeadTr, 'height'), 10);
+        }
+        const mainHeadTr = this.$refs.mainTable.$el.querySelector('thead tr');
+        const mainHeadHeight = parseInt(getComputedStyle(mainHeadTr, 'height'), 10);
+        // 补上 1px 的 border
+        const maxHeadHeight = getMaxOf([leftHeadHeight, mainHeadHeight, rightHeadHeight]) + 1;
+        if (leftHeadTr) {
+          leftHeadTr.style.height = `${maxHeadHeight}px`;
+        }
+        if (rightHeadTr) {
+          rightHeadTr.style.height = `${maxHeadHeight}px`;
+        }
+        mainHeadTr.style.height = `${maxHeadHeight}px`;
+      },
+      // 同步表体各行高度
+      syncBodyRowHeightWithFixed () {
+        // 各行最高
+        let leftRowsHeight = [];
+        let rightRowsHeight = [];
+        let mainRowsHeight = [];
+        if (this.hasLeftFixed && this.$refs.leftFixedTable) {
+          leftRowsHeight = Array.from(this.$refs.leftFixedTable.$el.querySelectorAll('tbody tr')).map(tr => {
             return parseInt(getComputedStyle(tr, 'height'), 10);
-          }).sort((a, b) => {
-            return a > b ? -1 : 1;
-          })[0];
-          maxHeight = this.getMaxOf([maxHeight, leftMaxRowHeight]);
+          });
         }
         if (this.hasRightFixed && this.$refs.rightFixedTable) {
-          const rightMaxRowHeight = Array.from(this.$refs.rightFixedTable.$el.querySelectorAll('tbody tr')).map(tr => {
+          rightRowsHeight = Array.from(this.$refs.rightFixedTable.$el.querySelectorAll('tbody tr')).map(tr => {
             return parseInt(getComputedStyle(tr, 'height'), 10);
-          }).sort((a, b) => {
-            return a > b ? -1 : 1;
-          })[0];
-          maxHeight = this.getMaxOf([maxHeight, rightMaxRowHeight]);
+          });
         }
         if (this.$refs.mainTable) {
-          const mainMaxRowHeight = Array.from(this.$refs.mainTable.$el.querySelectorAll('tbody tr')).map(tr => {
+          mainRowsHeight = Array.from(this.$refs.mainTable.$el.querySelectorAll('tbody tr')).map(tr => {
             return parseInt(getComputedStyle(tr, 'height'), 10);
-          }).sort((a, b) => {
-            return a > b ? -1 : 1;
-          })[0];
-          maxHeight = this.getMaxOf([maxHeight, mainMaxRowHeight]);
+          });
         }
-        // 补上 1px 的 border
-        ++maxHeight;
+        // 循环得出最高
+        if (!mainRowsHeight.length) return;
+        for (let i=0, len=mainRowsHeight.length; i<len; i++) {
+          const maxHeight = getMaxOf([
+            leftRowsHeight[i] || 0,
+            mainRowsHeight[i],
+            rightRowsHeight[i] || 0,
+          ]);
+          // 补上 1px 的 border
+          mainRowsHeight[i] = maxHeight + 1;
+        }
         if (this.$refs.leftFixedTable) {
-          this.$refs.leftFixedTable.$el.querySelectorAll('tbody tr').forEach(tr => {
+          this.$refs.leftFixedTable.$el.querySelectorAll('tbody tr').forEach((tr, index) => {
             const $tr = tr;
-            $tr.style.height = `${maxHeight}px`;
+            $tr.style.height = `${mainRowsHeight[index]}px`;
           });
         }
         if (this.$refs.rightFixedTable) {
-          this.$refs.rightFixedTable.$el.querySelectorAll('tbody tr').forEach(tr => {
+          this.$refs.rightFixedTable.$el.querySelectorAll('tbody tr').forEach((tr, index) => {
             const $tr = tr;
-            $tr.style.height = `${maxHeight}px`;
+            $tr.style.height = `${mainRowsHeight[index]}px`;
           });
         }
         if (this.$refs.mainTable) {
-          this.$refs.mainTable.$el.querySelectorAll('tbody tr').forEach(tr => {
+          this.$refs.mainTable.$el.querySelectorAll('tbody tr').forEach((tr, index) => {
             const $tr = tr;
-            $tr.style.height = `${maxHeight}px`;
+            $tr.style.height = `${mainRowsHeight[index]}px`;
           });
+        }
+      },
+      // 计算出主表格表头各列宽度
+      calcMainTableColumnWidths () {
+        const tds = this.$refs.mainTable.$el.querySelectorAll('tbody tr:first-child td');
+        // debugger;
+        for (let i = 0, len = tds.length; i < len; i++) {
+          const td = tds[i];
+          const style = getComputedStyle(td);
+          // td 盒子宽度
+          const width =
+            parseFloat(style.borderLeftWidth)
+            + parseFloat(style.paddingLeft)
+            + parseFloat(style.width)
+            + parseFloat(style.paddingRight);
+          this.columnWidths.push(width);
         }
       },
       // 计算出当前显示的列表行的平均高度
@@ -264,26 +322,29 @@
         this.virtualOptions.rowHeight =  Math.round(this.virtualOptions.tableHeight / this.virtualOptions.visibleNum);
       },
       calcVirtualPaddingBottom () {
+        // 计算出表格总共需要的高度空间
         const totalHeight = this.virtualOptions.rowHeight * this.totalRows;
         const paddingBottom = totalHeight - this.virtualOptions.paddingTop - this.virtualOptions.tableHeight;
         this.virtualOptions.paddingBottom = paddingBottom >= 0 ? paddingBottom : 0;
       },
-      onTableScroll (e) {
+      onVirtualTableScroll: debounce(function (e) {
+        if (!this.virtual) return;
         // 1. 先算出 paddingTop
         const { scrollTop } = e.target;
         const totalHeight = this.virtualOptions.rowHeight * this.totalRows;
         this.virtualOptions.paddingTop = scrollTop > totalHeight ? this.virtualOptions.paddingTop : scrollTop;
-        // 2. 计算出偏移
+        // 2. 计算出偏移（paddingTop 的空间理论上容纳的行数，向下取整）
         const offset = Math.floor(this.virtualOptions.paddingTop / this.virtualOptions.rowHeight);
         const maxOffset = this.totalRows - this.virtualOptions.visibleNum;
         this.virtualOptions.offset = offset > maxOffset ? maxOffset : offset;
         // 3. 计算出实际行的平均高度
+        // （在下一次 tick 修正行高和 paddingBottom 大小，ps：此时各行已经被渲染出来，因此可以计算真实行高）
         this.$nextTick(() => {
           this.calcVirtualRowHeight();
           // 4. 计算出实际向下的 paddingBottom 的值
           this.calcVirtualPaddingBottom();
         });
-      },
+      }, 15),
     },
   };
 </script>

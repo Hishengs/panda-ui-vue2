@@ -6,7 +6,7 @@
     </div>
 
     <div id="main">
-      <div class="component">
+      <!-- <div class="component">
         <IconPreview></IconPreview>
       </div>
 
@@ -60,7 +60,7 @@
 
       <div class="component">
         <TagInputPreview></TagInputPreview>
-      </div>
+      </div> -->
 
       <div class="component">
         <TablePreview></TablePreview>
