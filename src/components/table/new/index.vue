@@ -150,8 +150,8 @@
         virtualOptions: {
           // 可见节点数
           visibleNum: 20,
-          /* topPadNum: 5,
-          bottomPadNum: 5, */
+          topOffset: 0,
+          bottomOffset: 0,
           // 记录表格所占高度空间
           tableHeight: 0,
           // 计算得到的平均行高
@@ -160,9 +160,13 @@
           paddingTop: 0,
           // 向下补齐的高度空间
           paddingBottom: 0,
-          // 当前数据项的偏移
-          offset: 0,
+          // 当前数据项的偏移起点
+          startIndex: 0,
+          // 记录上次 scrollTop
+          scrollTop: 0,
         },
+        // 表格 tbody
+        tbody: null,
       };
     },
     computed: {
@@ -200,10 +204,16 @@
       totalRows () {
         return this.data.length;
       },
+      tableRows () {
+        const { topOffset, bottomOffset, visibleNum } = this.virtualOptions;
+        return topOffset + visibleNum + bottomOffset;
+      },
       showData () {
-        return this.virtual
-          ? this.data.slice(this.virtualOptions.offset, this.virtualOptions.offset + this.virtualOptions.visibleNum)
-          : this.data;
+        if (this.virtual) {
+          const { startIndex } = this.virtualOptions;
+          const endIndex = startIndex + this.tableRows;
+          return this.data.slice(startIndex, endIndex);
+        } else return this.data;
       },
     },
     mounted () {
@@ -218,7 +228,7 @@
         // 计算虚拟表格平均行高
         this.calcVirtualRowHeight();
         // 计算需要向下补齐的空间
-        this.calcVirtualPaddingBottom();
+        this.adjustVirtualPaddingBottom();
       }
     },
     methods: {
@@ -317,11 +327,14 @@
       },
       // 计算出当前显示的列表行的平均高度
       calcVirtualRowHeight () {
-        const tbody = this.$refs.main.querySelector('table tbody');
-        this.virtualOptions.tableHeight = Math.round(parseFloat(getComputedStyle(tbody, 'height')));
-        this.virtualOptions.rowHeight =  Math.round(this.virtualOptions.tableHeight / this.virtualOptions.visibleNum);
+        if (!this.tbody) {
+          this.tbody = this.$refs.main.querySelector('table tbody');
+        }
+        this.virtualOptions.tableHeight = Math.round(parseFloat(getComputedStyle(this.tbody, 'height')));
+        this.virtualOptions.rowHeight =  Math.round(this.virtualOptions.tableHeight / this.tableRows);
       },
-      calcVirtualPaddingBottom () {
+      // 修正 paddingBottom
+      adjustVirtualPaddingBottom () {
         // 计算出表格总共需要的高度空间
         const totalHeight = this.virtualOptions.rowHeight * this.totalRows;
         const paddingBottom = totalHeight - this.virtualOptions.paddingTop - this.virtualOptions.tableHeight;
@@ -329,22 +342,41 @@
       },
       onVirtualTableScroll: debounce(function (e) {
         if (!this.virtual) return;
-        // 1. 先算出 paddingTop
         const { scrollTop } = e.target;
-        const totalHeight = this.virtualOptions.rowHeight * this.totalRows;
-        this.virtualOptions.paddingTop = scrollTop > totalHeight ? this.virtualOptions.paddingTop : scrollTop;
-        // 2. 计算出偏移（paddingTop 的空间理论上容纳的行数，向下取整）
-        const offset = Math.floor(this.virtualOptions.paddingTop / this.virtualOptions.rowHeight);
-        const maxOffset = this.totalRows - this.virtualOptions.visibleNum;
-        this.virtualOptions.offset = offset > maxOffset ? maxOffset : offset;
-        // 3. 计算出实际行的平均高度
-        // （在下一次 tick 修正行高和 paddingBottom 大小，ps：此时各行已经被渲染出来，因此可以计算真实行高）
+        const { rowHeight, topOffset, bottomOffset, visibleNum, startIndex } = this.virtualOptions;
+        // 计算出滚动距离（相距上次）（scrollDistance 可正可负，代表方向）
+        const scrollDistance = scrollTop - this.virtualOptions.scrollTop;
+        // 计算补齐空间
+        let padding = scrollDistance;
+        console.log('===== 1 onVirtualTableScroll.scrollDistance', scrollDistance);
+        console.log('===== 2 onVirtualTableScroll.rowHeight', rowHeight);
+        // 滚动距离不足一行时
+        if (Math.abs(scrollDistance) < rowHeight) {
+          this.virtualOptions.paddingTop += padding;
+          this.virtualOptions.paddingBottom -= padding;
+        } else {
+          this.virtualOptions.scrollTop = scrollTop;
+          // 计算偏移行数
+          const offsetRows = (scrollDistance >= 0 ? 1 : -1) * Math.floor(Math.abs(scrollDistance) / rowHeight);
+          console.log('===== 3 onVirtualTableScroll.offsetRows', offsetRows);
+          padding = scrollDistance - offsetRows * rowHeight;
+          console.log('===== 4 onVirtualTableScroll.padding', padding);
+          this.virtualOptions.paddingTop += padding;
+          this.virtualOptions.paddingBottom -= padding;
+          // 重新设置 index
+          const newStartIndex = startIndex + offsetRows;
+          const endIndex = newStartIndex + this.tableRows;
+          this.virtualOptions.startIndex = endIndex > this.totalRows ? startIndex : newStartIndex;
+          console.log('===== 5 onVirtualTableScroll.virtualOptions', this.virtualOptions);
+        }
+        // 在下一次 tick 修正行高和 paddingBottom 大小，ps：此时各行已经被渲染出来，因此可以计算真实行高
         this.$nextTick(() => {
+          // 计算出实际行的平均高度
           this.calcVirtualRowHeight();
-          // 4. 计算出实际向下的 paddingBottom 的值
-          this.calcVirtualPaddingBottom();
+          // 修正 paddingBottom
+          this.adjustVirtualPaddingBottom();
         });
-      }, 15),
+      }, 100),
     },
   };
 </script>

@@ -188,7 +188,7 @@
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
         ], */
-        vData: Object.freeze(this.hugeData(5000000)),
+        vData: Object.freeze(this.hugeData(500000)),
       };
     },
     methods: {
