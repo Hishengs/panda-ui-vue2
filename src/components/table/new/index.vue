@@ -87,7 +87,7 @@
 
 <script>
   import commonTable from './common-table.vue';
-  import { getComputedStyle, addClass, removeClass } from '../../../utils/dom.js';
+  import { getComputedStyle/* , addClass, removeClass */ } from '../../../utils/dom.js';
   import { getMaxOf, debounce } from '../../../utils/index.js';
 
   export default {
@@ -150,6 +150,7 @@
         virtualOptions: {
           // 可见节点数
           visibleNum: 20,
+          offsetNum: 10,
           topOffset: 0,
           bottomOffset: 0,
           // 记录表格所占高度空间
@@ -281,7 +282,7 @@
         }
         // 循环得出最高
         if (!mainRowsHeight.length) return;
-        for (let i=0, len=mainRowsHeight.length; i<len; i++) {
+        for (let i = 0, len = mainRowsHeight.length; i < len; i++) {
           const maxHeight = getMaxOf([
             leftRowsHeight[i] || 0,
             mainRowsHeight[i],
@@ -331,7 +332,7 @@
           this.tbody = this.$refs.main.querySelector('table tbody');
         }
         this.virtualOptions.tableHeight = Math.round(parseFloat(getComputedStyle(this.tbody, 'height')));
-        this.virtualOptions.rowHeight =  Math.round(this.virtualOptions.tableHeight / this.tableRows);
+        this.virtualOptions.rowHeight = Math.round(this.virtualOptions.tableHeight / this.tableRows);
       },
       // 修正 paddingBottom
       adjustVirtualPaddingBottom () {
@@ -343,7 +344,7 @@
       onVirtualTableScroll: debounce(function (e) {
         if (!this.virtual) return;
         const { scrollTop } = e.target;
-        const { rowHeight, topOffset, bottomOffset, visibleNum, startIndex } = this.virtualOptions;
+        const { rowHeight, /* topOffset, bottomOffset, visibleNum,  */startIndex } = this.virtualOptions;
         // 计算出滚动距离（相距上次）（scrollDistance 可正可负，代表方向）
         const scrollDistance = scrollTop - this.virtualOptions.scrollTop;
         // 计算补齐空间
@@ -359,24 +360,40 @@
           // 计算偏移行数
           const offsetRows = (scrollDistance >= 0 ? 1 : -1) * Math.floor(Math.abs(scrollDistance) / rowHeight);
           console.log('===== 3 onVirtualTableScroll.offsetRows', offsetRows);
-          padding = scrollDistance - offsetRows * rowHeight;
-          console.log('===== 4 onVirtualTableScroll.padding', padding);
-          this.virtualOptions.paddingTop += padding;
-          this.virtualOptions.paddingBottom -= padding;
+          // padding = scrollDistance - (offsetRows * rowHeight);
+          // console.log('===== 4 onVirtualTableScroll.padding', padding);
+          this.virtualOptions.paddingTop += scrollDistance;
+          this.virtualOptions.paddingBottom -= scrollDistance;
           // 重新设置 index
           const newStartIndex = startIndex + offsetRows;
           const endIndex = newStartIndex + this.tableRows;
+          console.log('===== 5 onVirtualTableScroll.[startIndex, endIndex]', newStartIndex, endIndex);
           this.virtualOptions.startIndex = endIndex > this.totalRows ? startIndex : newStartIndex;
-          console.log('===== 5 onVirtualTableScroll.virtualOptions', this.virtualOptions);
+          console.log('===== 6 onVirtualTableScroll.virtualOptions', this.virtualOptions);
         }
         // 在下一次 tick 修正行高和 paddingBottom 大小，ps：此时各行已经被渲染出来，因此可以计算真实行高
-        this.$nextTick(() => {
+        /* this.$nextTick(() => {
           // 计算出实际行的平均高度
           this.calcVirtualRowHeight();
           // 修正 paddingBottom
           this.adjustVirtualPaddingBottom();
-        });
-      }, 100),
+        }); */
+      }, 200),
+      onVirtualTableScroll2: debounce(function (e) {
+        if (!this.virtual) return;
+        const { scrollTop } = e.target;
+        const { rowHeight, offsetNum, /* topOffset, bottomOffset, visibleNum,  */startIndex } = this.virtualOptions;
+        // 判断滚动距离是否超过允许偏移行高度
+        const offsetDistance = scrollTop - (offsetNum * rowHeight);
+        if (offsetDistance >= rowHeight) {
+          const offsetRows = Math.floor(offsetDistance / rowHeight);
+          this.virtualOptions.paddingTop += offsetDistance;
+          this.virtualOptions.paddingBottom -= offsetDistance;
+          const newStartIndex = this.virtualOptions.startIndex + offsetRows;
+          const endIndex = newStartIndex + this.tableRows;
+          this.virtualOptions.startIndex = endIndex > this.totalRows ? startIndex : newStartIndex;
+        }
+      }, 200),
     },
   };
 </script>

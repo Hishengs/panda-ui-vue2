@@ -19,7 +19,6 @@
               </div>
             </th>
             <!-- 滚动条的宽度 -->
-            <!-- 滚动条的宽度 -->
             <th v-if="hasScrollBarY">
               <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
             </th>
@@ -40,6 +39,8 @@
             <!-- 选择 -->
             <!-- <col width="20px"></col> -->
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
+            <!-- 滚动条的宽度 -->
+            <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col>
           </colgroup>
           <tbody>
             <tr
@@ -59,6 +60,10 @@
                 <div class="inner" :style="{width: column.width ? parseInt(column.width, 10) + 'px' : ''}">
                   {{ item[column['key']] }}
                 </div>
+              </td>
+              <!-- 滚动条的宽度 -->
+              <td v-if="hasScrollBarY" style="background: white; z-index: 9999; border-top: none;">
+                <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
               </td>
             </tr>
           </tbody>
@@ -148,9 +153,9 @@
         const { scrollLeft, scrollTop } = e.target;
         // 表格头部跟随移动
         this.$refs.head.scrollLeft = scrollLeft;
-        if (e.isTrusted) {
+        /* if (e.isTrusted) {
           this.$emit('scroll', e, scrollTop);
-        }
+        } */
         this.$emit('scroll', e, scrollTop);
       }, 10),
       onEnterRow (e, index) {

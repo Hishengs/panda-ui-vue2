@@ -1,6 +1,6 @@
 <template>
   <div id="Table">
-    <!-- <h2>Table 表格</h2>
+    <h2>Table 表格</h2>
     <h3>1. 默认表格</h3>
     <Table :columns="columns" :data="data"></Table>
     <h3>2. 带边框 border</h3>
@@ -38,7 +38,7 @@
     <h4>左侧多列固定</h4>
     <Table :columns="leftFixedColumns" :data="moreData" height="300px" stripe border></Table>
     <h4>左右侧固定</h4>
-    <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table> -->
+    <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table>
     <h3>10. 虚拟表格</h3>
     <h4>数据量：{{ vData.length }}</h4>
     <Table :columns="columns" :data="vData" height="300px" border virtual></Table>
@@ -71,7 +71,7 @@
             key: 'address',
           },
         ],
-        /* widthColumns: [
+        widthColumns: [
           {
             title: '姓名',
             key: 'name',
@@ -187,7 +187,7 @@
           { name: '张小帅', age: 21, education: '小学', address: '北京朝阳区幸福里小区7栋', },
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
-        ], */
+        ],
         vData: Object.freeze(this.hugeData(500000)),
       };
     },

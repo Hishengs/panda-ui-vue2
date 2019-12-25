@@ -2,7 +2,8 @@ module.exports = {
   "extends": "airbnb-base",
   "plugins": ["html"],
   "rules": {
-    "linebreak-style": ["error", "windows"],
+    // "linebreak-style": ["error", "windows"],
+    "linebreak-style": "off",
     // 该规则推荐文件扩展名忽略
     "import/extensions": "off",
     // 该规则推荐使用 forEach 代替 for-in, for-of
@@ -31,5 +32,8 @@ module.exports = {
     "comma-dangle": "off",
     "no-param-reassign": "off",
     "no-lonely-if": "off",
+    "func-names": "off",
+    "prefer-template": "warn",
+    "object-curly-newline": "off"
   },
 };
