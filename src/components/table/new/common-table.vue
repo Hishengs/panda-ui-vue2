@@ -33,14 +33,24 @@
       @mouseover="mouseEnter = true"
       @mouseleave="mouseEnter = false"
     >
-      <div class="panda-table_common-table_body_inner" :style="paddingStyle">
+      <div class="padding-area"
+        v-if="virtual"
+        :style="{
+          height: `${this.virtualOptions.tableHeight}px`,
+          right: `${scrollbarWidth}px`
+        }"
+      ></div>
+      <div class="table-area" :style="virtual ? {
+        transform: `translate3d(0,${this.virtualOptions.topOffset}px,0)`,
+        right: `${scrollbarWidth}px`
+      } : {}">
         <table class="panda-table_common-table">
           <colgroup>
             <!-- 选择 -->
             <!-- <col width="20px"></col> -->
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col>
+            <!-- <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col> -->
           </colgroup>
           <tbody>
             <tr
@@ -62,9 +72,9 @@
                 </div>
               </td>
               <!-- 滚动条的宽度 -->
-              <td v-if="hasScrollBarY" style="background: white; z-index: 9999; border-top: none;">
+              <!-- <td v-if="hasScrollBarY">
                 <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -74,7 +84,6 @@
 </template>
 
 <script>
-  import { getComputedStyle } from '../../../utils/dom.js';
   import { debounce } from '../../../utils/index.js';
 
   export default {
@@ -122,12 +131,6 @@
           height: this.height || '',
           maxHeight: this.maxHeight || '',
         };
-      },
-      paddingStyle () {
-        return this.virtual ? {
-          paddingTop: this.virtualOptions.paddingTop + 'px',
-          paddingBottom: this.virtualOptions.paddingBottom + 'px',
-        } : {};
       },
     },
     mounted () {

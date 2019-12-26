@@ -146,28 +146,15 @@
         scrollerAtEnd: false,
         // 计算得出主表格的各列宽度
         columnWidths: [],
-        // 虚拟表格配置
-        virtualOptions: {
-          // 可见节点数
-          visibleNum: 20,
-          offsetNum: 10,
-          topOffset: 0,
-          bottomOffset: 0,
-          // 记录表格所占高度空间
-          tableHeight: 0,
-          // 计算得到的平均行高
-          rowHeight: 0,
-          // 向上补齐的高度空间
-          paddingTop: 0,
-          // 向下补齐的高度空间
-          paddingBottom: 0,
-          // 当前数据项的偏移起点
-          startIndex: 0,
-          // 记录上次 scrollTop
-          scrollTop: 0,
-        },
         // 表格 tbody
         tbody: null,
+        // 虚拟列表相关参数
+        startIndex: 0,
+        endIndex: this.data.length,
+        visibleHeight: 0,
+        visibleRows: 20,
+        rowHeight: 0,
+        topOffset: 0,
       };
     },
     computed: {
@@ -201,21 +188,24 @@
       hasRightFixed () {
         return this.rightFixedColumns.length !== 0;
       },
-      // 总的行数
-      totalRows () {
-        return this.data.length;
-      },
-      tableRows () {
-        const { topOffset, bottomOffset, visibleNum } = this.virtualOptions;
-        return topOffset + visibleNum + bottomOffset;
-      },
       showData () {
-        if (this.virtual) {
-          const { startIndex } = this.virtualOptions;
-          const endIndex = startIndex + this.tableRows;
-          return this.data.slice(startIndex, endIndex);
-        } else return this.data;
+        return this.data.slice(this.startIndex, Math.min(this.endIndex, this.data.length));
       },
+      tableHeight () {
+        return this.data.length * this.rowHeight;
+      },
+      virtualOptions () {
+        return {
+          tableHeight: this.tableHeight,
+          topOffset: this.topOffset,
+          visibleHeight: this.visibleHeight,
+        };
+      }
+    },
+    created () {
+      if (this.virtual) {
+        this.endIndex = this.visibleRows;
+      }
     },
     mounted () {
       this.calcMainTableColumnWidths();
@@ -226,10 +216,7 @@
         this.syncBodyRowHeightWithFixed();
       }
       if (this.virtual) {
-        // 计算虚拟表格平均行高
-        this.calcVirtualRowHeight();
-        // 计算需要向下补齐的空间
-        this.adjustVirtualPaddingBottom();
+        this.initVirtual();
       }
     },
     methods: {
@@ -326,74 +313,21 @@
           this.columnWidths.push(width);
         }
       },
-      // 计算出当前显示的列表行的平均高度
-      calcVirtualRowHeight () {
+      // 虚拟列表初始化
+      initVirtual () {
         if (!this.tbody) {
           this.tbody = this.$refs.main.querySelector('table tbody');
         }
-        this.virtualOptions.tableHeight = Math.round(parseFloat(getComputedStyle(this.tbody, 'height')));
-        this.virtualOptions.rowHeight = Math.round(this.virtualOptions.tableHeight / this.tableRows);
-      },
-      // 修正 paddingBottom
-      adjustVirtualPaddingBottom () {
-        // 计算出表格总共需要的高度空间
-        const totalHeight = this.virtualOptions.rowHeight * this.totalRows;
-        const paddingBottom = totalHeight - this.virtualOptions.paddingTop - this.virtualOptions.tableHeight;
-        this.virtualOptions.paddingBottom = paddingBottom >= 0 ? paddingBottom : 0;
+        this.visibleHeight = Math.round(parseFloat(getComputedStyle(this.tbody, 'height')));
+        this.rowHeight = Math.round(this.visibleHeight / this.visibleRows);
       },
       onVirtualTableScroll: debounce(function (e) {
         if (!this.virtual) return;
         const { scrollTop } = e.target;
-        const { rowHeight, /* topOffset, bottomOffset, visibleNum,  */startIndex } = this.virtualOptions;
-        // 计算出滚动距离（相距上次）（scrollDistance 可正可负，代表方向）
-        const scrollDistance = scrollTop - this.virtualOptions.scrollTop;
-        // 计算补齐空间
-        let padding = scrollDistance;
-        console.log('===== 1 onVirtualTableScroll.scrollDistance', scrollDistance);
-        console.log('===== 2 onVirtualTableScroll.rowHeight', rowHeight);
-        // 滚动距离不足一行时
-        if (Math.abs(scrollDistance) < rowHeight) {
-          this.virtualOptions.paddingTop += padding;
-          this.virtualOptions.paddingBottom -= padding;
-        } else {
-          this.virtualOptions.scrollTop = scrollTop;
-          // 计算偏移行数
-          const offsetRows = (scrollDistance >= 0 ? 1 : -1) * Math.floor(Math.abs(scrollDistance) / rowHeight);
-          console.log('===== 3 onVirtualTableScroll.offsetRows', offsetRows);
-          // padding = scrollDistance - (offsetRows * rowHeight);
-          // console.log('===== 4 onVirtualTableScroll.padding', padding);
-          this.virtualOptions.paddingTop += scrollDistance;
-          this.virtualOptions.paddingBottom -= scrollDistance;
-          // 重新设置 index
-          const newStartIndex = startIndex + offsetRows;
-          const endIndex = newStartIndex + this.tableRows;
-          console.log('===== 5 onVirtualTableScroll.[startIndex, endIndex]', newStartIndex, endIndex);
-          this.virtualOptions.startIndex = endIndex > this.totalRows ? startIndex : newStartIndex;
-          console.log('===== 6 onVirtualTableScroll.virtualOptions', this.virtualOptions);
-        }
-        // 在下一次 tick 修正行高和 paddingBottom 大小，ps：此时各行已经被渲染出来，因此可以计算真实行高
-        /* this.$nextTick(() => {
-          // 计算出实际行的平均高度
-          this.calcVirtualRowHeight();
-          // 修正 paddingBottom
-          this.adjustVirtualPaddingBottom();
-        }); */
-      }, 200),
-      onVirtualTableScroll2: debounce(function (e) {
-        if (!this.virtual) return;
-        const { scrollTop } = e.target;
-        const { rowHeight, offsetNum, /* topOffset, bottomOffset, visibleNum,  */startIndex } = this.virtualOptions;
-        // 判断滚动距离是否超过允许偏移行高度
-        const offsetDistance = scrollTop - (offsetNum * rowHeight);
-        if (offsetDistance >= rowHeight) {
-          const offsetRows = Math.floor(offsetDistance / rowHeight);
-          this.virtualOptions.paddingTop += offsetDistance;
-          this.virtualOptions.paddingBottom -= offsetDistance;
-          const newStartIndex = this.virtualOptions.startIndex + offsetRows;
-          const endIndex = newStartIndex + this.tableRows;
-          this.virtualOptions.startIndex = endIndex > this.totalRows ? startIndex : newStartIndex;
-        }
-      }, 200),
+        this.startIndex = Math.floor(scrollTop / this.rowHeight);
+        this.endIndex = this.startIndex + this.visibleRows;
+        this.topOffset = scrollTop - (scrollTop % this.rowHeight);
+      }, 10),
     },
   };
 </script>
