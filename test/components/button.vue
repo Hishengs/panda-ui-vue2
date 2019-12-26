@@ -30,7 +30,11 @@
     <Button type="primary" size="normal" round>normal 按钮 round</Button>
     <Button type="primary" size="large" round>large 按钮 round</Button>
     <h3>6. 图标按钮 icon</h3>
-    <Button type="primary">书籍 <Icon name="book"></Icon></Button> <Button type="success" size="mini">多云 <Icon name="cloud"></Icon></Button>
+    <Button type="primary" icon="book">书籍</Button>
+    <Button type="success" icon="cloud" size="mini">多云</Button>
+    <Button type="primary" icon="upload"></Button>
+    <h3>7. 加载中 loading</h3>
+    <Button type="primary" loading>加载中</Button>
     <h3>Props</h3>
     <table>
       <tr>

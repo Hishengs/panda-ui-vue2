@@ -4,8 +4,8 @@
     <div class="search">
       <Input placeholder="搜索图标" v-model="searchKey" clearable></Input>
     </div>
-    <span class="container" v-for="name,i in icons" @click="copyIcon(name)">
-      <Icon :name="name" size="20"></Icon>
+    <span class="container" v-for="(name, i) in icons" :key="i" @click="copyIcon(name)">
+      <Icon :name="name" size="24"></Icon>
       <label class="name">{{ name }}</label>
     </span>
     <h3>Props</h3>

@@ -1,19 +1,62 @@
 .panda-badge {
+  position: relative;
   display: inline-block;
-  padding: 0 5px;
-  font-size: 1.2rem;
-  height: 18px;
-  line-height: 18px;
-  color: #ffffff;
-  background-color: @color-red;
-  border-radius: 11px;
-  vertical-align: middle;
-  overflow: hidden;
-}
-
-.panda-badge.dot {
-  height: 8px;
-  width: 8px;
-  border-radius: 4px;
-  padding: 0;
+  .panda-badge-content {
+    display: inline-block;
+    padding: 0 6px;
+    font-size: 1.2rem;
+    height: 18px;
+    line-height: 18px;
+    color: #ffffff;
+    background-color: @color-red;
+    border-radius: 11px;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+  &.red .panda-badge-content {
+    border-color: #f5222d;
+    background-color: #f5222d;
+  }
+  &.orange .panda-badge-content {
+    border-color: #fa541c;
+    background-color: #fa541c;
+  }
+  &.yellow .panda-badge-content {
+    border-color: #f1c911;
+    background-color: #f1c911;
+  }
+  &.green .panda-badge-content {
+    border-color: #52c41a;
+    background-color: #52c41a;
+  }
+  &.cyan .panda-badge-content {
+    border-color: #13c2c2;
+    background-color: #13c2c2;
+  }
+  &.blue .panda-badge-content {
+    border-color: #1890ff;
+    background-color: #1890ff;
+  }
+  &.purple .panda-badge-content {
+    border-color: #722ed1;
+    background-color: #722ed1;
+  }
+  &.has-slot {
+    margin-right: 30px;
+  }
+  &.has-slot .panda-badge-content {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    transform: translateY(-50%) translateX(100%);
+  }
+  &.dot .panda-badge-content {
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    padding: 0;
+  }
+  &.dot.has-slot .panda-badge-content {
+    right: 5px;
+  }
 }

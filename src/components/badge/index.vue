@@ -1,13 +1,15 @@
 <template>
-  <span class="panda-badge" :class="cClass" :style="cStyle">
+  <div class="panda-badge" :class="cClass">
     <slot></slot>
-  </span>
+    <span class="panda-badge-content" @click="onClick">{{ value }}</span>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'badge',
     props: {
+      value: [Number, String],
       type: {
         type: String,
         default: 'default',
@@ -27,37 +29,19 @@
         default: '',
       },
     },
-    data (){
-      return {
-        builtInColors: {
-          red: '#f5222d',
-          orange: '#fa541c',
-          yellow: '#f1c911',
-          green: '#52c41a',
-          cyan: '#13c2c2',
-          blue: '#1890ff',
-          purple: '#722ed1',
-        },
-      };
-    },
     computed: {
-      cClass (){
+      cClass () {
         return [
+          this.$slots.default ? 'has-slot' : 'no-slot',
           this.type,
-          this.builtInColors[this.color] ? this.color : '',
+          this.color ? this.color : '',
         ].filter(cls => cls !== '').join(' ');
-      },
-      cStyle (){
-        const style = {};
-        // compute color
-        if(this.color){
-          const bgColor = this.builtInColors[this.color] || this.color;
-          style['backgroundColor'] = bgColor;
-          style['borderColor'] = bgColor;
-          style['color'] = 'white';
-        }
-        return style;
-      },
+      }
+    },
+    methods: {
+      onClick (e) {
+        this.$emit('click', e);
+      }
     },
   };
 </script>

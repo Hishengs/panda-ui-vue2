@@ -1,33 +1,42 @@
 <template>
   <div class="panda-table_common-table">
-    <div class="panda-table_common-table_head" ref="head" v-show="!hideHeader">
-      <table>
-        <colgroup>
-          <!-- 选择 -->
-          <!-- <col width="20px"></col> -->
-          <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
-          <!-- 滚动条的宽度 -->
-          <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col>
-        </colgroup>
-        <thead>
-          <tr>
+    <!-- 表格头部 -->
+    <div class="panda-table_common-table_head" v-show="!hideHeader" :style="{
+      paddingRight: hasScrollBarY ? `${scrollbarWidth-1}px` : ''
+    }">
+      <!-- 占据滚动条位置 -->
+      <div class="panda-table_common-table_head_scroller" v-if="hasScrollBarY"></div>
+      <div class="panda-table_common-table_head_inner" ref="headScrollArea">
+        <table>
+          <colgroup>
             <!-- 选择 -->
-            <!-- <th width="20px"><input type="checkbox"></th> -->
-            <th v-for="(column, i) in columns" :key="i">
-              <div class="inner" :style="{width: column.width ? parseInt(column.width, 10) + 'px' : ''}">
-                {{ typeof column.title === 'function' ? column.title() : column.title }}
-              </div>
-            </th>
+            <!-- <col width="20px"></col> -->
+            <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <th v-if="hasScrollBarY">
-              <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
-            </th>
-          </tr>
-        </thead>
-      </table>
+            <!-- <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col> -->
+          </colgroup>
+          <thead>
+            <tr>
+              <!-- 选择 -->
+              <!-- <th width="20px"><input type="checkbox"></th> -->
+              <th v-for="(column, i) in columns" :key="i">
+                <div class="inner" :style="{width: column.width ? parseFloat(column.width, 10) + 'px' : ''}">
+                  {{ typeof column.title === 'function' ? column.title() : column.title }}
+                </div>
+              </th>
+              <!-- 滚动条的宽度 -->
+              <!-- <th v-if="hasScrollBarY">
+                <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
+              </th> -->
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
+    <!-- 表格主体 -->
     <div
       class="panda-table_common-table_body"
+      :class="{ virtual: this.virtual }"
       :style="bodyStyle"
       ref="body"
       @mouseover="mouseEnter = true"
@@ -35,22 +44,16 @@
     >
       <div class="padding-area"
         v-if="virtual"
-        :style="{
-          height: `${this.virtualOptions.tableHeight}px`,
-          right: `${scrollbarWidth}px`
-        }"
+        :style="paddingAreaStyle"
       ></div>
-      <div class="table-area" :style="virtual ? {
-        transform: `translate3d(0,${this.virtualOptions.topOffset}px,0)`,
-        right: `${scrollbarWidth}px`
-      } : {}">
+      <div class="table-area" :style="tableAreaStyle">
         <table class="panda-table_common-table">
           <colgroup>
             <!-- 选择 -->
             <!-- <col width="20px"></col> -->
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <!-- <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col> -->
+            <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col>
           </colgroup>
           <tbody>
             <tr
@@ -59,6 +62,7 @@
               :class="[item.className, i === hoverIndex ? 'row-hover' : '']"
               @mouseover="onEnterRow($event, i)"
               @mouseout="onLeaveRow($event, i)"
+              ref="rows"
             >
               <!-- 选择 -->
               <!-- <td width="20px"><input type="checkbox"></td> -->
@@ -67,7 +71,7 @@
                 :key="i+'-'+j"
                 :class="column.className"
               >
-                <div class="inner" :style="{width: column.width ? parseInt(column.width, 10) + 'px' : ''}">
+                <div class="inner" :style="{width: column.width ? parseFloat(column.width, 10) + 'px' : ''}">
                   {{ item[column['key']] }}
                 </div>
               </td>
@@ -120,7 +124,7 @@
         // 是否存在 y 轴滚动条
         hasScrollBarY: false,
         // 统一滚动条的宽度
-        scrollbarWidth: 17,
+        scrollbarWidth: 16.7999,
         // 鼠标是否进入当前表格
         mouseEnter: false,
       };
@@ -132,6 +136,16 @@
           maxHeight: this.maxHeight || '',
         };
       },
+      paddingAreaStyle () {
+        return this.virtual ? {
+          height: `${this.virtualOptions.tableHeight}px`,
+        } : {};
+      },
+      tableAreaStyle () {
+        return this.virtual ? {
+          transform: `translate3d(0,${this.virtualOptions.topOffset}px,0)`,
+        } : {};
+      }
     },
     mounted () {
       // 检测是否存在滚动条
@@ -155,7 +169,7 @@
         // e.stopPropagation();
         const { scrollLeft, scrollTop } = e.target;
         // 表格头部跟随移动
-        this.$refs.head.scrollLeft = scrollLeft;
+        this.$refs.headScrollArea.scrollLeft = scrollLeft;
         /* if (e.isTrusted) {
           this.$emit('scroll', e, scrollTop);
         } */

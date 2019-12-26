@@ -41,7 +41,7 @@
     <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table>
     <h3>10. 虚拟表格</h3>
     <h4>数据量：{{ vData.length }}</h4>
-    <Table :columns="columns" :data="vData" height="300px" border virtual></Table>
+    <Table :columns="columns" :data="vData" height="500px" border virtual></Table>
     <!-- <h4>左右侧固定的虚拟表格</h4> -->
     <!-- <Table :columns="fixedColumns" :data="hugeData(50)" height="300px" stripe border virtual></Table> -->
   </div>
@@ -188,7 +188,7 @@
           { name: '王大锤', age: 25, education: '本科', address: '上海陆家嘴商贸大厦16层5B', },
           { name: '周星星', age: 33, education: '中学', address: '尘世中的一只迷途小羔羊', },
         ],
-        vData: Object.freeze(this.hugeData(500000)),
+        vData: Object.freeze(this.hugeData(1000000)),
       };
     },
     methods: {

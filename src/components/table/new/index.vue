@@ -155,6 +155,9 @@
         visibleRows: 20,
         rowHeight: 0,
         topOffset: 0,
+        // 存储每一个列表项的高度信息
+        rowHeights: [],
+        bufferRows: 20,
       };
     },
     computed: {
@@ -189,10 +192,12 @@
         return this.rightFixedColumns.length !== 0;
       },
       showData () {
+        // return this.data.slice(Math.max(0, this.startIndex-this.bufferRows), Math.min(this.endIndex+this.bufferRows, this.data.length));
         return this.data.slice(this.startIndex, Math.min(this.endIndex, this.data.length));
       },
       tableHeight () {
         return this.data.length * this.rowHeight;
+        // return this.rowHeights.length ? this.rowHeights[this.rowHeights.length-1].bottom : 0;
       },
       virtualOptions () {
         return {
@@ -219,6 +224,9 @@
         this.initVirtual();
       }
     },
+    /* updated () {
+      this.recalculateRowHeights();
+    }, */
     methods: {
       // 同步表头高度
       syncHeadHeightWithFixed () {
@@ -319,15 +327,48 @@
           this.tbody = this.$refs.main.querySelector('table tbody');
         }
         this.visibleHeight = Math.round(parseFloat(getComputedStyle(this.tbody, 'height')));
+        // 根据表格高度计算出大概每一项的高度
         this.rowHeight = Math.round(this.visibleHeight / this.visibleRows);
+        /* this.rowHeights = this.data.map((item, index) => {
+          return {
+            index,
+            height: this.rowHeight,
+            top: index * this.rowHeight,
+            bottom: (index + 1) * this.rowHeight,
+          };
+        }); */
       },
       onVirtualTableScroll: debounce(function (e) {
         if (!this.virtual) return;
         const { scrollTop } = e.target;
         this.startIndex = Math.floor(scrollTop / this.rowHeight);
+        // this.startIndex = this.rowHeights.find(r => r.bottom > scrollTop)['index'];
         this.endIndex = this.startIndex + this.visibleRows;
         this.topOffset = scrollTop - (scrollTop % this.rowHeight);
+        /* if (this.startIndex > 0) {
+          this.topOffset = this.rowHeights[this.startIndex-1]['bottom'];
+        } else this.topOffset = 0; */
       }, 10),
+      // 重新动态计算列表项高度
+      recalculateRowHeights () {
+        if (!this.rowHeights.length) return;
+        this.$refs.mainTable.$refs.rows.map((el, i) => {
+          const rect = el.getBoundingClientRect();
+          const { height } = rect;
+          const index = this.startIndex + i;
+          const row = this.rowHeights[index];
+          const offsetHeight = height - row.height;
+          if (offsetHeight) {
+            row.height = height;
+            row.bottom += offsetHeight;
+            for (let j=index+1; j<this.rowHeights.length; j++) {
+              const curRow = this.rowHeights[j];
+              curRow.top = this.rowHeights[j-1].bottom;
+              curRow.bottom += offsetHeight;
+            }
+          }
+        });
+      }
     },
   };
 </script>

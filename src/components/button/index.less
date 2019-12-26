@@ -20,8 +20,8 @@
   cursor: pointer;
   background-color: @default-button-bgcolor;
   color: lighten(@primary-text-color, 20%);
-  border: 1px solid lighten(@primary-text-color, 40%);
-  border-color: lighten(@primary-text-color, 40%);
+  border: 1px solid lighten(@primary-text-color, 60%);
+  // border-color: lighten(@primary-text-color, 40%);
   border-radius: 2px;
   box-sizing: border-box;
   outline: none;
@@ -149,4 +149,21 @@
 }
 .panda-button.round.large {
   border-radius: 19px;
+}
+
+/* loading button */
+.panda-button.loading {
+  opacity: .65;
+  cursor: default;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+  i svg {
+    animation: spin 2s linear infinite;
+  }
 }

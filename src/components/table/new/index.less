@@ -4,15 +4,19 @@
 .panda-table {
   width: 100%;
   position: relative;
-  .panda-table_wrapper {
+  &_wrapper {
     > .panda-table_left-fixed, > .panda-table_right-fixed {
       position: absolute;
       top: 0;
       bottom: 0;
       overflow: hidden;
+      z-index: 99;
       .panda-table_common-table {
-        .panda-table_common-table_body table {
-          margin-bottom: @scrollbar-width;
+        &_body {
+          // overflow: hidden;
+          table {
+            margin-bottom: @scrollbar-width;
+          }
         }
       }
     }
@@ -23,32 +27,45 @@
         margin-right: -@scrollbar-width;
       }
     }
-    > .panda-table_main {
+    /* > .panda-table_main {
       //
-    }
+    } */
     > .panda-table_right-fixed {
       right: 0;
       box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
     }
     .panda-table_common-table {
-      > .panda-table_common-table_head {
-        overflow: hidden;
-      }
-      > .panda-table_common-table_body {
-        overflow: auto;
+      &_head {
         position: relative;
-        .padding-area {
+        &_scroller {
           position: absolute;
-          left: 0;
           top: 0;
           right: 0;
-          z-index: -1;
+          bottom: 0;
+          width: @scrollbar-width - 1px;
+          border-bottom: 1px solid @border-color;
         }
-        .table-area {
-          left: 0;
-          right: 0;
-          top: 0;
-          position: absolute;
+        &_inner {
+          overflow: hidden;
+        }
+      }
+      &_body {
+        overflow: auto;
+        &.virtual {
+          position: relative;
+          .padding-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            z-index: -1;
+          }
+          .table-area {
+            left: 0;
+            right: 0;
+            top: 0;
+            position: absolute;
+          }
         }
       }
     }
@@ -105,6 +122,13 @@
     }
     > .panda-table_right-fixed {
       right: 1px;
+    }
+    .panda-table_common-table {
+      &_head {
+        &_scroller {
+          border-left: 1px solid @border-color;
+        }
+      }
     }
     table {
       thead {

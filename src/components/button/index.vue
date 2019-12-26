@@ -1,12 +1,19 @@
 <template>
-  <button class="panda-button" :class="cClass" :disabled="disabled" @click="onclick">
+  <button class="panda-button" :class="cClass" :disabled="disabled" :autofocus="autofocus" @click="onClick">
+    <Icon v-if="!loading && icon" :name="icon"></Icon>
+    <Icon v-else-if="loading" name="loader"></Icon>
     <slot></slot>
   </button>
 </template>
 
 <script>
+  import Icon from '../icon';
+
   export default {
     name: 'Button',
+    components: {
+      Icon
+    },
     props: {
       disabled: {
         type: Boolean,
@@ -26,9 +33,11 @@
           return ['mini', 'small', 'normal', 'large'].includes(size);
         },
       },
+      icon: String,
       round: Boolean,
       block: Boolean,
       loading: Boolean,
+      autofocus: Boolean,
     },
     computed: {
       cClass (){
@@ -43,7 +52,8 @@
       },
     },
     methods: {
-      onclick (e){
+      onClick (e){
+        if (this.loading) return;
         this.$emit('click', e);
       },
     },
