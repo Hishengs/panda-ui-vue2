@@ -14,7 +14,9 @@
           <thead>
             <tr>
               <!-- 选择 -->
-              <th width="20px" v-if="selectable"><input type="checkbox"></th>
+              <th width="20px" v-if="selectable">
+                <Checkbox :value="allChecked" @change="toggleAllChecked"></Checkbox>
+              </th>
               <th v-for="(column, i) in columns" :key="i">
                 <div class="inner" :style="{width: column.width ? parseFloat(column.width, 10) + 'px' : ''}">
                   {{ typeof column.title === 'function' ? column.title() : column.title }}
@@ -62,7 +64,9 @@
               ref="rows"
             >
               <!-- 选择 -->
-              <td width="20px" v-if="selectable"><input type="checkbox"></td>
+              <td width="20px" v-if="selectable">
+                <Checkbox :value="item._checked" @change="e => onRowChecked(e, item, i)"></Checkbox>
+              </td>
               <td
                 v-for="(column, j) in columns" 
                 :key="i+'-'+j"
@@ -88,9 +92,13 @@
 <script>
   import { debounce } from '../../../utils/index.js';
   import { getScrollBarWidth } from '../../../utils/dom.js';
+  import Checkbox from '../../checkbox';
 
   export default {
     name: 'panda-table-common-table',
+    components: {
+      Checkbox,
+    },
     props: {
       columns: {
         type: Array,
@@ -128,6 +136,7 @@
         scrollbarWidth: getScrollBarWidth(),
         // 鼠标是否进入当前表格
         mouseEnter: false,
+        allChecked: false,
       };
     },
     computed: {
@@ -149,7 +158,7 @@
         return this.virtual ? {
           transform: `translate3d(0,${this.virtualOptions.topOffset}px,0)`,
         } : {};
-      }
+      },
     },
     mounted () {
       // 检测是否存在滚动条
@@ -185,6 +194,21 @@
       onLeaveRow (e, index) {
         // 设置为 -1，一个不存在的 index
         this.$emit('row-hover', -1);
+      },
+      onRowChecked (e, row, index) {
+        if (row._disabled) return;
+        const { checked } = e.target;
+        row._checked = checked;
+        this.allChecked = this.data.every(item => item._checked);
+        this.$emit('on-row-checked', row, index, checked);
+      },
+      toggleAllChecked (e) {
+        const { checked } = e.target;
+        this.data.forEach(row => {
+          row._checked = checked;
+        });
+        this.allChecked = checked;
+        this.$emit('on-all-rows-checked', checked);
       },
     },
   };

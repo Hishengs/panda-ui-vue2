@@ -226,6 +226,7 @@
     },
     mounted () {
       this.calcMainTableColumnWidths();
+      this.setFixedStyle();
       if (this.hasLeftFixed || this.hasRightFixed) {
         // 同步一下左中右三个表格表头的高度
         this.syncHeadHeightWithFixed();
@@ -240,6 +241,14 @@
       this.recalculateRowHeights();
     }, */
     methods: {
+      setFixedStyle () {
+        if (this.$refs.leftFixed && this.$refs.mainTable.hasScrollBarX) {
+          this.$refs.leftFixed.style.bottom = `${this.scrollBarWidth}px`;
+        }
+        if (this.$refs.rightFixed && this.$refs.mainTable.hasScrollBarX) {
+          this.$refs.rightFixed.style.bottom = `${this.scrollBarWidth}px`;
+        }
+      },
       // 同步表头高度
       syncHeadHeightWithFixed () {
         let leftHeadHeight = 0;

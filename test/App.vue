@@ -1,12 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
 
     <div id="nav">
-      <h1 id="logo">Panda UI <img src="./panda.png"></h1>
+      <div class="inner">
+        <h1 id="logo">
+          <a href="javascript:;" @click="onNav('logo')">Panda UI <img src="./panda.png"></a>
+        </h1>
+      </div>
     </div>
 
-    <div id="main">
-      <!-- <div class="component">
+    <div id="main" ref="main">
+      <div class="component">
         <IconPreview></IconPreview>
       </div>
 
@@ -60,7 +64,7 @@
 
       <div class="component">
         <TagInputPreview></TagInputPreview>
-      </div> -->
+      </div>
 
       <div class="component">
         <TablePreview></TablePreview>
@@ -69,22 +73,21 @@
 
     <!-- 菜单 -->
     <ul id="menu">
-      <a href="#logo"><li>Panda UI</li></a>
-      <a href="#Icon"><li>Icon（图标）</li></a>
-      <a href="#Button"><li>Button（按钮）</li></a>
-      <a href="#Badge"><li>Badge（徽标）</li></a>
-      <a href="#Tag"><li>Tag（标签）</li></a>
-      <a href="#Input"><li>Input（输入框）</li></a>
-      <a href="#NumberInput"><li>NumberInput（数字输入框）</li></a>
-      <a href="#Select"><li>Select（下拉框）</li></a>
-      <a href="#Textarea"><li>Textarea（文本输入框）</li></a>
-      <a href="#Radiobox"><li>Radiobox（单选）</li></a>
-      <a href="#Checkbox"><li>Checkbox（多选）</li></a>
-      <a href="#Switch"><li>Switch（开关）</li></a>
-      <a href="#Slider"><li>Slider（滑块）</li></a>
-      <a href="#Alert"><li>Alert（提示）</li></a>
-      <a href="#TagInput"><li>TagInput（标签输入框）</li></a>
-      <a href="#Table"><li>Table（表格）</li></a>
+      <a href="javascript:;" @click="onNav('Icon')"><li>Icon（图标）</li></a>
+      <a href="javascript:;" @click="onNav('Button')"><li>Button（按钮）</li></a>
+      <a href="javascript:;" @click="onNav('Badge')"><li>Badge（徽标）</li></a>
+      <a href="javascript:;" @click="onNav('Tag')"><li>Tag（标签）</li></a>
+      <a href="javascript:;" @click="onNav('Input')"><li>Input（输入框）</li></a>
+      <a href="javascript:;" @click="onNav('NumberInput')"><li>NumberInput（数字输入框）</li></a>
+      <a href="javascript:;" @click="onNav('Select')"><li>Select（下拉框）</li></a>
+      <a href="javascript:;" @click="onNav('Textarea')"><li>Textarea（文本输入框）</li></a>
+      <a href="javascript:;" @click="onNav('Radiobox')"><li>Radiobox（单选）</li></a>
+      <a href="javascript:;" @click="onNav('Checkbox')"><li>Checkbox（多选）</li></a>
+      <a href="javascript:;" @click="onNav('Switch')"><li>Switch（开关）</li></a>
+      <a href="javascript:;" @click="onNav('Slider')"><li>Slider（滑块）</li></a>
+      <a href="javascript:;" @click="onNav('Alert')"><li>Alert（提示）</li></a>
+      <a href="javascript:;" @click="onNav('TagInput')"><li>TagInput（标签输入框）</li></a>
+      <a href="javascript:;" @click="onNav('Table')"><li>Table（表格）</li></a>
     </ul>
   </div>
 </template>
@@ -125,43 +128,71 @@
       TagInputPreview,
       TablePreview,
     },
+    methods: {
+      onNav (id) {
+        /* global document */
+        /* document.getElementById(id).scrollIntoView({
+          behavior: 'smooth',
+        }); */
+        this.$refs.main.scrollBy(0, 50);
+      }
+    }
   };
 </script>
 
 <style lang= "less">
+  /* body {
+    background: #f6ffed;
+  } */
   #app {
-    /* padding: 20px; */
     color: #555;
-    width: 800px;
-    margin: 0 auto;
     #nav {
       position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
       background-color: white;
-      z-index: 1;
-      width: 800px;
-      #logo {
-        line-height: 40px;
-        img {
-          height: 40px;
-          display: inline-block;
-          vertical-align: middle;
-          margin-top: -5px;
+      z-index: 999;
+      border-bottom: 1px solid #eee;
+      box-shadow: 1px 5px 10px rgba(0,0,0,.1);
+      color: white;
+      background: linear-gradient(to right, #ffa39e 0%, #69c0ff 100%);
+      .inner {
+        width: 800px;
+        margin: 0 auto;
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+        #logo {
+          line-height: 40px;
+          img {
+            height: 40px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -5px;
+          }
         }
       }
     }
     #main {
-      /*  */
+      background: white;
+      width: 800px;
+      margin: 0 auto;
+      margin-top: 100px;
     }
     #menu {
+      background: white;
       position: fixed;
-      top: 25%;
-      left: 50%;
+      top: 100px;
+      bottom: 0;
+      right: calc(50% + 420px);
       margin: 0;
-      margin-left: -620px;
-      width: 220px;
-      list-style: none;
       padding: 0;
+      list-style: none;
+      border: 1px solid #eee;
+      box-shadow: 1px 5px 10px rgba(0,0,0,.1);
       a {
         text-decoration: none;
         color: inherit;
@@ -170,20 +201,25 @@
         }
         li {
           font-size: 14px;
-          margin: 15px 0;
+          padding: 15px 20px;
+          &:hover {
+            background-color: #f5f5f5;
+          }
         }
       }
     }
     .component {
-      margin-top: 50px;
       margin-bottom: 150px;
+      border: 1px solid #eee;
+      padding: 20px;
+      box-shadow: 1px 5px 20px rgba(0,0,0,.1);
       h2 {
+        margin-top: 0;
         margin-bottom: 40px;
-        padding-top: 40px;
-        /* border-top: 1px solid #dedede; */
       }
-      h3 {
-        margin-top: 50px;
+      h3:not(:first-child) {
+        margin-top: 40px;
+        margin-bottom: 20px;
       }
     }
     pre {
@@ -195,7 +231,7 @@
     h1, h2, h3, h4 {
       font-weight: normal;
     }
-    /* table {
+    .component > div > table {
       width: 100%;
       border-collapse:collapse;
       border: 1px solid #dfdfdf;
@@ -204,7 +240,7 @@
         padding: 10px;
         text-align: center;
       }
-    } */
+    }
   }
 </style>
 

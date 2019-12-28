@@ -73,6 +73,12 @@
         <td>Boolean</td>
         <td>false</td>
       </tr>
+      <tr>
+        <td>loading</td>
+        <td>加载中</td>
+        <td>Boolean</td>
+        <td>false</td>
+      </tr>
     </table>
   </div>
 </template>

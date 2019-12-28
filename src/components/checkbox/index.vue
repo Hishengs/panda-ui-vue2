@@ -2,7 +2,7 @@
   <span class="panda-checkbox" :class="cClass" @click="onClick">
     <input type="checkbox" :name="name" :disabled="isDisabled" :checked="checked" @change="onChange" ref="input">
     <span class="panda-checkbox-inner">
-      <Icon name="check" v-if="checked"></Icon>
+      <Icon name="check" v-if="checked" color="white"></Icon>
     </span>
     <slot></slot>
   </span>
@@ -23,14 +23,19 @@
         default: null,
       },
       disabled: Boolean,
-      // 是否在组内
-      inGroup: Boolean,
     },
     data () {
       return {
-        checked: false,
+        checked: this.value,
         isGroup: false,
       };
+    },
+    watch: {
+      value (checked) {
+        if (!this.isGroup) {
+          this.checked = checked;
+        }
+      }
     },
     computed: {
       cClass () {

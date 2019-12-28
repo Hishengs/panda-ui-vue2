@@ -63,12 +63,17 @@
 <style lang= "less" scoped>
   #Icon {
     padding: 0 10px;
+    .search {
+      margin-bottom: 20px;
+    }
     .container {
       display: inline-block;
-      margin: 10px 0;
+      margin: 10px 8px;
       padding: 30px 0;
-      width: 110px;
+      width: 130px;
       text-align: center;
+      border-radius: 3px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
       &:hover {
         cursor: pointer;
         background-color: #f5f5f5;
