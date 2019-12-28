@@ -35,6 +35,7 @@
           :column-widths="columnWidths"
           :height="height"
           :max-height="maxHeight"
+          :selectable="selectable"
           :hide-header="hideHeader"
           :hover-index="hoverIndex"
           @row-hover="index => hoverIndex = index"
@@ -131,6 +132,8 @@
           return ['center', 'left', 'right'].includes(align);
         },
       },
+      // 可选择
+      selectable: Boolean,
       // 隐藏表头
       hideHeader: Boolean,
       // 虚拟列表

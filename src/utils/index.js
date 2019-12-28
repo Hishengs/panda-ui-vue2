@@ -14,7 +14,7 @@ export function debounce (fn, t) {
 }
 
 export function getMaxOf (nums) {
-  return nums.sort()[nums.length-1];
+  return nums.sort()[nums.length - 1];
 }
 
 export default {

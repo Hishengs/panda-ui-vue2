@@ -8,8 +8,11 @@
     <h3>3. 斑马纹 stripe</h3>
     <Table :columns="columns" :data="data" stripe></Table>
     <h3>4. 对齐方式 align="left|center|right" 默认居中</h3>
+    <h5>左对齐</h5>
     <Table :columns="columns" :data="data" align="left"></Table>
+    <h5>居中对齐</h5>
     <Table :columns="columns" :data="data" align="center"></Table>
+    <h5>右对齐</h5>
     <Table :columns="columns" :data="data" align="right"></Table>
     <h3>5. 设置高度 固定表头</h3>
     <h4>height(300px)</h4>
@@ -25,6 +28,8 @@
     <Table :columns="columns" :data="data" size="normal"></Table>
     <h4>large</h4>
     <Table :columns="columns" :data="data" size="large"></Table>
+    <h3>7. 可选择 selectable</h3>
+    <Table :columns="columns" :data="data" stripe selectable></Table>
     <h3>7. 隐藏表头 hide-header</h3>
     <Table :columns="columns" :data="data" stripe hide-header></Table>
     <h3>8. 超出外层宽度</h3>

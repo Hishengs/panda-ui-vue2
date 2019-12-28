@@ -1,33 +1,29 @@
 <template>
   <div class="panda-table_common-table">
     <!-- 表格头部 -->
-    <div class="panda-table_common-table_head" v-show="!hideHeader" :style="{
-      paddingRight: hasScrollBarY ? `${scrollbarWidth-1}px` : ''
-    }">
-      <!-- 占据滚动条位置 -->
-      <div class="panda-table_common-table_head_scroller" v-if="hasScrollBarY"></div>
+    <div class="panda-table_common-table_head" v-show="!hideHeader">
       <div class="panda-table_common-table_head_inner" ref="headScrollArea">
         <table>
           <colgroup>
             <!-- 选择 -->
-            <!-- <col width="20px"></col> -->
+            <col width="20px" v-if="selectable"></col>
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <!-- <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col> -->
+            <col v-if="showScrollCell" :width="scrollbarWidth + 'px'"></col>
           </colgroup>
           <thead>
             <tr>
               <!-- 选择 -->
-              <!-- <th width="20px"><input type="checkbox"></th> -->
+              <th width="20px" v-if="selectable"><input type="checkbox"></th>
               <th v-for="(column, i) in columns" :key="i">
                 <div class="inner" :style="{width: column.width ? parseFloat(column.width, 10) + 'px' : ''}">
                   {{ typeof column.title === 'function' ? column.title() : column.title }}
                 </div>
               </th>
               <!-- 滚动条的宽度 -->
-              <!-- <th v-if="hasScrollBarY">
+              <th v-if="showScrollCell">
                 <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
-              </th> -->
+              </th>
             </tr>
           </thead>
         </table>
@@ -50,10 +46,10 @@
         <table class="panda-table_common-table">
           <colgroup>
             <!-- 选择 -->
-            <!-- <col width="20px"></col> -->
+            <col width="20px" v-if="selectable"></col>
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <col v-if="hasScrollBarY" :width="scrollbarWidth + 'px'"></col>
+            <col v-if="showScrollCell" :width="scrollbarWidth + 'px'"></col>
           </colgroup>
           <tbody>
             <tr
@@ -65,7 +61,7 @@
               ref="rows"
             >
               <!-- 选择 -->
-              <!-- <td width="20px"><input type="checkbox"></td> -->
+              <td width="20px" v-if="selectable"><input type="checkbox"></td>
               <td
                 v-for="(column, j) in columns" 
                 :key="i+'-'+j"
@@ -76,9 +72,9 @@
                 </div>
               </td>
               <!-- 滚动条的宽度 -->
-              <!-- <td v-if="hasScrollBarY">
+              <td v-if="showScrollCell">
                 <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
-              </td> -->
+              </td>
             </tr>
           </tbody>
         </table>
@@ -89,6 +85,7 @@
 
 <script>
   import { debounce } from '../../../utils/index.js';
+  import { getScrollBarWidth } from '../../../utils/dom.js';
 
   export default {
     name: 'panda-table-common-table',
@@ -113,6 +110,8 @@
       },
       // 隐藏表头
       hideHeader: Boolean,
+      // 是否可选择
+      selectable: Boolean,
       hoverIndex: Number,
       virtual: Boolean,
       virtualOptions: Object,
@@ -124,12 +123,15 @@
         // 是否存在 y 轴滚动条
         hasScrollBarY: false,
         // 统一滚动条的宽度
-        scrollbarWidth: 16.7999,
+        scrollbarWidth: getScrollBarWidth(),
         // 鼠标是否进入当前表格
         mouseEnter: false,
       };
     },
     computed: {
+      showScrollCell () {
+        return this.hasScrollBarY && this.scrollbarWidth > 0;
+      },
       bodyStyle () {
         return {
           height: this.height || '',
