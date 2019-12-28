@@ -22,7 +22,7 @@
               </th>
               <!-- 滚动条的宽度 -->
               <th v-if="showScrollCell">
-                <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
+                <div :style="{ width: scrollbarWidth + 'px' }"></div>
               </th>
             </tr>
           </thead>
@@ -49,7 +49,8 @@
             <col width="20px" v-if="selectable"></col>
             <col v-for="i in columns.length" :key="i-1" :width="`${columnWidths[i-1]}px`"></col>
             <!-- 滚动条的宽度 -->
-            <col v-if="showScrollCell" :width="scrollbarWidth + 'px'"></col>
+            <!-- <col v-if="showScrollCell" :width="scrollbarWidth + 'px'"></col> -->
+            <col v-if="showScrollCell" width="0"></col>
           </colgroup>
           <tbody>
             <tr
@@ -72,9 +73,10 @@
                 </div>
               </td>
               <!-- 滚动条的宽度 -->
-              <td v-if="showScrollCell">
+              <!-- <td v-if="showScrollCell">
                 <div :style="{ width: (scrollbarWidth - 1) + 'px' }"></div>
-              </td>
+              </td> -->
+              <td v-if="showScrollCell"></td>
             </tr>
           </tbody>
         </table>

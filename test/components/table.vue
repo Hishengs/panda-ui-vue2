@@ -28,6 +28,8 @@
     <Table :columns="columns" :data="data" size="normal"></Table>
     <h4>large</h4>
     <Table :columns="columns" :data="data" size="large"></Table>
+    <h3>7. 加载中 loading</h3>
+    <Table :columns="columns" :data="data" stripe loading></Table>
     <h3>7. 可选择 selectable</h3>
     <Table :columns="columns" :data="data" stripe selectable></Table>
     <h3>7. 隐藏表头 hide-header</h3>

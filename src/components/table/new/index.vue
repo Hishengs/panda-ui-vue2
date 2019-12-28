@@ -1,5 +1,8 @@
 <template>
   <div class="panda-table" :class="cClass">
+    <div class="panda-table_loading-mask" v-show="loading">
+      <panda-icon name="rotate-cw" size="24"></panda-icon>
+    </div>
     <div class="panda-table_wrapper">
       <!-- 左 -->
       <div class="panda-table_left-fixed" ref="leftFixed" v-if="hasLeftFixed">
@@ -24,6 +27,7 @@
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
+          :style="{ marginRight: `${-scrollBarWidth-1}px` }"
         ></common-table>
       </div>
       <!-- 中 -->
@@ -88,13 +92,16 @@
 
 <script>
   import commonTable from './common-table.vue';
+  import Icon from '../../icon';
   import { getComputedStyle/* , addClass, removeClass */ } from '../../../utils/dom.js';
   import { getMaxOf, debounce } from '../../../utils/index.js';
+  import { getScrollBarWidth } from '../../../utils/dom.js';
 
   export default {
     name: 'panda-table',
     components: {
       commonTable,
+      [Icon.name]: Icon,
     },
     props: {
       columns: {
@@ -149,6 +156,8 @@
         scrollerAtEnd: false,
         // 计算得出主表格的各列宽度
         columnWidths: [],
+        // 滚动条宽度
+        scrollBarWidth: getScrollBarWidth(),
         // 表格 tbody
         tbody: null,
         // 虚拟列表相关参数

@@ -2,9 +2,33 @@
 @scrollbar-width: 17px;
 @prefix: "panda-table";
 
+@keyframes spin {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 .panda-table {
   width: 100%;
   position: relative;
+  &_loading-mask {
+    position: absolute;
+    z-index: 2000;
+    background-color: hsla(0,0%,100%,.9);
+    margin: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: opacity .3s;
+    .panda-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -12px;
+      animation: spin 1s linear infinite;
+    }
+  }
   &_wrapper {
     > .panda-table_left-fixed, > .panda-table_right-fixed {
       position: absolute;
@@ -126,9 +150,9 @@
         }
       }
       tbody {
-        tr:last-child {
+        /* tr:last-child {
           border-bottom: none;
-        }
+        } */
         tr td:not(:first-child) {
           border-left: 1px solid @border-color;
           border-right: none;
