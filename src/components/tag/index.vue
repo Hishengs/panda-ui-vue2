@@ -1,5 +1,5 @@
 <template>
-  <span class="panda-tag" :class="cClass" :style="cStyle">
+  <span class="panda-tag" :class="cClass" :style="cStyle" v-if="show">
     <!-- <div class="triangle-mark" v-if="triangle"></div> -->
     <span class="text">
       <slot></slot>
@@ -45,6 +45,7 @@
     },
     data (){
       return {
+        show: true,
         builtInColors: {
           red: '#f5222d',
           orange: '#fa541c',
@@ -81,7 +82,7 @@
     },
     methods: {
       onClose (e){
-        console.log('>>> panda-tag@close');
+        this.show = false;
         this.$emit('close', e);
       },
     },

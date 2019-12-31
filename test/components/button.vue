@@ -82,3 +82,9 @@
     </table>
   </div>
 </template>
+
+<style scoped>
+.panda-button {
+  margin-right: 10px !important;
+}
+</style>

@@ -68,8 +68,8 @@
     }
     .container {
       display: inline-block;
-      margin: 10px 8px;
-      padding: 30px 0;
+      margin: 12px 16px;
+      padding: 35px 0;
       width: 130px;
       text-align: center;
       border-radius: 3px;

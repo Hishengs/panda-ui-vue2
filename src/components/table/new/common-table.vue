@@ -177,17 +177,11 @@
         this.hasScrollBarX = this.$refs.body.scrollWidth > this.$refs.body.offsetWidth;
       },
       onTableScroll: debounce(function (e) {
-        // if (e.currentTarget !== this.$refs.body || !this.mouseEnter) return;
-        // e.preventDefault();
-        // e.stopPropagation();
         const { scrollLeft, scrollTop } = e.target;
         // 表格头部跟随移动
         this.$refs.headScrollArea.scrollLeft = scrollLeft;
-        /* if (e.isTrusted) {
-          this.$emit('scroll', e, scrollTop);
-        } */
         this.$emit('scroll', e, scrollTop);
-      }, 10),
+      }, 5),
       onEnterRow (e, index) {
         this.$emit('row-hover', index);
       },

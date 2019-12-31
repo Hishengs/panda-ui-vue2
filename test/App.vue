@@ -1,150 +1,163 @@
 <template>
   <div id="app" ref="app">
 
+    <img src="./kongfu-panda.png" alt="" class="kongfu-panda">
+
+    <img src="./corner-panda.jpeg" alt="" class="panda-at-conner">
+
     <div id="nav">
       <div class="inner">
         <h1 id="logo">
-          <a href="javascript:;" @click="onNav('logo')">Panda UI <img src="./panda.png"></a>
+          <a href="javascript:;" @click="onNav('logo')">Panda UI <img src="./panda-nuddle.jpeg"></a>
         </h1>
       </div>
     </div>
 
     <div id="main" ref="main">
       <div class="component">
-        <IconPreview></IconPreview>
+        <component :is="selected"></component>
       </div>
 
-      <div class="component">
-        <ButtonPreview></ButtonPreview>
-      </div>
+    </div>
 
-      <div class="component">
-        <TagPreview></TagPreview>
-      </div>
-
-      <div class="component">
-        <BadgePreview></BadgePreview>
-      </div>
-
-      <div class="component">
-        <InputPreview></InputPreview>
-      </div>
-
-      <div class="component">
-        <NumberInputPreview></NumberInputPreview>
-      </div>
-
-      <div class="component">
-        <SelectPreview></SelectPreview>
-      </div>
-
-      <div class="component">
-        <TextareaPreview></TextareaPreview>
-      </div>
-
-      <div class="component">
-        <RadioPreview></RadioPreview>
-      </div>
-
-      <div class="component">
-        <CheckboxPreview></CheckboxPreview>
-      </div>
-
-      <div class="component">
-        <SwitchPreview></SwitchPreview>
-      </div>
-
-      <div class="component">
-        <SliderPreview></SliderPreview>
-      </div>
-
-      <div class="component">
-        <AlertPreview></AlertPreview>
-      </div>
-
-      <div class="component">
-        <TagInputPreview></TagInputPreview>
-      </div>
-
-      <div class="component">
-        <TablePreview></TablePreview>
-      </div>
+    <div class="site-info">
+      <p>Created and Design with ❤️ by Hisheng.</p>
     </div>
 
     <!-- 菜单 -->
     <ul id="menu">
-      <a href="javascript:;" @click="onNav('Icon')"><li>Icon（图标）</li></a>
-      <a href="javascript:;" @click="onNav('Button')"><li>Button（按钮）</li></a>
-      <a href="javascript:;" @click="onNav('Badge')"><li>Badge（徽标）</li></a>
-      <a href="javascript:;" @click="onNav('Tag')"><li>Tag（标签）</li></a>
-      <a href="javascript:;" @click="onNav('Input')"><li>Input（输入框）</li></a>
-      <a href="javascript:;" @click="onNav('NumberInput')"><li>NumberInput（数字输入框）</li></a>
-      <a href="javascript:;" @click="onNav('Select')"><li>Select（下拉框）</li></a>
-      <a href="javascript:;" @click="onNav('Textarea')"><li>Textarea（文本输入框）</li></a>
-      <a href="javascript:;" @click="onNav('Radiobox')"><li>Radiobox（单选）</li></a>
-      <a href="javascript:;" @click="onNav('Checkbox')"><li>Checkbox（多选）</li></a>
-      <a href="javascript:;" @click="onNav('Switch')"><li>Switch（开关）</li></a>
-      <a href="javascript:;" @click="onNav('Slider')"><li>Slider（滑块）</li></a>
-      <a href="javascript:;" @click="onNav('Alert')"><li>Alert（提示）</li></a>
-      <a href="javascript:;" @click="onNav('TagInput')"><li>TagInput（标签输入框）</li></a>
-      <a href="javascript:;" @click="onNav('Table')"><li>Table（表格）</li></a>
+      <a
+        href="javascript:;"
+        v-for="(menu,i ) in menus"
+        :key="i"
+        @click="onNav(menu.id)"
+        :class="{
+          selected: menu.id === selected
+        }"
+      >
+        <li>{{ menu.name }}</li>
+      </a>
     </ul>
+
   </div>
 </template>
 
 <script>
-  import IconPreview from './components/icon.vue';
-  import ButtonPreview from './components/button.vue';
-  import TagPreview from './components/tag.vue';
-  import BadgePreview from './components/badge.vue';
-  import AlertPreview from './components/alert.vue';
-  import InputPreview from './components/input.vue';
-  import NumberInputPreview from './components/number-input.vue';
-  import SelectPreview from './components/select.vue';
-  import TextareaPreview from './components/textarea.vue';
-  import RadioPreview from './components/radio.vue';
-  import CheckboxPreview from './components/checkbox.vue';
-  import SwitchPreview from './components/switch.vue';
-  import SliderPreview from './components/slider.vue';
-  import TagInputPreview from './components/tag-input.vue';
-  import TablePreview from './components/table.vue';
+  import Intro from './intro.vue';
+  import Updates from './updates.vue';
+  import Start from './get-started.vue';
+  import Icon from './components/icon.vue';
+  import Button from './components/button.vue';
+  import Tag from './components/tag.vue';
+  import Badge from './components/badge.vue';
+  import Alert from './components/alert.vue';
+  import Input from './components/input.vue';
+  import NumberInput from './components/number-input.vue';
+  import Select from './components/select.vue';
+  import Textarea from './components/textarea.vue';
+  import Radio from './components/radio.vue';
+  import Checkbox from './components/checkbox.vue';
+  import iSwitch from './components/switch.vue';
+  import Slider from './components/slider.vue';
+  import TagInput from './components/tag-input.vue';
+  import Table from './components/table.vue';
+  import Modal from './components/modal.vue';
+  import Drawer from './components/drawer.vue';
+  import Notice from './components/notice.vue';
 
   export default {
     name: 'app',
     components: {
-      IconPreview,
-      ButtonPreview,
-      TagPreview,
-      BadgePreview,
-      AlertPreview,
-      InputPreview,
-      NumberInputPreview,
-      SelectPreview,
-      TextareaPreview,
-      RadioPreview,
-      CheckboxPreview,
-      SwitchPreview,
-      SliderPreview,
-      TagInputPreview,
-      TablePreview,
+      Intro,
+      Updates,
+      Start,
+      Icon,
+      Button,
+      Tag,
+      Badge,
+      Alert,
+      Input,
+      NumberInput,
+      Select,
+      Textarea,
+      Radio,
+      Checkbox,
+      iSwitch,
+      Slider,
+      TagInput,
+      Table,
+      Modal,
+      Drawer,
+      Notice,
+    },
+    data () {
+      return {
+        selected: 'Intro',
+        menus: [
+          { id: 'Intro', name: '介绍' },
+          { id: 'Start', name: '起步' },
+          { id: 'Updates', name: '更新日志' },
+          { id: 'Icon', name: 'Icon（图标）' },
+          { id: 'Button', name: 'Button（按钮）' },
+          { id: 'Badge', name: 'Badge（徽标）' },
+          { id: 'Tag', name: 'Tag（标签）' },
+          { id: 'Input', name: 'Input（输入框）' },
+          { id: 'NumberInput', name: 'NumberInput（数字输入框）' },
+          { id: 'Select', name: 'Select（下拉框）' },
+          { id: 'Textarea', name: 'Textarea（文本输入框）' },
+          { id: 'Radio', name: 'Radiobox（单选）' },
+          { id: 'Checkbox', name: 'Checkbox（多选）' },
+          { id: 'iSwitch', name: 'Switch（开关）' },
+          { id: 'Slider', name: 'Slider（滑块）' },
+          { id: 'Alert', name: 'Alert（提示）' },
+          { id: 'TagInput', name: 'TagInput（标签输入框）' },
+          { id: 'Table', name: 'Table（表格）' },
+          { id: 'Modal', name: 'Modal（弹窗）' },
+          { id: 'Drawer', name: 'Drawer（抽屉）' },
+          { id: 'Notice', name: 'Notice（通知）' },
+        ],
+      };
     },
     methods: {
       onNav (id) {
+        this.selected = id;
         /* global document */
-        /* document.getElementById(id).scrollIntoView({
+        document.getElementById('app').scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        /* const target = document.getElementById(id);
+        document.documentElement.scrollTo({
+          top: target.offsetTop - 120,
+          left: 0,
           behavior: 'smooth',
         }); */
-        this.$refs.main.scrollBy(0, 50);
       }
     }
   };
 </script>
 
-<style lang= "less">
-  /* body {
-    background: #f6ffed;
-  } */
+<style lang="less">
+  .kongfu-panda {
+    position: fixed;
+    top: 200px;
+    left: 0;
+    width: 150px;
+  }
+  .panda-at-conner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+  }
+  body {
+    height: 100vh;
+  }
   #app {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    padding: 0 20px;
     color: #555;
     #nav {
       position: fixed;
@@ -152,14 +165,16 @@
       left: 0;
       right: 0;
       width: 100%;
-      background-color: white;
+      /* background-color: white; */
+      background-color: #f5f5f5;
       z-index: 999;
       border-bottom: 1px solid #eee;
       box-shadow: 1px 5px 10px rgba(0,0,0,.1);
-      color: white;
-      background: linear-gradient(to right, #ffa39e 0%, #69c0ff 100%);
+      /* color: white; */
+      /* background: linear-gradient(to right, #ffa39e 0%, #69c0ff 100%); */
+      padding: 0 160px;
       .inner {
-        width: 800px;
+        /* width: 800px; */
         margin: 0 auto;
         a {
           text-decoration: none;
@@ -169,6 +184,8 @@
           line-height: 40px;
           img {
             height: 40px;
+            transform: scale(2, 2);
+            margin-left: 20px;
             display: inline-block;
             vertical-align: middle;
             margin-top: -5px;
@@ -177,19 +194,26 @@
       }
     }
     #main {
+      position: relative;
       background: white;
-      width: 800px;
-      margin: 0 auto;
+      max-width: 900px;
+      margin: 0;
+      margin-left: 370px;
       margin-top: 100px;
+      min-height: calc(100% - 160px);
+    }
+    .site-info {
+      text-align: center;
     }
     #menu {
-      background: white;
+      background: rgba(255,255,255,.9);
       position: fixed;
       top: 100px;
-      bottom: 0;
-      right: calc(50% + 420px);
+      bottom: 20px;
+      right: calc(50% + 470px);
       margin: 0;
       padding: 0;
+      overflow-y: auto;
       list-style: none;
       border: 1px solid #eee;
       box-shadow: 1px 5px 10px rgba(0,0,0,.1);
@@ -197,7 +221,7 @@
         text-decoration: none;
         color: inherit;
         &:hover {
-          color: #222;
+          color: #0084fe;
         }
         li {
           font-size: 14px;
@@ -207,19 +231,57 @@
           }
         }
       }
+      a.selected {
+        color: #0084fe;
+      }
     }
     .component {
-      margin-bottom: 150px;
+      height: 100%;
+      /* margin-bottom: 50px; */
       border: 1px solid #eee;
-      padding: 20px;
+      padding: 20px 30px 30px 30px;
       box-shadow: 1px 5px 20px rgba(0,0,0,.1);
       h2 {
         margin-top: 0;
         margin-bottom: 40px;
       }
       h3:not(:first-child) {
-        margin-top: 40px;
+        margin-top: 80px;
+        margin-bottom: 30px;
+      }
+      h4 {
+        margin-top: 30px;
         margin-bottom: 20px;
+      }
+      h2 {
+        &::after {
+          display: block;
+          content: '';
+          width: 150px;
+          height: 22px;
+          margin-top: -22px;
+          background-color: #ffd45e;
+        }
+      }
+      h3 {
+        &::after {
+          display: block;
+          content: '';
+          width: 250px;
+          height: 18px;
+          margin-top: -18px;
+          background-color: #ffbb96;
+        }
+      }
+      h4 {
+        &::after {
+          display: block;
+          content: '';
+          width: 150px;
+          height: 16px;
+          margin-top: -16px;
+          background-color: #d9f7be;
+        }
       }
     }
     pre {

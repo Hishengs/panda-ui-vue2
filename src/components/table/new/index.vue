@@ -1,7 +1,9 @@
 <template>
   <div class="panda-table" :class="cClass">
     <div class="panda-table_loading-mask" v-show="loading">
-      <panda-icon name="rotate-cw" size="24"></panda-icon>
+      <slot name="loading">
+        <panda-icon name="rotate-cw" size="24"></panda-icon>
+      </slot>
     </div>
     <div class="panda-table_wrapper">
       <!-- 左 -->

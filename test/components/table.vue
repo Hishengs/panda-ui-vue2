@@ -7,7 +7,7 @@
     <Table :columns="columns" :data="data" border></Table>
     <h3>3. 斑马纹 stripe</h3>
     <Table :columns="columns" :data="data" stripe></Table>
-    <h3>4. 对齐方式 align="left|center|right" 默认居中</h3>
+    <h3>4. 对齐方式 align="left | center | right" 默认居中</h3>
     <h5>左对齐</h5>
     <Table :columns="columns" :data="data" align="left"></Table>
     <h5>居中对齐</h5>
@@ -29,24 +29,29 @@
     <h4>large</h4>
     <Table :columns="columns" :data="data" size="large"></Table>
     <h3>7. 加载中 loading</h3>
+    <h4>默认</h4>
     <Table :columns="columns" :data="data" stripe loading></Table>
-    <h3>7. 可选择 selectable</h3>
+    <h4>自定义 loading slot</h4>
+    <Table :columns="columns" :data="data" stripe loading>
+      <div slot="loading" style="text-align: center; padding-top: 70px;">加载中...</div>
+    </Table>
+    <h3>8. 可选择 selectable</h3>
     <Table :columns="columns" :data="data" stripe selectable></Table>
-    <h3>7. 隐藏表头 hide-header</h3>
+    <h3>9. 隐藏表头 hide-header</h3>
     <Table :columns="columns" :data="data" stripe hide-header></Table>
-    <h3>8. 超出外层宽度</h3>
+    <h3>10. 超出外层宽度</h3>
     <h4>x 轴超出</h4>
     <Table :columns="widthColumns" :data="lessData" height="300px" stripe border></Table>
     <h4>x, y 轴超出</h4>
     <Table :columns="widthColumns" :data="moreData" height="300px" stripe border></Table>
-    <h3>9. 固定列</h3>
+    <h3>11. 固定列</h3>
     <h4>左侧单列固定</h4>
     <Table :columns="leftFixedOneColumns" :data="moreData" height="300px" stripe border></Table>
     <h4>左侧多列固定</h4>
     <Table :columns="leftFixedColumns" :data="moreData" height="300px" stripe border></Table>
     <h4>左右侧固定</h4>
     <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table>
-    <h3>10. 虚拟表格</h3>
+    <h3>12. 虚拟表格</h3>
     <h4>数据量：{{ vData.length }}</h4>
     <Table :columns="columns" :data="vData" height="500px" border virtual></Table>
     <!-- <h4>左右侧固定的虚拟表格</h4> -->

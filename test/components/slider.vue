@@ -3,6 +3,7 @@
     <h2>Slider 滑块</h2>
     
     <h3>默认</h3>
+    <p>进度：{{ progress }}%</p>
     <Slider v-model="progress"></Slider>
     <!-- code -->
     <!-- <pre>

@@ -1,0 +1,49 @@
+/* panda-notice-track {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  overflow: auto;
+} */
+
+.panda-notice {
+  /* position: fixed;
+  right: 20px;
+  bottom: 20px; */
+  margin-top: 20px;
+  width: 360px;
+  // z-index: 999;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 15px rgba(0,0,0,.2);
+  &-inner {
+    width: 100%;
+    margin: 0;
+    background-color: white;
+    position: relative;
+    .close-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1, 1.1);
+      }
+    }
+  }
+  &-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    h3 {
+      margin: 0;
+      height: 30px;
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+  }
+  &-body {
+    padding: 20px;
+  }
+}

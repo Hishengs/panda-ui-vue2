@@ -18,7 +18,7 @@
 - [ ] Cascader     （级联选择器）
 - [ ] DatePicker   （日期选择器）
 - [ ] TimePicker   （时间选择器）
-- [ ] Slider       （滑块）
+- [x] Slider       （滑块）
 - [x] Switch       （开关）
 - [x] TagInput     （标签输入框）
 
@@ -26,7 +26,7 @@
 ## 反馈类
 - [ ] Message      （信息）
 - [ ] Notice       （通知）
-- [ ] Modal        （模态框）
+- [x] Modal        （模态框）
 - [x] Alert        （提示）
 - [ ] Progress     （进度条）
 
@@ -47,4 +47,4 @@
 - [ ] Popover      （弹出层）
 - [ ] Tooltip      （气泡提示）
 - [ ] Tree         （树形控件）
-- [ ] Table        （表格）
+- [x] Table        （表格）

@@ -1,0 +1,67 @@
+.panda-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, .7);
+  z-index: 999;
+  &-inner {
+    z-index: 1000;
+    width: 400px;
+    max-width: 600px;
+    height: 100%;
+    float: right;
+    background-color: white;
+    position: relative;
+    .close-btn {
+      z-index: 9999;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1, 1.1);
+      }
+    }
+  }
+  &-header {
+    position: relative;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    h3 {
+      margin: 0;
+      height: 30px;
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+  }
+  &-body {
+    padding: 20px 15px;
+    max-height: 100%;
+    overflow: auto;
+  }
+  &-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    // width: 100%;
+    border-top: 1px solid #eee;
+    padding: 10px 15px;
+  }
+}
+
+.panda-drawer {
+  &.fixed-left > &-inner {
+    float: left;
+  }
+}
+
+.panda-drawer {
+  &.fixed-right > &-inner {
+    float: right;
+  }
+}

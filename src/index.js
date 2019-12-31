@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import Icon from './components/icon/index.js';
 import Button from './components/button/index.js';
 import Tag from './components/tag/index.js';
@@ -14,6 +15,10 @@ import Switch from './components/switch/index.js';
 import Slider from './components/slider/index.js';
 import TagInput from './components/tag-input/index.js';
 import Table from './components/table/new/index.js';
+import Modal from './components/modal/index.js';
+import Notice from './components/notice/index.js';
+import Drawer from './components/drawer/index.js';
+import Divider from './components/divider/index.js';
 
 const components = {
   Icon,
@@ -33,14 +38,16 @@ const components = {
   Slider,
   TagInput,
   Table,
+  Modal,
+  Drawer,
+  Divider,
 };
 
-console.log(components);
+Vue.use(Notice);
 
 function install(Vue) {
   const componentKeys = Object.keys(components);
   for (const key of componentKeys) {
-    console.log('>>> key: ', key);
     Vue.component(key, components[key]);
   }
 }

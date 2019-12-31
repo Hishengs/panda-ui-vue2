@@ -2,6 +2,7 @@
   <div class="panda-slider" ref="slider">
     <div class="panda-slider-inner" :style="innerStyle">
       <span class="panda-slider-handler" ref="handler"></span>
+      <span class="panda-slider-value">{{ value }}</span>
     </div>
   </div>
 </template>
@@ -36,7 +37,7 @@
           this.$emit('input', 0);
         } else if (newValue > 100) {
           this.$emit('input', 100);
-        } else this.$emit('input', newValue);
+        } else this.$emit('input', Number(newValue.toFixed(2)));
       },
     },
     mounted () {
@@ -72,6 +73,7 @@
         }
       },
       onMouseMove (e) {
+        if (this.value < 0 || this.value > 100) return;
         if (this.track) {
           this.offset = e.pageX - this.lastPageX;
           this.lastPageX = e.pageX;
