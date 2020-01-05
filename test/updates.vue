@@ -1,7 +1,7 @@
 <template>
   <div id="Updates">
     <h2>更新日志</h2>
-    <h4>已实现组件：18</h4>
+    <h4>已实现组件：19</h4>
     <div class="done">
       <Tag color="blue">Icon</Tag>
       <Tag color="blue">Button</Tag>
@@ -20,8 +20,10 @@
       <Tag color="blue">Modal</Tag>
       <Tag color="blue">Drawer</Tag>
       <Tag color="blue">Notice</Tag>
+      <Tag color="blue">Collapse</Tag>
+      <Tag color="blue">Divider</Tag>
     </div>
-    <h4>待实现组件：20</h4>
+    <h4>待实现组件：17</h4>
     <div class="todo">
       <Tag>Upload</Tag>
       <Tag>Cascader</Tag>
@@ -35,12 +37,10 @@
       <Tag>Pagination</Tag>
       <Tag>Grid</Tag>
       <Tag>Panel</Tag>
-      <Tag>Collapse</Tag>
       <Tag>Timeline</Tag>
       <Tag>Popover</Tag>
       <Tag>Tooltip</Tag>
       <Tag>Tree</Tag>
-      <Tag>Divider</Tag>
       <Tag>Form</Tag>
     </div>
   </div>

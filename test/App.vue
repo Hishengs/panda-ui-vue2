@@ -64,6 +64,8 @@
   import Modal from './components/modal.vue';
   import Drawer from './components/drawer.vue';
   import Notice from './components/notice.vue';
+  import Collapse from './components/collapse.vue';
+  import Divider from './components/divider.vue';
 
   export default {
     name: 'app',
@@ -89,6 +91,8 @@
       Modal,
       Drawer,
       Notice,
+      Collapse,
+      Divider,
     },
     data () {
       return {
@@ -115,8 +119,16 @@
           { id: 'Modal', name: 'Modal（弹窗）' },
           { id: 'Drawer', name: 'Drawer（抽屉）' },
           { id: 'Notice', name: 'Notice（通知）' },
+          { id: 'Collapse', name: 'Collapse（折叠面板）' },
+          { id: 'Divider', name: 'Divider（分割线）' }
         ],
       };
+    },
+    mounted () {
+      const id = location.href.split('#')[1];
+      if (id) {
+        this.selected = id;
+      }
     },
     methods: {
       onNav (id) {
@@ -126,12 +138,9 @@
           top: 0,
           behavior: 'smooth',
         });
-        /* const target = document.getElementById(id);
-        document.documentElement.scrollTo({
-          top: target.offsetTop - 120,
-          left: 0,
-          behavior: 'smooth',
-        }); */
+        let url = location.href.split('#')[0];
+        url += `#${id}`;
+        location.href = url;
       }
     }
   };
@@ -241,19 +250,19 @@
       border: 1px solid #eee;
       padding: 20px 30px 30px 30px;
       box-shadow: 1px 5px 20px rgba(0,0,0,.1);
-      h2 {
+      > div > h2 {
         margin-top: 0;
         margin-bottom: 40px;
       }
-      h3:not(:first-child) {
+      > div > h3:not(:first-child) {
         margin-top: 80px;
         margin-bottom: 30px;
       }
-      h4 {
+      > div > h4 {
         margin-top: 30px;
         margin-bottom: 20px;
       }
-      h2 {
+      > div > h2 {
         &::after {
           display: block;
           content: '';
@@ -263,7 +272,7 @@
           background-color: #ffd45e;
         }
       }
-      h3 {
+      > div > h3 {
         &::after {
           display: block;
           content: '';
@@ -273,7 +282,7 @@
           background-color: #ffbb96;
         }
       }
-      h4 {
+      > div > h4 {
         &::after {
           display: block;
           content: '';

@@ -19,6 +19,7 @@ import Modal from './components/modal/index.js';
 import Notice from './components/notice/index.js';
 import Drawer from './components/drawer/index.js';
 import Divider from './components/divider/index.js';
+import { default as Collapse, CollapsePanel } from './components/collapse/index.js';
 
 const components = {
   Icon,
@@ -41,6 +42,8 @@ const components = {
   Modal,
   Drawer,
   Divider,
+  Collapse,
+  CollapsePanel,
 };
 
 Vue.use(Notice);
