@@ -1,0 +1,31 @@
+.panda-message {
+  // width: 100%;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 5px 1px rgba(0,0,0,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  margin-bottom: 15px;
+  color: #666;
+  padding: 10px;
+  box-sizing: content-box;
+  height: 20px;
+  line-height: 20px;
+  opacity: .95;
+  .icon {
+    margin-right: 10px;
+  }
+  &-body {
+    flex-grow: 1;
+  }
+  .close-btn {
+    margin-left: 10px;
+    flex-basis: 20px;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.1, 1.1);
+    }
+  }
+}

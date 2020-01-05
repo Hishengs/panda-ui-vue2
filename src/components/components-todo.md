@@ -25,7 +25,7 @@
 
 ## 反馈类
 - [ ] Message      （信息）
-- [ ] Notice       （通知）
+- [x] Notice       （通知）
 - [x] Modal        （模态框）
 - [x] Alert        （提示）
 - [ ] Progress     （进度条）
@@ -41,10 +41,23 @@
 ## 布局展示类
 - [ ] Grid         （网格）
 - [ ] Panel        （面板）
-- [ ] Collapse     （折叠面板）
+- [x] Collapse     （折叠面板）
 - [ ] Carousel     （走马灯）
 - [ ] Timeline     （时间轴）
 - [ ] Popover      （弹出层）
 - [ ] Tooltip      （气泡提示）
 - [ ] Tree         （树形控件）
 - [x] Table        （表格）
+- [x] Divider      （分割线）
+
+## 待定
+- [ ] BreadCumb    （面包屑）
+- [ ] Steps        （步骤）
+- [ ] Rate         （星级评分）
+- [ ] TreeSelect   （树选择器）
+- [ ] Transfer     （穿梭框）
+- [ ] Avatar       （头像）
+- [ ] Card         （卡片）
+- [ ] Empty        （空状态提示）
+- [ ] Calendar     （日历）
+- [ ] Loading      （加载提示）

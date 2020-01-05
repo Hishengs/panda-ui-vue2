@@ -66,6 +66,8 @@
   import Notice from './components/notice.vue';
   import Collapse from './components/collapse.vue';
   import Divider from './components/divider.vue';
+  import Message from './components/message.vue';
+  import Tooltip from './components/tooltip.vue';
 
   export default {
     name: 'app',
@@ -93,6 +95,8 @@
       Notice,
       Collapse,
       Divider,
+      Message,
+      Tooltip,
     },
     data () {
       return {
@@ -120,7 +124,9 @@
           { id: 'Drawer', name: 'Drawer（抽屉）' },
           { id: 'Notice', name: 'Notice（通知）' },
           { id: 'Collapse', name: 'Collapse（折叠面板）' },
-          { id: 'Divider', name: 'Divider（分割线）' }
+          { id: 'Divider', name: 'Divider（分割线）' },
+          { id: 'Message', name: 'Message（消息提示）' },
+          { id: 'Tooltip', name: 'Tooltip（文字提示）' }
         ],
       };
     },
@@ -207,7 +213,7 @@
       background: white;
       max-width: 900px;
       margin: 0;
-      margin-left: 370px;
+      margin-left: calc(50% - 430px);
       margin-top: 100px;
       min-height: calc(100% - 160px);
     }

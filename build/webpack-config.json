@@ -1,10 +1,10 @@
 {
   "mode": "development",
   "entry": {
-    "app": "D:\\CodeSpace\\github\\my-repos\\panda-ui\\test\\index.js"
+    "app": "D:\\codespace\\github\\panda-ui\\test\\index.js"
   },
   "output": {
-    "path": "D:\\CodeSpace\\github\\my-repos\\panda-ui\\dev-dist",
+    "path": "D:\\codespace\\github\\panda-ui\\dev-dist",
     "filename": "panda-ui.common.js"
   },
   "resolve": {
@@ -17,7 +17,7 @@
       ".json"
     ],
     "alias": {
-      "@": "D:\\CodeSpace\\github\\my-repos\\panda-ui\\src"
+      "@": "D:\\codespace\\github\\panda-ui\\src"
     },
     "modules": [
       "node_modules"
@@ -27,7 +27,7 @@
     "rules": [
       {
         "test": {},
-        "include": "D:\\CodeSpace\\github\\my-repos\\panda-ui",
+        "include": "D:\\codespace\\github\\panda-ui",
         "exclude": {},
         "loader": "babel-loader"
       },
@@ -100,7 +100,7 @@
     {},
     {
       "options": {
-        "template": "D:\\CodeSpace\\github\\my-repos\\panda-ui\\test\\index.html",
+        "template": "D:\\codespace\\github\\panda-ui\\test\\index.html",
         "filename": "index.html",
         "hash": false,
         "inject": true,
@@ -120,7 +120,7 @@
   ],
   "devtool": "inline-source-map",
   "devServer": {
-    "contentBase": "D:\\CodeSpace\\github\\my-repos\\panda-ui\\dist",
+    "contentBase": "D:\\codespace\\github\\panda-ui\\dist",
     "host": "localhost",
     "port": 8787,
     "compress": true,

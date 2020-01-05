@@ -20,6 +20,8 @@ import Notice from './components/notice/index.js';
 import Drawer from './components/drawer/index.js';
 import Divider from './components/divider/index.js';
 import { default as Collapse, CollapsePanel } from './components/collapse/index.js';
+import Message from './components/message/index.js';
+import Tooltip from './components/tooltip/index.js';
 
 const components = {
   Icon,
@@ -44,9 +46,11 @@ const components = {
   Divider,
   Collapse,
   CollapsePanel,
+  Tooltip,
 };
 
 Vue.use(Notice);
+Vue.use(Message);
 
 function install(Vue) {
   const componentKeys = Object.keys(components);

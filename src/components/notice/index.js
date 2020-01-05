@@ -44,7 +44,7 @@ function notify (options) {
   noticeIns.$mount();
   noticeIns.id = ++nid;
   instances.push(noticeIns);
-  noticeIns.$el.className += `panda-notice-${nid}`;
+  noticeIns.$el.className += ` panda-notice-${nid}`;
   // noticeTrack.appendChild(noticeIns.$el);
   noticeTrack.insertBefore(noticeIns.$el, noticeTrack.firstChild);
   noticeIns.$on('close', () => {
