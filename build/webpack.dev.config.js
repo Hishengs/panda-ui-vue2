@@ -3,7 +3,7 @@ const path = require('path');
 const merge = require('lodash/merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.base.config.js');
-const fs = require('fs');
+// const fs = require('fs');
 
 const resolve = p => path.resolve(process.cwd(), p);
 
@@ -34,6 +34,6 @@ devConfig.plugins = [
   })
 ];
 
-fs.writeFileSync(path.join(__dirname, './webpack-config.json'), JSON.stringify(devConfig, null, 2));
+// fs.writeFileSync(path.join(__dirname, './webpack-config.json'), JSON.stringify(devConfig, null, 2));
 
 module.exports = devConfig;
