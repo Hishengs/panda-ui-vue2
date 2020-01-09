@@ -22,6 +22,7 @@ import Divider from './components/divider/index.js';
 import { default as Collapse, CollapsePanel } from './components/collapse/index.js';
 import Message from './components/message/index.js';
 import Tooltip from './components/tooltip/index.js';
+import Popover from './components/popover/index.js';
 
 const components = {
   Icon,
@@ -47,6 +48,7 @@ const components = {
   Collapse,
   CollapsePanel,
   Tooltip,
+  Popover,
 };
 
 Vue.use(Notice);

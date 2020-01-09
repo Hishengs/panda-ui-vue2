@@ -68,6 +68,7 @@
   import Divider from './components/divider.vue';
   import Message from './components/message.vue';
   import Tooltip from './components/tooltip.vue';
+  import Popover from './components/popover.vue';
 
   export default {
     name: 'app',
@@ -97,6 +98,7 @@
       Divider,
       Message,
       Tooltip,
+      Popover,
     },
     data () {
       return {
@@ -126,7 +128,8 @@
           { id: 'Collapse', name: 'Collapse（折叠面板）' },
           { id: 'Divider', name: 'Divider（分割线）' },
           { id: 'Message', name: 'Message（消息提示）' },
-          { id: 'Tooltip', name: 'Tooltip（文字提示）' }
+          { id: 'Tooltip', name: 'Tooltip（文字提示）' },
+          { id: 'Popover', name: 'Popover（气泡卡片）' }
         ],
       };
     },

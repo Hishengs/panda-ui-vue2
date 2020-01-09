@@ -73,7 +73,10 @@
                 :class="column.className"
               >
                 <div class="inner" :style="{width: column.width ? parseFloat(column.width, 10) + 'px' : ''}">
-                  {{ item[column['key']] }}
+                  <template v-if="column.render">
+                    <cell-render :render="column.render" :column="column" :row="item" :index="i"></cell-render>
+                  </template>
+                  <template v-else>{{ item[column['key']] }}</template>
                 </div>
               </td>
               <!-- 滚动条的宽度 -->
@@ -94,10 +97,28 @@
   import { getScrollBarWidth } from '../../../utils/dom.js';
   import Checkbox from '../../checkbox';
 
+  const CellRender = {
+    functional: true,
+    props: {
+      render: Function,
+      row: Object,
+      column: Object,
+      index: Number,
+    },
+    render (h, context) {
+      return context.props.render.call(context, h, {
+        row: context.props.row,
+        column: context.props.column,
+        index: context.props.index,
+      });
+    },
+  };
+
   export default {
     name: 'panda-table-common-table',
     components: {
       Checkbox,
+      CellRender,
     },
     props: {
       columns: {
@@ -194,7 +215,7 @@
         const { checked } = e.target;
         row._checked = checked;
         this.allChecked = this.data.every(item => item._checked);
-        this.$emit('on-row-checked', row, index, checked);
+        this.$emit('select', row, checked, this.data.filter(item => item._checked));
       },
       toggleAllChecked (e) {
         const { checked } = e.target;
@@ -202,7 +223,7 @@
           row._checked = checked;
         });
         this.allChecked = checked;
-        this.$emit('on-all-rows-checked', checked);
+        this.$emit('select-all', checked);
       },
     },
   };

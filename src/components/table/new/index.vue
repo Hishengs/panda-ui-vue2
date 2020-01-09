@@ -30,6 +30,8 @@
           :virtual="virtual"
           :virtual-options="virtualOptions"
           :style="{ marginRight: `${-scrollBarWidth-1}px` }"
+          @select="onSelect"
+          @select-all="onSelectAll"
         ></common-table>
       </div>
       <!-- 中 -->
@@ -61,6 +63,8 @@
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
+          @select="onSelect"
+          @select-all="onSelectAll"
         ></common-table>
       </div>
       <!-- 右 -->
@@ -391,6 +395,12 @@
             }
           }
         });
+      },
+      onSelect (row, selected, selection) {
+        this.$emit('select', row, selected, selection);
+      },
+      onSelectAll (selected) {
+        this.$emit('select-all', selected);
       }
     },
   };

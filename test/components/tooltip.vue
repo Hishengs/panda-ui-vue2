@@ -5,6 +5,10 @@
     <h3>默认</h3>
     <Tooltip content="Tooltip 文字提示"><Button type="primary">主要按钮</Button></Tooltip>
 
+    <h3>触发方式 trigger</h3>
+    <Tooltip content="Tooltip 文字提示"><Button type="primary">hover</Button></Tooltip>
+    <Tooltip content="Tooltip 文字提示" trigger="click"><Button type="primary">click</Button></Tooltip>
+
     <h3>方向</h3>
     <p>支持 12 个方向</p>
     <Tooltip content="Tooltip 文字提示" placement="top-start"><Button type="primary">Top Start</Button></Tooltip>

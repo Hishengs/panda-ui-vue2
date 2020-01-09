@@ -36,7 +36,7 @@
       <div slot="loading" style="text-align: center; padding-top: 70px;">加载中...</div>
     </Table>
     <h3>8. 可选择 selectable</h3>
-    <Table :columns="columns" :data="data" stripe selectable></Table>
+    <Table :columns="columns" :data="data" stripe selectable @select="onSelect" @select-all="onSelectAll"></Table>
     <h3>9. 隐藏表头 hide-header</h3>
     <Table :columns="columns" :data="data" stripe hide-header></Table>
     <h3>10. 超出外层宽度</h3>
@@ -68,10 +68,16 @@
           {
             title: '姓名',
             key: 'name',
+            /* render (h, params) {
+              return h('span', {}, '>>> ' + params.row[params.column.key]);
+            } */
           },
           {
             title: '年龄',
             key: 'age',
+            /* render (h, params) {
+              return <span>This is JSX</span>;
+            } */
           },
           {
             title: '学历',
@@ -217,6 +223,12 @@
         console.log('==== 结束模拟数据', endTime, data.length, '条数据', '花了 ', (endTime - startTime) / 1000, 's');
         return data;
       },
+      onSelect (row, selected, selection) {
+        console.log('select', row, selected, selection);
+      },
+      onSelectAll (selected) {
+        console.log('select-all', selected);
+      }
     },
   };
 </script>
