@@ -1,21 +1,24 @@
 <template>
-  <div class="panda-popover" ref="popover">
+  <div class="panda-popover" ref="popover" :class="cClass">
     <div class="panda-popover-reference" ref="reference">
       <slot></slot>
     </div>
     <div class="panda-popover-popper" ref="popper" v-show="show">
-      <div class="panda-popover-popper_title" v-if="title">
-        <slot name="title">{{ title }}</slot>
-      </div>
-      <div class="panda-popover-popper_content">
-        <slot name="content">{{ content }}</slot>
+      <div class="panda-popover-popper-inner">
+        <div class="panda-popover-popper-arrow"></div>
+        <div class="panda-popover-popper-title" v-if="title">
+          <slot name="title">{{ title }}</slot>
+        </div>
+        <div class="panda-popover-popper-content">
+          <slot name="content">{{ content }}</slot>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Popper from 'popper.js';
+  import { createPopper } from '@popperjs/core';
   import { on, off } from '../../utils/index.js';
 
   export default {
@@ -55,9 +58,27 @@
         popper: null,
       };
     },
+    computed: {
+      cClass () {
+        return {
+          [`placement-${this.placement}`]: true
+        };
+      }
+    },
     mounted () {
-      this.popper = new Popper(this.$refs.reference, this.$refs.popper, {
-        placement: this.placement
+      this.popper = createPopper(this.$refs.reference, this.$refs.popper, {
+        placement: this.placement,
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: ({ placement, reference, popper }) => {
+                // 添加间距
+                return [0, 10];
+              },
+            }
+          }
+        ]
       });
       setTimeout(() => {
         this.show = false;

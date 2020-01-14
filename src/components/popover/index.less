@@ -1,16 +1,53 @@
-.panda-popover {
+@prefix: ~"panda-popover";
+@poptip-arrow-width: 7px;
+@poptip-arrow-outer-width: (@poptip-arrow-width + 1);
+
+.@{prefix} {
   display: inline-block;
   &-popper {
     color: #333;
     background-color: rgba(255, 255, 255, .95);
     border-radius: 3px;
     box-shadow: 0 1px 5px rgba(0,0,0,.15);
-    &_title {
+    z-index: 9999;
+    &-inner {
+      position: relative;
+    }
+    &-inner &-arrow {
+      &, &::after {
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        content: " ";
+        border: @poptip-arrow-width solid transparent;
+      }
+    }
+    &-title {
       border-bottom: 1px solid #eee;
       font-size: 16px;
     }
-    &_title, &_content {
+    &-title, &-content {
       padding: 10px 15px;
+    }
+  }
+}
+
+.@{prefix} {
+  &.placement-top, &.placement-top-start, &.placement-top-end {
+    .@{prefix}-popper .@{prefix}-popper-inner .@{prefix}-popper-arrow {
+      &, &::after {
+        left: 50%;
+        margin-left: -@poptip-arrow-width;
+        bottom: -@poptip-arrow-width;
+        border-bottom-width: 0;
+        border-top-width: @poptip-arrow-width;
+        border-top-color: white;
+      }
+      &::after {
+        border-top-color: #eee;
+        margin-top: -@poptip-arrow-width;
+      }
     }
   }
 }
