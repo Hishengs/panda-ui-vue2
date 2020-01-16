@@ -3,7 +3,7 @@
     <h2>Message 通知</h2>
     
     <h3>使用</h3>
-    <Button type="primary" @click="showMessage">显示 Message</Button>
+    <panda-button type="primary" @click="showMessage">显示 Message</panda-button>
   </div>
 </template>
 

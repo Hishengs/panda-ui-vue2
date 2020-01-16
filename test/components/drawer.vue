@@ -3,30 +3,30 @@
     <h2>Drawer 抽屉</h2>
     
     <h3>默认</h3>
-    <Drawer v-model="showDrawer" :title="title">{{ intro }}</Drawer>
-    <Button @click="showDrawer=true" type="primary">显示 Drawer</Button>
+    <panda-drawer v-model="showDrawer" :title="title">{{ intro }}</panda-drawer>
+    <panda-button @click="showDrawer=true" type="primary">显示 panda-drawer</panda-button>
 
     <h3>closable</h3>
-    <Drawer v-model="showDrawer1" :title="title" :closable="false">{{ intro }}</Drawer>
-    <Button @click="showDrawer1=true" type="primary">无关闭按钮，点击遮罩关闭</Button>
+    <panda-drawer v-model="showDrawer1" :title="title" :closable="false">{{ intro }}</panda-drawer>
+    <panda-button @click="showDrawer1=true" type="primary">无关闭按钮，点击遮罩关闭</panda-button>
 
     <h3>mask-closable</h3>
-    <Drawer v-model="showDrawer2" :title="title" :mask-closable="false">{{ intro }}</Drawer>
-    <Button @click="showDrawer2=true" type="primary">点击遮罩不可关闭</Button>
+    <panda-drawer v-model="showDrawer2" :title="title" :mask-closable="false">{{ intro }}</panda-drawer>
+    <panda-button @click="showDrawer2=true" type="primary">点击遮罩不可关闭</panda-button>
 
     <h3>自定义 footer</h3>
-    <Drawer v-model="showDrawer3" :title="title">
+    <panda-drawer v-model="showDrawer3" :title="title">
       {{ intro }}
       <div slot="footer">
-        <Button @click="showDrawer3=false" type="primary">确定</Button>
-        <Button @click="showDrawer3=false" type="text">取消</Button>
+        <panda-button @click="showDrawer3=false" type="primary">确定</panda-button>
+        <panda-button @click="showDrawer3=false" type="text">取消</panda-button>
       </div>
-    </Drawer>
-    <Button @click="showDrawer3=true" type="primary">自定义 footer</Button>
+    </panda-drawer>
+    <panda-button @click="showDrawer3=true" type="primary">自定义 footer</panda-button>
 
     <h3>位置 position="left | right" 默认 right</h3>
-    <Drawer v-model="showDrawer4" :title="title" position="left">{{ intro }}</Drawer>
-    <Button @click="showDrawer4=true" type="primary">左边显示</Button>
+    <panda-drawer v-model="showDrawer4" :title="title" position="left">{{ intro }}</panda-drawer>
+    <panda-button @click="showDrawer4=true" type="primary">左边显示</panda-button>
 
     <h4>Props</h4>
     <table>

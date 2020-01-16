@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: 'badge',
+    name: 'panda-badge',
     props: {
       value: [Number, String],
       type: {

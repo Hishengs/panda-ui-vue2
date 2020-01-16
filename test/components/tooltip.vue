@@ -3,26 +3,26 @@
     <h2>Tooltip 文字提示</h2>
     
     <h3>默认</h3>
-    <Tooltip content="Tooltip 文字提示"><Button type="primary">主要按钮</Button></Tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示"><panda-button type="primary">主要按钮</panda-button></panda-tooltip>
 
     <h3>触发方式 trigger</h3>
-    <Tooltip content="Tooltip 文字提示"><Button type="primary">hover</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" trigger="click"><Button type="primary">click</Button></Tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示"><panda-button type="primary">hover</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" trigger="click"><panda-button type="primary">click</panda-button></panda-tooltip>
 
     <h3>方向</h3>
     <p>支持 12 个方向</p>
-    <Tooltip content="Tooltip 文字提示" placement="top-start"><Button type="primary">Top Start</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="top"><Button type="primary">Top</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="top-end"><Button type="primary">Top End</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="left-start"><Button type="primary">Left Start</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="left"><Button type="primary">Left</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="left-end"><Button type="primary">Left End</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="right-start"><Button type="primary">Right Start</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="right"><Button type="primary">Right</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="right-end"><Button type="primary">Right End</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="bottom-start"><Button type="primary">Bottom Start</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="bottom"><Button type="primary">Bottom</Button></Tooltip>
-    <Tooltip content="Tooltip 文字提示" placement="bottom-end"><Button type="primary">Bottom End</Button></Tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="top-start"><panda-button type="primary">Top Start</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="top"><panda-button type="primary">Top</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="top-end"><panda-button type="primary">Top End</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="left-start"><panda-button type="primary">Left Start</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="left"><panda-button type="primary">Left</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="left-end"><panda-button type="primary">Left End</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="right-start"><panda-button type="primary">Right Start</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="right"><panda-button type="primary">Right</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="right-end"><panda-button type="primary">Right End</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="bottom-start"><panda-button type="primary">Bottom Start</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="bottom"><panda-button type="primary">Bottom</panda-button></panda-tooltip>
+    <panda-tooltip content="panda-tooltip 文字提示" placement="bottom-end"><panda-button type="primary">Bottom End</panda-button></panda-tooltip>
   </div>
 </template>
 

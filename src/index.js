@@ -23,6 +23,7 @@ import { default as Collapse, CollapsePanel } from './components/collapse/index.
 import Message from './components/message/index.js';
 import Tooltip from './components/tooltip/index.js';
 import Popover from './components/popover/index.js';
+import Tabs from './components/tabs/index.js';
 
 const components = {
   Icon,
@@ -49,6 +50,7 @@ const components = {
   CollapsePanel,
   Tooltip,
   Popover,
+  Tabs,
 };
 
 Vue.use(Notice);
@@ -57,7 +59,7 @@ Vue.use(Message);
 function install(Vue) {
   const componentKeys = Object.keys(components);
   for (const key of componentKeys) {
-    Vue.component(key, components[key]);
+    Vue.use(components[key]);
   }
 }
 

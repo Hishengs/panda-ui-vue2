@@ -3,7 +3,7 @@
     <h2>Notice 通知</h2>
     
     <h3>使用</h3>
-    <Button type="primary" @click="showNotice">显示 Notice</Button>
+    <panda-button type="primary" @click="showNotice">显示 Notice</panda-button>
     <!-- code -->
     <!-- <pre>
       <code class="html">

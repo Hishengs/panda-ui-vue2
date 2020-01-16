@@ -10,8 +10,13 @@
 </template>
 
 <script>
+  import Icon from '../icon';
+
   export default {
-    name: 'Tag',
+    name: 'panda-tag',
+    components: {
+      Icon,
+    },
     props: {
       type: {
         type: String,

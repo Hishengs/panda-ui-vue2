@@ -3,31 +3,31 @@
     <h2>Switch 开关</h2>
     
     <h3>默认</h3>
-    <i-switch v-model="checked"></i-switch>
+    <panda-switch v-model="checked"></panda-switch>
     <!-- code -->
     <pre>
       <code class="html">
-        &lt;i-switch v-model="checked"&gt;&lt;/i-switch&gt;
+        &lt;panda-switch v-model="checked"&gt;&lt;/panda-switch&gt;
       </code>
     </pre>
     <h3>禁用</h3>
-    <i-switch :disabled="true"></i-switch>
+    <panda-switch :disabled="true"></panda-switch>
     <!-- code -->
     <pre>
       <code class="html">
-        &lt;i-switch :disabled="true"&gt;&lt;/i-switch&gt;
+        &lt;panda-switch :disabled="true"&gt;&lt;/panda-switch&gt;
       </code>
     </pre>
     <h3>大小</h3>
-    小 <i-switch v-model="checked" size="small"></i-switch>
-    正常 <i-switch v-model="checked"></i-switch>
-    大 <i-switch v-model="checked" size="large"></i-switch>
+    小 <panda-switch v-model="checked" size="small"></panda-switch>
+    正常 <panda-switch v-model="checked"></panda-switch>
+    大 <panda-switch v-model="checked" size="large"></panda-switch>
     <!-- code -->
     <pre>
       <code class="html">
-        &lt;i-switch size="small"&gt;&lt;/i-switch&gt;
-        &lt;i-switch size="default"&gt;&lt;/i-switch&gt;
-        &lt;i-switch size="large"&gt;&lt;/i-switch&gt;
+        &lt;panda-switch size="small"&gt;&lt;/panda-switch&gt;
+        &lt;panda-switch size="default"&gt;&lt;/panda-switch&gt;
+        &lt;panda-switch size="large"&gt;&lt;/panda-switch&gt;
       </code>
     </pre>
   </div>
