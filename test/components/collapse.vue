@@ -3,31 +3,31 @@
     <h2>Collapse 折叠面板</h2>
     
     <h3>默认</h3>
-    <Collapse v-model="collapsed" @change="onCollapse">
-      <CollapsePanel :title="title" :content="intro" value="one"></CollapsePanel>
-      <CollapsePanel :title="title" :content="intro" value='two'></CollapsePanel>
-      <CollapsePanel :title="title" :content="intro" value='three'></CollapsePanel>
-    </Collapse>
+    <panda-collapse v-model="collapsed" @change="onCollapse">
+      <panda-collapse-panel :title="title" :content="intro" value="one"></panda-collapse-panel>
+      <panda-collapse-panel :title="title" :content="intro" value='two'></panda-collapse-panel>
+      <panda-collapse-panel :title="title" :content="intro" value='three'></panda-collapse-panel>
+    </panda-collapse>
 
     <h3>手风琴模式</h3>
-    <Collapse accordion>
-      <CollapsePanel :title="title" :content="intro"></CollapsePanel>
-      <CollapsePanel :title="title" :content="intro"></CollapsePanel>
-      <CollapsePanel :title="title" :content="intro"></CollapsePanel>
-    </Collapse>
+    <panda-collapse accordion>
+      <panda-collapse-panel :title="title" :content="intro"></panda-collapse-panel>
+      <panda-collapse-panel :title="title" :content="intro"></panda-collapse-panel>
+      <panda-collapse-panel :title="title" :content="intro"></panda-collapse-panel>
+    </panda-collapse>
 
     <h3>自定义</h3>
-    <Collapse accordion>
-      <CollapsePanel :title="title">{{ intro }}</CollapsePanel>
-      <CollapsePanel :content="intro">
+    <panda-collapse accordion>
+      <panda-collapse-panel :title="title">{{ intro }}</panda-collapse-panel>
+      <panda-collapse-panel :content="intro">
         <Button type="primary" slot="title">自定义标题区域</Button>
-      </CollapsePanel>
-      <CollapsePanel :title="title" :content="intro"></CollapsePanel>
-    </Collapse>
+      </panda-collapse-panel>
+      <panda-collapse-panel :title="title" :content="intro"></panda-collapse-panel>
+    </panda-collapse>
 
     <h3>API</h3>
 
-    <h4>Collapse</h4>
+    <h4>panda-collapse</h4>
     <table>
       <tr>
         <th>名称</th>
@@ -55,7 +55,7 @@
       </tr>
     </table>
 
-    <h4>CollapsePanel</h4>
+    <h4>panda-collapse-panel</h4>
     <table>
       <tr>
         <th>名称</th>

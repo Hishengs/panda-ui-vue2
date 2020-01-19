@@ -3,7 +3,7 @@
     <h2>TagInput 标签输入框</h2>
     
     <h3>默认</h3>
-    <TagInput v-model="tags" :recommend-tags="recommendTags"></TagInput>
+    <panda-tag-input v-model="tags" :recommend-tags="recommendTags"></panda-tag-input>
     <h4>Props</h4>
     <table>
       <tr>

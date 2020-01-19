@@ -1,31 +1,31 @@
 <template>
-  <div id="Divider">
-    <h2>Divider 分割线</h2>
+  <div id="panda-divider">
+    <h2>panda-divider 分割线</h2>
     
     <h3>默认</h3>
     <p>内容1</p>
-    <Divider></Divider>
+    <panda-divider></panda-divider>
     <p>内容2</p>
 
     <h3>带文字</h3>
     <p>内容1</p>
-    <Divider>我是一条萌萌哒的分割线 🙈</Divider>
+    <panda-divider>我是一条萌萌哒的分割线 🙈</panda-divider>
     <p>内容2</p>
 
     <h3>对齐 align</h3>
     <p>默认居中</p>
-    <Divider>我是一条萌萌哒的分割线 🙈</Divider>
+    <panda-divider>我是一条萌萌哒的分割线 🙈</panda-divider>
     <p>左对齐</p>
-    <Divider align="left">我是一条萌萌哒的分割线 🙈</Divider>
+    <panda-divider align="left">我是一条萌萌哒的分割线 🙈</panda-divider>
     <p>右对齐</p>
-    <Divider align="right">我是一条萌萌哒的分割线 🙈</Divider>
+    <panda-divider align="right">我是一条萌萌哒的分割线 🙈</panda-divider>
 
     <h3>虚线</h3>
-    <Divider dashed>我是一条萌萌哒的分割线 🙈</Divider>
+    <panda-divider dashed>我是一条萌萌哒的分割线 🙈</panda-divider>
 
     <h3>API</h3>
 
-    <h4>Divider</h4>
+    <h4>panda-divider</h4>
     <table>
       <tr>
         <th>名称</th>

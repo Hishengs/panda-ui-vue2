@@ -9,7 +9,7 @@
   import inputMixin from './mixin.js';
   import Icon from '../icon';
   export default {
-    name: 'Button',
+    name: 'panda-input',
     components: {
       Icon,
     },

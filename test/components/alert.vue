@@ -4,31 +4,31 @@
     
     <h3>类型 type</h3>
     <p>info</p>
-    <Alert type="info">这是一条信息提示</Alert>
+    <panda-alert type="info">这是一条信息提示</panda-alert>
     <p>success</p>
-    <Alert type="success">这是一条成功提示</Alert>
+    <panda-alert type="success">这是一条成功提示</panda-alert>
     <p>warning</p>
-    <Alert type="warning">这是一条警告提示</Alert>
+    <panda-alert type="warning">这是一条警告提示</panda-alert>
     <p>danger</p>
-    <Alert type="danger">这是一条危险提示</Alert>
+    <panda-alert type="danger">这是一条危险提示</panda-alert>
     <h3>可关闭的 closable</h3>
-    <p><Alert type="info" closable>这是一条信息提示</Alert></p>
-    <p><Alert type="success" closable>这是一条信息提示</Alert></p>
+    <p><panda-alert type="info" closable>这是一条信息提示</panda-alert></p>
+    <p><panda-alert type="success" closable>这是一条信息提示</panda-alert></p>
     <h3>带标题 title</h3>
     <p>
-      <Alert type="info" title="这是标题">
+      <panda-alert type="info" title="这是标题">
         这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。
-    </Alert>
+    </panda-alert>
     </p>
     <p>
-      <Alert type="success" title="这是标题" closable>
+      <panda-alert type="success" title="这是标题" closable>
         这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。
-    </Alert>
+    </panda-alert>
     </p>
     <p>
-      <Alert type="warning" title="这是标题">
+      <panda-alert type="warning" title="这是标题">
         这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示，这是一条带标题提示。
-    </Alert>
+    </panda-alert>
     </p>
 
     <h4>Props</h4>

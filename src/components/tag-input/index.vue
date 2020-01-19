@@ -17,7 +17,7 @@
   import Icon from '../icon';
 
   export default {
-    name: 'tag-input',
+    name: 'panda-tag-input',
     components: {
       Icon,
     },

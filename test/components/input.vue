@@ -5,22 +5,22 @@
     <h3>基本输入框</h3>
     <p><i>使用 v-model 双向绑定</i> {{ val }}</p>
     <!-- <textarea class="code" disabled>
-    <Input placeholder="基本输入框" v-model="val"></Input>
+    <panda-input placeholder="基本输入框" v-model="val"></panda-input>
     </textarea> -->
-    <Input placeholder="基本输入框" v-model="val"></Input>
+    <panda-input placeholder="基本输入框" v-model="val"></panda-input>
     <h3>禁用输入框 disabled</h3>
-    <Input placeholder="禁用输入框" disabled></Input>
+    <panda-input placeholder="禁用输入框" disabled></panda-input>
     <h3>只读输入框 readonly</h3>
-    <Input placeholder="只读输入框 readonly" readonly></Input>
+    <panda-input placeholder="只读输入框 readonly" readonly></panda-input>
     <h3>输入框尺寸 size</h3>
     <p>small</p>
-    <Input placeholder="输入框尺寸 small" size="small"></Input>
+    <panda-input placeholder="输入框尺寸 small" size="small"></panda-input>
     <p>normal</p>
-    <Input placeholder="输入框尺寸 normal" size="normal"></Input>
+    <panda-input placeholder="输入框尺寸 normal" size="normal"></panda-input>
     <p>large</p>
-    <Input placeholder="输入框尺寸 large" size="large"></Input>
+    <panda-input placeholder="输入框尺寸 large" size="large"></panda-input>
     <h3>可清空 clearable</h3>
-    <Input placeholder="可清空" clearable></Input>
+    <panda-input placeholder="可清空" clearable></panda-input>
   </div>
 </template>
 
