@@ -99,9 +99,8 @@
 <script>
   import commonTable from './common-table.vue';
   import Icon from '../../icon';
-  import { getComputedStyle/* , addClass, removeClass */ } from '../../../utils/dom.js';
+  import { getComputedStyle, getScrollBarWidth } from '../../../utils/dom.js';
   import { getMaxOf, debounce } from '../../../utils/index.js';
-  import { getScrollBarWidth } from '../../../utils/dom.js';
 
   export default {
     name: 'panda-table',

@@ -1,8 +1,9 @@
-@prefix: ~"panda-popover";
-@poptip-arrow-width: 7px;
-@poptip-arrow-outer-width: (@poptip-arrow-width + 1);
+@popover-prefix: ~"panda-popover";
+@popover-arrow-width: 7px;
+@popover-arrow-bg: white;
+@popover-arrow-border-color: #dedede;
 
-.@{prefix} {
+.@{popover-prefix} {
   display: inline-block;
   &-popper {
     color: #333;
@@ -10,44 +11,131 @@
     border-radius: 3px;
     box-shadow: 0 1px 5px rgba(0,0,0,.15);
     z-index: 9999;
+    font-size: 14px;
     &-inner {
       position: relative;
     }
     &-inner &-arrow {
-      &, &::after {
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      content: " ";
+      border: @popover-arrow-width solid transparent;
+      &::after {
         display: block;
         width: 0;
         height: 0;
-        position: absolute;
         content: " ";
-        border: @poptip-arrow-width solid transparent;
+        border: @popover-arrow-width solid transparent;
       }
     }
     &-title {
       border-bottom: 1px solid #eee;
-      font-size: 16px;
+      // font-size: 16px;
+      font-weight: 600;
     }
     &-title, &-content {
-      padding: 10px 15px;
+      padding: 6px 15px;
     }
   }
 }
 
-.@{prefix} {
-  &.placement-top, &.placement-top-start, &.placement-top-end {
-    .@{prefix}-popper .@{prefix}-popper-inner .@{prefix}-popper-arrow {
-      &, &::after {
-        left: 50%;
-        margin-left: -@poptip-arrow-width;
-        bottom: -@poptip-arrow-width;
-        border-bottom-width: 0;
-        border-top-width: @poptip-arrow-width;
-        border-top-color: white;
-      }
-      &::after {
-        border-top-color: #eee;
-        margin-top: -@poptip-arrow-width;
-      }
+// ============= placement ===============
+.@{popover-prefix}[data-placement^="top"] {
+  .@{popover-prefix}-popper-arrow {
+    left: 50%;
+    margin-left: -@popover-arrow-width;
+    bottom: -@popover-arrow-width;
+    border-bottom-width: 0;
+    border-top-width: @popover-arrow-width;
+    border-top-color: @popover-arrow-border-color;
+    &::after {
+      margin-left: -@popover-arrow-width;
+      margin-top: -(@popover-arrow-width + 1);
+      border-bottom-width: 0;
+      border-top-width: @popover-arrow-width;
+      border-top-color: @popover-arrow-bg;
+    }
+  }
+}
+.@{popover-prefix}[data-placement^="top-start"],
+.@{popover-prefix}[data-placement^="bottom-start"] {
+  .@{popover-prefix}-popper-arrow {
+    left: 20%;
+  }
+}
+.@{popover-prefix}[data-placement^="top-end"],
+.@{popover-prefix}[data-placement^="bottom-end"] {
+  .@{popover-prefix}-popper-arrow {
+    left: inherit;
+    right: 20%;
+  }
+}
+
+.@{popover-prefix}[data-placement^="bottom"] {
+  .@{popover-prefix}-popper-arrow {
+    left: 50%;
+    margin-left: -@popover-arrow-width;
+    top: -@popover-arrow-width;
+    border-top-width: 0;
+    border-bottom-width: @popover-arrow-width;
+    border-bottom-color: @popover-arrow-border-color;
+    &::after {
+      margin-left: -@popover-arrow-width;
+      margin-top: 1px;
+      border-top-width: 0;
+      border-bottom-width: @popover-arrow-width;
+      border-bottom-color: @popover-arrow-bg;
+    }
+  }
+}
+
+.@{popover-prefix}[data-placement^="left"] {
+  .@{popover-prefix}-popper-arrow {
+    top: 50%;
+    margin-top: -@popover-arrow-width;
+    right: -@popover-arrow-width;
+    border-right-width: 0;
+    border-left-width: @popover-arrow-width;
+    border-left-color: @popover-arrow-border-color;
+    &::after {
+      margin-left: -(@popover-arrow-width + 1);
+      margin-top: -@popover-arrow-width;
+      border-right-width: 0;
+      border-left-width: @popover-arrow-width;
+      border-left-color: @popover-arrow-bg;
+    }
+  }
+}
+.@{popover-prefix}[data-placement^="left-start"],
+.@{popover-prefix}[data-placement^="right-start"] {
+  .@{popover-prefix}-popper-arrow {
+    top: 20%;
+  }
+}
+.@{popover-prefix}[data-placement^="left-end"],
+.@{popover-prefix}[data-placement^="right-end"] {
+  .@{popover-prefix}-popper-arrow {
+    top: inherit;
+    bottom: 20%;
+  }
+}
+
+.@{popover-prefix}[data-placement^="right"] {
+  .@{popover-prefix}-popper-arrow {
+    top: 50%;
+    margin-top: -@popover-arrow-width;
+    left: -@popover-arrow-width;
+    border-left-width: 0;
+    border-right-width: @popover-arrow-width;
+    border-right-color: @popover-arrow-border-color;
+    &::after {
+      margin-left: 1px;
+      margin-top: -@popover-arrow-width;
+      border-left-width: 0;
+      border-right-width: @popover-arrow-width;
+      border-right-color: @popover-arrow-bg;
     }
   }
 }

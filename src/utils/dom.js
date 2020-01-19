@@ -70,10 +70,20 @@ export function getScrollBarWidth (fresh) {
   return cachedWidth;
 }
 
+export function on (el, event, callback) {
+  return el.addEventListener(event, callback);
+}
+
+export function off (el, event, callback) {
+  return el.removeEventListener(event, callback);
+}
+
 export default {
   getComputedStyle,
   hasClass,
   addClass,
   removeClass,
   getScrollBarWidth,
+  on,
+  off,
 };

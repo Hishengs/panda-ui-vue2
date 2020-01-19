@@ -1,29 +1,33 @@
 import Vue from 'vue';
 import Message from './index.vue';
+import { isServer } from '../../utils';
 
 const MessageCtr = Vue.extend(Message);
 
 let nid = 0;
 const instances = [];
 
-/* global document */
-const messageTrack = document.createElement('div');
-messageTrack.className = 'panda-message-track';
-const styles = {
-  position: 'fixed',
-  top: '0',
-  right: 'calc(50% - 160px)',
-  width: '320px',
-  padding: '20px',
-  overflow: 'auto',
-  zIndex: '9999',
-  display: 'flex',
-  flexDirection: 'column-reverse',
-};
-for (const key of Object.keys(styles)) {
-  messageTrack.style[key] = styles[key];
+let messageTrack;
+if (!isServer) {
+  /* global document */
+  messageTrack = document.createElement('div');
+  messageTrack.className = 'panda-message-track';
+  const styles = {
+    position: 'fixed',
+    top: '0',
+    right: 'calc(50% - 160px)',
+    width: '320px',
+    padding: '20px',
+    overflow: 'auto',
+    zIndex: '9999',
+    display: 'flex',
+    flexDirection: 'column-reverse',
+  };
+  for (const key of Object.keys(styles)) {
+    messageTrack.style[key] = styles[key];
+  }
+  document.body.appendChild(messageTrack);
 }
-document.body.appendChild(messageTrack);
 
 const defaultOpt = {
   duration: 2 * 1000,
@@ -32,6 +36,12 @@ const defaultOpt = {
   content: ''
 };
 function message (options) {
+  if (options == null) return;
+  if (typeof options === 'string') {
+    options = {
+      content: options,
+    };
+  }
   options = Object.assign({}, defaultOpt, options);
   if (!options.content) return null;
   const messageIns = new MessageCtr({

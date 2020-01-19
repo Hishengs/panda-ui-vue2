@@ -1,3 +1,5 @@
+@klk-divider-color: #eee;
+
 .panda-divider {
   width: 100%;
   margin: 20px 0;
@@ -6,7 +8,7 @@
   &::before, &::after {
     flex-grow: 1;
     content: '';
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid @klk-divider-color;
   }
   &_content {
     flex-shrink: 0;
@@ -29,6 +31,8 @@
   }
   &.dashed {
     &::before, &::after {
+      border-color: darken(@klk-divider-color, 20);
+      border-width: .5px;
       border-style: dashed;
     }
   }

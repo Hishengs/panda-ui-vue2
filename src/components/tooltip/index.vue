@@ -11,7 +11,7 @@
 
 <script>
   import Popper from 'popper.js';
-  import { on, off } from '../../utils/index.js';
+  import { on, off } from '../../utils/dom.js';
 
   export default {
     name: 'panda-tooltip',

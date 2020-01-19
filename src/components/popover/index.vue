@@ -1,9 +1,23 @@
 <template>
-  <div class="panda-popover" ref="popover" :class="cClass">
-    <div class="panda-popover-reference" ref="reference">
+  <div
+    class="panda-popover"
+    ref="popover"
+    :class="cClass"
+    :data-placement="placement"
+    v-click-outside="onClickOutside"
+    @mouseenter="onMouseenter"
+    @mouseleave="onMouseleave"
+  >
+    <div
+      class="panda-popover-reference"
+      ref="reference"
+      @click="onClick"
+      @mousedown="onFocus(false)"
+      @mouseup="onBlur(false)"
+    >
       <slot></slot>
     </div>
-    <div class="panda-popover-popper" ref="popper" v-show="show">
+    <div class="panda-popover-popper" ref="popper" v-show="showPopper">
       <div class="panda-popover-popper-inner">
         <div class="panda-popover-popper-arrow"></div>
         <div class="panda-popover-popper-title" v-if="title">
@@ -18,12 +32,20 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import { createPopper } from '@popperjs/core';
-  import { on, off } from '../../utils/index.js';
+  import clickOutside from '../../utils/directives/click-outside.js';
+  import { on, off } from '../../utils/dom.js';
+
+  const isServer = Vue.prototype.$isServer;
 
   export default {
     name: 'panda-popover',
     props: {
+      value: {
+        type: Boolean,
+        default: false,
+      },
       title: {
         type: String,
         default: ''
@@ -47,66 +69,146 @@
       trigger: {
         type: String,
         validator (val) {
-          return ['hover', 'click'].includes(val);
+          return ['hover', 'click', 'focus'].includes(val);
         },
         default: 'hover'
-      }
+      },
+      offset: {
+        type: Number,
+        default: 10,
+      },
+      popperEl: Object,
+      referenceEl: Object,
+      disabled: Boolean,
     },
+    directives: { clickOutside },
     data () {
       return {
-        show: true,
-        popper: null,
+        showPopper: false,
+        popperIns: null,
+        // for focus trigger
+        inputEl: null,
       };
     },
     computed: {
       cClass () {
-        return {
-          [`placement-${this.placement}`]: true
-        };
+        return {};
+      }
+    },
+    watch: {
+      value: {
+        immediate: true,
+        handler(val) {
+          this.showPopper = val;
+          this.$emit('input', val);
+        }
+      },
+      showPopper (show) {
+        if (show) {
+          this.update();
+          this.$emit('show');
+        } else {
+          this.$emit('hide');
+        }
+        this.$emit('input', show);
       }
     },
     mounted () {
-      this.popper = createPopper(this.$refs.reference, this.$refs.popper, {
-        placement: this.placement,
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: ({ placement, reference, popper }) => {
-                // 添加间距
-                return [0, 10];
-              },
-            }
-          }
-        ]
-      });
-      setTimeout(() => {
-        this.show = false;
-      }, 100);
-      if (this.trigger === 'hover') {
-        on(this.$refs.reference, 'mouseenter', this.onShow);
-        on(this.$refs.reference, 'mouseleave', this.onHide);
-      } else if (this.trigger === 'click') {
-        on(this.$refs.reference, 'click', this.onShow);
-        on(this.$refs.reference, 'click', this.onHide);
-      }
+      this.initFocus();
+    },
+    updated (){
+      this.$nextTick(() => this.update());
     },
     beforeDestroy () {
-      if (this.trigger === 'hover') {
-        off(this.$refs.reference, 'mouseenter', this.onShow);
-        off(this.$refs.reference, 'mouseleave', this.onHide);
-      } else if (this.trigger === 'click') {
-        off(this.$refs.reference, 'click', this.onShow);
-        off(this.$refs.reference, 'click', this.onHide);
+      if (this.inputEl) {
+        off(this.inputEl, 'focus', this.onFocus);
+        off(this.inputEl, 'blur', this.onBlur);
+      }
+      if (!isServer && this.popperIns) {
+        this.popperIns.destroy();
+        this.popperIns = null;
       }
     },
     methods: {
-      onShow () {
-        this.show = true;
+      update () {
+        if (isServer) return;
+        if (!this.popperIns) {
+          this.createPopper();
+        }
+        this.popperIns.update();
       },
-      onHide () {
-        this.show = false;
-      }
+      createPopper () {
+        if (isServer) return;
+        if (this.popperIns) return;
+        const reference = this.referenceEl || this.$refs.reference;
+        const popper = this.popperEl || this.$refs.popper;
+        if (!reference || !popper) return;
+        const options = {
+          placement: this.placement,
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: (/* { placement, reference, popper } */) => {
+                  // 添加偏移
+                  return [0, this.offset];
+                },
+              }
+            }
+          ],
+          strategy: 'fixed'
+        };
+        this.popperIns = createPopper(reference, popper, options);
+        // console.log('>>> createPopper', this.popperIns);
+      },
+      initFocus () {
+        if (this.shouldResponse('focus')) {
+          this.$nextTick(() => {
+            const input = this.$refs.reference.querySelectorAll('input');
+            const textarea = this.$refs.reference.querySelectorAll('textarea');
+            this.inputEl = input ? input[0] : textarea ? textarea[0] : null;
+            if (this.inputEl) {
+              on(this.inputEl, 'focus', this.onFocus);
+              on(this.inputEl, 'blur', this.onBlur);
+            }
+          });
+        }
+      },
+      shouldResponse (trigger = '') {
+        return !(isServer || this.disabled || this.trigger !== trigger);
+      },
+      onClick () {
+        if (this.shouldResponse('click')) {
+          this.showPopper = !this.showPopper;
+        }
+      },
+      onClickOutside () {
+        if (this.shouldResponse('click')) {
+          this.showPopper = false;
+        }
+      },
+      onMouseenter () {
+        if (this.shouldResponse('hover')) {
+          this.showPopper = true;
+        }
+      },
+      onMouseleave () {
+        if (this.shouldResponse('hover')) {
+          this.showPopper = false;
+        }
+      },
+      onFocus (fromInput = true) {
+        if (this.inputEl && !fromInput) return;
+        if (this.shouldResponse('focus')) {
+          this.showPopper = true;
+        }
+      },
+      onBlur (fromInput = true) {
+        if (this.inputEl && !fromInput) return;
+        if (this.shouldResponse('focus')) {
+          this.showPopper = false;
+        }
+      },
     },
   };
 </script>

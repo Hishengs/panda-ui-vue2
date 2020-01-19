@@ -3,7 +3,15 @@
     <h2>Popover 文字提示</h2>
     
     <h3>默认</h3>
-    <Popover title="这是标题" content="这是内容"><Button type="primary">主要按钮</Button></Popover>
+    <Popover content="这是内容"><Button type="primary">主要按钮</Button></Popover>
+
+    <h3>触发方式</h3>
+    <Popover title="这是标题" content="这是内容"><Button type="primary">hover</Button></Popover>
+    <Popover title="这是标题" content="这是内容" trigger="click"><Button type="primary">click</Button></Popover>
+    <Popover title="这是标题" content="这是内容" trigger="focus"><Button type="primary">focus</Button></Popover>
+    <Popover title="这是标题" content="这是内容" trigger="focus">
+      <Input placeholder="focus 触发" value=""></Input>
+    </Popover>
 
     <h3>方向</h3>
     <p>支持 12 个方向</p>
