@@ -3,29 +3,29 @@
     <h2>Badge 徽标</h2>
 
     <h3>单独使用</h3>
-    <Badge value="2"></Badge>
-    <Badge value="新"></Badge>
-    <Badge value="999+"></Badge>
+    <panda-badge value="2"></panda-badge>
+    <panda-badge value="新"></panda-badge>
+    <panda-badge value="999+"></panda-badge>
     
     <h3>默认徽标</h3>
-    <Badge :value="2"><Button type="primary">CES</Button></Badge>
-    <Badge value="23"><Button type="primary">CES</Button></Badge>
-    <Badge value="233"><Button type="primary">CES</Button></Badge>
-    <Badge value="999+"><Button type="primary">CES</Button></Badge>
-    <Badge value="新"><Button type="primary">CES</Button></Badge>
-    <Badge value="折"><Button type="primary">CES</Button></Badge>
+    <panda-badge :value="2"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge value="23"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge value="233"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge value="999+"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge value="新"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge value="折"><panda-button type="primary">CES</panda-button></panda-badge>
     <h3>内置颜色</h3>
-    <Badge color="red" value="new"><Button type="primary">CES</Button></Badge>
-    <Badge color="orange" value="hot"><Button type="primary">CES</Button></Badge>
-    <Badge color="yellow" value="sold"><Button type="primary">CES</Button></Badge>
-    <Badge color="green" :value="999"><Button type="primary">CES</Button></Badge>
-    <Badge color="cyan" :value="999"><Button type="primary">CES</Button></Badge>
-    <Badge color="blue" :value="999"><Button type="primary">CES</Button></Badge>
-    <Badge color="purple" :value="999"><Button type="primary">CES</Button></Badge>
+    <panda-badge color="red" value="new"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="orange" value="hot"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="yellow" value="sold"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="green" :value="999"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="cyan" :value="999"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="blue" :value="999"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="purple" :value="999"><panda-button type="primary">CES</panda-button></panda-badge>
     <h3>小圆点 dot</h3>
-    <Badge type="dot"><Button type="primary">CES</Button></Badge>
-    <Badge color="orange" type="dot"><Button type="primary">CES</Button></Badge>
-    <Badge color="blue" type="dot"><Button type="primary">CES</Button></Badge>
+    <panda-badge type="dot"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="orange" type="dot"><panda-button type="primary">CES</panda-button></panda-badge>
+    <panda-badge color="blue" type="dot"><panda-button type="primary">CES</panda-button></panda-badge>
     <h3>Props</h3>
     <table>
       <tr>

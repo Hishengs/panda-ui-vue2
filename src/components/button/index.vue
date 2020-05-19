@@ -10,7 +10,7 @@
   import Icon from '../icon';
 
   export default {
-    name: 'Button',
+    name: 'panda-button',
     components: {
       Icon
     },

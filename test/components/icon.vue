@@ -2,10 +2,10 @@
   <div id="Icon">
     <h2>Icon 图标</h2>
     <div class="search">
-      <Input placeholder="搜索图标" v-model="searchKey" clearable></Input>
+      <panda-input placeholder="搜索图标" v-model="searchKey" clearable></panda-input>
     </div>
     <span class="container" v-for="(name, i) in icons" :key="i" @click="copyIcon(name)">
-      <Icon :name="name" size="24"></Icon>
+      <panda-icon :name="name" size="24"></panda-icon>
       <label class="name">{{ name }}</label>
     </span>
     <h3>Props</h3>
@@ -53,7 +53,7 @@
     },
     methods: {
       copyIcon (name){
-        // window.copy(`<Icon name="${name}"></Icon>`);
+        // window.copy(`<panda-icon name="${name}"></panda-icon>`);
         // alert('已复制');
       }
     },

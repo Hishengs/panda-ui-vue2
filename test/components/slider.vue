@@ -4,7 +4,7 @@
     
     <h3>默认</h3>
     <p>进度：{{ progress }}%</p>
-    <Slider v-model="progress"></Slider>
+    <panda-slider v-model="progress"></panda-slider>
     <!-- code -->
     <!-- <pre>
       <code class="html">

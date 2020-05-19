@@ -3,11 +3,11 @@
     <h2>Select 下拉框</h2>
     
     <h3>默认</h3>
-    <i-select v-model="selected" placeholder="最喜欢的饮料">
-      <i-option value="可乐">可乐</i-option>
-      <i-option value="咖啡">咖啡</i-option>
-      <i-option value="乌龙茶">乌龙茶</i-option>
-    </i-select>
+    <panda-select v-model="selected" placeholder="最喜欢的饮料">
+      <panda-option value="可乐">可乐</panda-option>
+      <panda-option value="咖啡">咖啡</panda-option>
+      <panda-option value="乌龙茶">乌龙茶</panda-option>
+    </panda-select>
     <!-- code -->
     <!-- <pre>
       <code class="html">
@@ -17,29 +17,29 @@
       </code>
     </pre> -->
     <h3>禁用</h3>
-    <i-select v-model="selected" placeholder="最喜欢的饮料" disabled>
-      <i-option value="可乐">可乐</i-option>
-      <i-option value="咖啡">咖啡</i-option>
-      <i-option value="乌龙茶">乌龙茶</i-option>
-    </i-select>
+    <panda-select v-model="selected" placeholder="最喜欢的饮料" disabled>
+      <panda-option value="可乐">可乐</panda-option>
+      <panda-option value="咖啡">咖啡</panda-option>
+      <panda-option value="乌龙茶">乌龙茶</panda-option>
+    </panda-select>
     <h3>可清空</h3>
-    <i-select v-model="selected" placeholder="最喜欢的饮料" clearable>
-      <i-option value="可乐">可乐</i-option>
-      <i-option value="咖啡">咖啡</i-option>
-      <i-option value="乌龙茶">乌龙茶</i-option>
-    </i-select>
+    <panda-select v-model="selected" placeholder="最喜欢的饮料" clearable>
+      <panda-option value="可乐">可乐</panda-option>
+      <panda-option value="咖啡">咖啡</panda-option>
+      <panda-option value="乌龙茶">乌龙茶</panda-option>
+    </panda-select>
     <h3>可搜索</h3>
-    <i-select v-model="selected" placeholder="最喜欢的饮料" searchable>
-      <i-option value="可乐">可乐</i-option>
-      <i-option value="咖啡">咖啡</i-option>
-      <i-option value="乌龙茶">乌龙茶</i-option>
-    </i-select>
+    <panda-select v-model="selected" placeholder="最喜欢的饮料" searchable>
+      <panda-option value="可乐">可乐</panda-option>
+      <panda-option value="咖啡">咖啡</panda-option>
+      <panda-option value="乌龙茶">乌龙茶</panda-option>
+    </panda-select>
     <h3>多选</h3>
-    <i-select v-model="multiSelected" placeholder="最喜欢的饮料" multiple>
-      <i-option value="可乐">可乐</i-option>
-      <i-option value="咖啡">咖啡</i-option>
-      <i-option value="乌龙茶">乌龙茶</i-option>
-    </i-select>
+    <panda-select v-model="multiSelected" placeholder="最喜欢的饮料" multiple>
+      <panda-option value="可乐">可乐</panda-option>
+      <panda-option value="咖啡">咖啡</panda-option>
+      <panda-option value="乌龙茶">乌龙茶</panda-option>
+    </panda-select>
   </div>
 </template>
 

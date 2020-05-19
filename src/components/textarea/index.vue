@@ -4,7 +4,7 @@
 
 <script>
   export default {
-    name: 'Textarea',
+    name: 'panda-textarea',
     props: {
       value: String,
       disabled: {

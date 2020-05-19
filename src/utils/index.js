@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 export function debounce (fn, t) {
   const timeout = t || 200;
   let timeoutIns;
@@ -24,6 +26,8 @@ export function on (el, event, callback) {
 export function off (el, event, callback) {
   el.removeEventListener(event, callback);
 }
+
+export const isServer = Vue.prototype.$isServer;
 
 export default {
   debounce,

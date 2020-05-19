@@ -2,60 +2,60 @@
   <div id="Table">
     <h2>Table 表格</h2>
     <h3>1. 默认表格</h3>
-    <Table :columns="columns" :data="data"></Table>
+    <panda-table :columns="columns" :data="data"></panda-table>
     <h3>2. 带边框 border</h3>
-    <Table :columns="columns" :data="data" border></Table>
+    <panda-table :columns="columns" :data="data" border></panda-table>
     <h3>3. 斑马纹 stripe</h3>
-    <Table :columns="columns" :data="data" stripe></Table>
+    <panda-table :columns="columns" :data="data" stripe></panda-table>
     <h3>4. 对齐方式 align="left | center | right" 默认居中</h3>
     <h5>左对齐</h5>
-    <Table :columns="columns" :data="data" align="left"></Table>
+    <panda-table :columns="columns" :data="data" align="left"></panda-table>
     <h5>居中对齐</h5>
-    <Table :columns="columns" :data="data" align="center"></Table>
+    <panda-table :columns="columns" :data="data" align="center"></panda-table>
     <h5>右对齐</h5>
-    <Table :columns="columns" :data="data" align="right"></Table>
+    <panda-table :columns="columns" :data="data" align="right"></panda-table>
     <h3>5. 设置高度 固定表头</h3>
     <h4>height(300px)</h4>
-    <Table :columns="columns" :data="hugeData(100)" height="300px" border></Table>
+    <panda-table :columns="columns" :data="hugeData(100)" height="300px" border></panda-table>
     <h4>max-height(500px)</h4>
-    <Table :columns="columns" :data="hugeData(300)" max-height="500px"></Table>
+    <panda-table :columns="columns" :data="hugeData(300)" max-height="500px"></panda-table>
     <h3>6. 大小 size="normal | large | small | mini"</h3>
     <h4>mini</h4>
-    <Table :columns="columns" :data="data" size="mini"></Table>
+    <panda-table :columns="columns" :data="data" size="mini"></panda-table>
     <h4>small</h4>
-    <Table :columns="columns" :data="data" size="small"></Table>
+    <panda-table :columns="columns" :data="data" size="small"></panda-table>
     <h4>normal</h4>
-    <Table :columns="columns" :data="data" size="normal"></Table>
+    <panda-table :columns="columns" :data="data" size="normal"></panda-table>
     <h4>large</h4>
-    <Table :columns="columns" :data="data" size="large"></Table>
+    <panda-table :columns="columns" :data="data" size="large"></panda-table>
     <h3>7. 加载中 loading</h3>
     <h4>默认</h4>
-    <Table :columns="columns" :data="data" stripe loading></Table>
+    <panda-table :columns="columns" :data="data" stripe loading></panda-table>
     <h4>自定义 loading slot</h4>
-    <Table :columns="columns" :data="data" stripe loading>
+    <panda-table :columns="columns" :data="data" stripe loading>
       <div slot="loading" style="text-align: center; padding-top: 70px;">加载中...</div>
-    </Table>
+    </panda-table>
     <h3>8. 可选择 selectable</h3>
-    <Table :columns="columns" :data="data" stripe selectable></Table>
+    <panda-table :columns="columns" :data="data" stripe selectable @select="onSelect" @select-all="onSelectAll"></panda-table>
     <h3>9. 隐藏表头 hide-header</h3>
-    <Table :columns="columns" :data="data" stripe hide-header></Table>
+    <panda-table :columns="columns" :data="data" stripe hide-header></panda-table>
     <h3>10. 超出外层宽度</h3>
     <h4>x 轴超出</h4>
-    <Table :columns="widthColumns" :data="lessData" height="300px" stripe border></Table>
+    <panda-table :columns="widthColumns" :data="lessData" height="300px" stripe border></panda-table>
     <h4>x, y 轴超出</h4>
-    <Table :columns="widthColumns" :data="moreData" height="300px" stripe border></Table>
+    <panda-table :columns="widthColumns" :data="moreData" height="300px" stripe border></panda-table>
     <h3>11. 固定列</h3>
     <h4>左侧单列固定</h4>
-    <Table :columns="leftFixedOneColumns" :data="moreData" height="300px" stripe border></Table>
+    <panda-table :columns="leftFixedOneColumns" :data="moreData" height="300px" stripe border></panda-table>
     <h4>左侧多列固定</h4>
-    <Table :columns="leftFixedColumns" :data="moreData" height="300px" stripe border></Table>
+    <panda-table :columns="leftFixedColumns" :data="moreData" height="300px" stripe border></panda-table>
     <h4>左右侧固定</h4>
-    <Table :columns="fixedColumns" :data="moreData" height="300px" stripe border></Table>
+    <panda-table :columns="fixedColumns" :data="moreData" height="300px" stripe border></panda-table>
     <h3>12. 虚拟表格</h3>
     <h4>数据量：{{ vData.length }}</h4>
-    <Table :columns="columns" :data="vData" height="500px" border virtual></Table>
+    <panda-table :columns="columns" :data="vData" height="500px" border virtual></panda-table>
     <!-- <h4>左右侧固定的虚拟表格</h4> -->
-    <!-- <Table :columns="fixedColumns" :data="hugeData(50)" height="300px" stripe border virtual></Table> -->
+    <!-- <panda-table :columns="fixedColumns" :data="hugeData(50)" height="300px" stripe border virtual></panda-table> -->
   </div>
 </template>
 
@@ -68,10 +68,16 @@
           {
             title: '姓名',
             key: 'name',
+            /* render (h, params) {
+              return h('span', {}, '>>> ' + params.row[params.column.key]);
+            } */
           },
           {
             title: '年龄',
             key: 'age',
+            /* render (h, params) {
+              return <span>This is JSX</span>;
+            } */
           },
           {
             title: '学历',
@@ -217,6 +223,12 @@
         console.log('==== 结束模拟数据', endTime, data.length, '条数据', '花了 ', (endTime - startTime) / 1000, 's');
         return data;
       },
+      onSelect (row, selected, selection) {
+        console.log('select', row, selected, selection);
+      },
+      onSelectAll (selected) {
+        console.log('select-all', selected);
+      }
     },
   };
 </script>

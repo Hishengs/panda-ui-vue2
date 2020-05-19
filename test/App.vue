@@ -68,6 +68,8 @@
   import Divider from './components/divider.vue';
   import Message from './components/message.vue';
   import Tooltip from './components/tooltip.vue';
+  import Popover from './components/popover.vue';
+  import Tabs from './components/tabs.vue';
 
   export default {
     name: 'app',
@@ -97,6 +99,8 @@
       Divider,
       Message,
       Tooltip,
+      Popover,
+      Tabs,
     },
     data () {
       return {
@@ -113,7 +117,7 @@
           { id: 'NumberInput', name: 'NumberInput（数字输入框）' },
           { id: 'Select', name: 'Select（下拉框）' },
           { id: 'Textarea', name: 'Textarea（文本输入框）' },
-          { id: 'Radio', name: 'Radiobox（单选）' },
+          { id: 'Radio', name: 'Radio（单选）' },
           { id: 'Checkbox', name: 'Checkbox（多选）' },
           { id: 'iSwitch', name: 'Switch（开关）' },
           { id: 'Slider', name: 'Slider（滑块）' },
@@ -126,7 +130,9 @@
           { id: 'Collapse', name: 'Collapse（折叠面板）' },
           { id: 'Divider', name: 'Divider（分割线）' },
           { id: 'Message', name: 'Message（消息提示）' },
-          { id: 'Tooltip', name: 'Tooltip（文字提示）' }
+          { id: 'Tooltip', name: 'Tooltip（文字提示）' },
+          { id: 'Popover', name: 'Popover（气泡卡片）' },
+          { id: 'Tabs', name: 'Tabs（标签页）' }
         ],
       };
     },

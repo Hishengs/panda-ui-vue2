@@ -30,6 +30,8 @@
           :virtual="virtual"
           :virtual-options="virtualOptions"
           :style="{ marginRight: `${-scrollBarWidth-1}px` }"
+          @select="onSelect"
+          @select-all="onSelectAll"
         ></common-table>
       </div>
       <!-- 中 -->
@@ -61,6 +63,8 @@
           }"
           :virtual="virtual"
           :virtual-options="virtualOptions"
+          @select="onSelect"
+          @select-all="onSelectAll"
         ></common-table>
       </div>
       <!-- 右 -->
@@ -95,9 +99,8 @@
 <script>
   import commonTable from './common-table.vue';
   import Icon from '../../icon';
-  import { getComputedStyle/* , addClass, removeClass */ } from '../../../utils/dom.js';
+  import { getComputedStyle, getScrollBarWidth } from '../../../utils/dom.js';
   import { getMaxOf, debounce } from '../../../utils/index.js';
-  import { getScrollBarWidth } from '../../../utils/dom.js';
 
   export default {
     name: 'panda-table',
@@ -391,6 +394,12 @@
             }
           }
         });
+      },
+      onSelect (row, selected, selection) {
+        this.$emit('select', row, selected, selection);
+      },
+      onSelectAll (selected) {
+        this.$emit('select-all', selected);
       }
     },
   };
