@@ -61,3 +61,61 @@
 - [ ] Empty        （空状态提示）
 - [ ] Calendar     （日历）
 - [ ] Loading      （加载提示）
+
+## UI 框架组件对比
+
+组件 | Ant Design | ElementUI | ViewUI | PandaUI
+--- | --- | --- | --- | ---
+Button | ✔ | ✔ | ✔ | ✔
+Radio/RadioGroup | ✔ | ✔ | ✔ | ✔
+Checkbox/CheckboxGroup | ✔ | ✔ | ✔ | ✔
+Switch | ✔ | ✔ | ✔ | ✔
+Input | ✔ | ✔ | ✔ | ✔
+Select | ✔ | ✔ | ✔ | ✔
+InputNumber/Counter | ✔ | ✔ | ✔ | ✔
+Icon | ✔ | ✔ | ✔ | ✔
+Divider | ✔ | ✔ | ✔ | ✔
+Layout | ✔ | ✔ | ✔ | ✔
+Grid | ✔ | ✘ | ✔ | ✔
+Affix | ✔ | ✘ | ✔ | ✘
+Breadcrumb | ✔ | ✔ | ✔ | ✔
+Dropdown | ✔ | ✔ | ✔ | ✔
+Menu | ✔ | ✔ | ✔ | ✘
+Pagination | ✔ | ✔ | ✔ | ✔
+Steps | ✔ | ✔ | ✔ | ✔
+AutoComplete | ✔ | ✘ | ✔ | ✘
+Cascader | ✔ | ✔ | ✔ | ✔
+DatePicker | ✔ | ✔ | ✔ | ✔
+TimePicker | ✔ | ✔ | ✔ | ✔
+DateTimePicker | ✔ | ✔ | ✔ | ✔
+Form/FormItem | ✔ | ✔ | ✔ | ✔
+Rate | ✔ | ✔ | ✔ | ✘
+Slider | ✔ | ✔ | ✔ | ✔
+Tree | ✔ | ✔ | ✔ | ✔
+TreeSelect | ✔ | ✘ | ✘ | ✘
+Transfer | ✔ | ✔ | ✔ | ✘
+Upload | ✔ | ✔ | ✔ | ✘
+Avatar | ✔ | ✔ | ✔ | ✘
+Badge | ✔ | ✔ | ✔ | ✔
+Collapse | ✔ | ✔ | ✔ | ✔
+Carousel | ✔ | ✔ | ✔ | ✔
+Card | ✔ | ✔ | ✔ | ✘
+Calendar | ✔ | ✔ | ✘ | ✘
+List | ✔ | ✔ | ✔ | ✘
+Popover/Poptip | ✔ | ✔ | ✔ | ✔
+Tooltip | ✔ | ✔ | ✔ | ✔
+Timeline | ✔ | ✔ | ✔ | ✘
+Tag | ✔ | ✔ | ✔ | ✔
+Tabs | ✔ | ✔ | ✔ | ✔
+Table | ✔ | ✔ | ✔ | ✔
+Alert | ✔ | ✔ | ✔ | ✔
+Drawer | ✔ | ✔ | ✔ | ✔
+Modal/Dialog | ✔ | ✔ | ✔ | ✔
+Message | ✔ | ✔ | ✔ | ✔
+Notification | ✔ | ✔ | ✔ | ✔
+Progress | ✔ | ✔ | ✔ | ✔
+Loading/Spin | ✔ | ✔ | ✔ | ✔
+Skeleton | ✔ | ✘ | ✘ | ✘
+Backtop | ✔ | ✔ | ✔ | ✘
+Link | ✘ | ✔ | ✔ | ✘
+InfiniteScroll/LoadMore | ✘ | ✔ | ✔ | ✘

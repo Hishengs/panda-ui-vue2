@@ -1,13 +1,14 @@
 <template>
-  <div class="panda-tooltip" ref="tooltip">
+  <div class="panda-tooltip-wrapper" ref="wrapper" style="display: inline-block;">
     <slot></slot>
-    <div class="panda-tooltip-content" ref="content" v-show="show" :style="cStyle">
-      <slot name="content">{{ content }}</slot>
-    </div>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue';
+  import Tooltip from './tooltip.vue';
+  import { on, off } from '../../utils/index.js';
+
   export default {
     name: 'panda-tooltip',
     props: {
@@ -31,6 +32,7 @@
     data () {
       return {
         show: false,
+        tooltip: null,
         contentHeight: 40,
         contentWidth: 100,
         styleSet: false,
@@ -95,34 +97,37 @@
         }[this.placement];
       }
     },
+    created () {
+      this.createTooltip();
+    },
     mounted () {
-      // set style
-      this.$refs.tooltip.addEventListener('mouseenter', (/* e */) => {
-        this.show = true;
-        if (!this.styleSet) {
-          this.$nextTick(() => {
-            this.setStyle();
-          });
-        }
-      });
-      this.$refs.tooltip.addEventListener('mouseleave', (/* e */) => {
-        this.show = false;
-      });
+      on(this.$refs.wrapper, 'mouseenter', this.onShow);
+      on(this.$refs.wrapper, 'mouseleave', this.onHide);
+    },
+    beforeDestroy () {
+      off(this.$refs.wrapper, 'mouseenter', this.onShow);
+      off(this.$refs.wrapper, 'mouseleave', this.onHide);
     },
     methods: {
-      setStyle () {
-        if (this.styleSet) return;
-        this.styleSet = true;
-        /* global window */
-        const contentStyle = window.getComputedStyle(this.$refs.content);
-        if (contentStyle) {
-          const { height, borderTopWidth, paddingTop, width, borderLeftWidth, paddingLeft } = contentStyle;
-          console.log({ height, borderTopWidth, paddingTop, width, borderLeftWidth, paddingLeft });
-          this.contentHeight = parseFloat(height) + parseFloat(borderTopWidth) + parseFloat(paddingTop) + 10;
-          this.contentWidth = parseFloat(width) + parseFloat(borderLeftWidth) + parseFloat(paddingLeft);
-        }
-        console.log('>>> style set', this);
-      }
+      createTooltip () {
+        if (this.tooltip) return;
+        this.tooltip = new (Vue.extend(Tooltip))({
+          propsData: {
+            content: this.content,
+            value: this.show,
+          }
+        }).$mount();
+        /* global document */
+        document.body.appendChild(this.tooltip.$el);
+      },
+      onShow () {
+        this.show = true;
+        console.log('>> onShow', this.show, this.tooltip);
+      },
+      onHide () {
+        this.show = false;
+        console.log('>> onHide', this.show);
+      },
     },
   };
 </script>
