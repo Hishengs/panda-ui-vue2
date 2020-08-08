@@ -24,34 +24,37 @@
 
 
 ## 反馈类
-- [ ] Message      （信息）
+- [x] Message      （信息）
 - [x] Notice       （通知）
 - [x] Modal        （模态框）
 - [x] Alert        （提示）
 - [ ] Progress     （进度条）
+- [ ] Loading      （加载提示）
+- [x] BottomSheet  （底部弹出）
+- [x] Announcement （公告通知）
 
 
 ## 导航类
-- [ ] Menu         （菜单）
-- [ ] Dropdown     （下拉菜单）
-- [ ] Tabs         （标签页）
-- [ ] Pagination   （分页）
+- [x] Dropdown     （下拉菜单）
+- [x] Tabs         （标签页）
+- [x] Pagination   （分页）
+- [ ] BreadCrumb   （面包屑）
 
 
 ## 布局展示类
-- [ ] Grid         （网格）
+- [x] Grid         （网格）
 - [ ] Panel        （面板）
 - [x] Collapse     （折叠面板）
 - [ ] Carousel     （走马灯）
 - [ ] Timeline     （时间轴）
-- [ ] Popover      （弹出层）
-- [ ] Tooltip      （气泡提示）
+- [x] Popover      （弹出层）
+- [x] Tooltip      （气泡提示）
 - [ ] Tree         （树形控件）
 - [x] Table        （表格）
 - [x] Divider      （分割线）
+- [ ] Drawer       （抽屉）
 
 ## 待定
-- [ ] BreadCumb    （面包屑）
 - [ ] Steps        （步骤）
 - [ ] Rate         （星级评分）
 - [ ] TreeSelect   （树选择器）
@@ -60,7 +63,7 @@
 - [ ] Card         （卡片）
 - [ ] Empty        （空状态提示）
 - [ ] Calendar     （日历）
-- [ ] Loading      （加载提示）
+- [ ] Menu         （菜单）
 
 ## UI 框架组件对比
 
@@ -75,14 +78,14 @@ Select | ✔ | ✔ | ✔ | ✔
 InputNumber/Counter | ✔ | ✔ | ✔ | ✔
 Icon | ✔ | ✔ | ✔ | ✔
 Divider | ✔ | ✔ | ✔ | ✔
-Layout | ✔ | ✔ | ✔ | ✔
+Layout | ✔ | ✔ | ✔ | ✘
 Grid | ✔ | ✘ | ✔ | ✔
 Affix | ✔ | ✘ | ✔ | ✘
 Breadcrumb | ✔ | ✔ | ✔ | ✔
 Dropdown | ✔ | ✔ | ✔ | ✔
 Menu | ✔ | ✔ | ✔ | ✘
 Pagination | ✔ | ✔ | ✔ | ✔
-Steps | ✔ | ✔ | ✔ | ✔
+Steps | ✔ | ✔ | ✔ | ✘
 AutoComplete | ✔ | ✘ | ✔ | ✘
 Cascader | ✔ | ✔ | ✔ | ✔
 DatePicker | ✔ | ✔ | ✔ | ✔
@@ -94,7 +97,7 @@ Slider | ✔ | ✔ | ✔ | ✔
 Tree | ✔ | ✔ | ✔ | ✔
 TreeSelect | ✔ | ✘ | ✘ | ✘
 Transfer | ✔ | ✔ | ✔ | ✘
-Upload | ✔ | ✔ | ✔ | ✘
+Upload | ✔ | ✔ | ✔ | ✔
 Avatar | ✔ | ✔ | ✔ | ✘
 Badge | ✔ | ✔ | ✔ | ✔
 Collapse | ✔ | ✔ | ✔ | ✔
@@ -104,7 +107,7 @@ Calendar | ✔ | ✔ | ✘ | ✘
 List | ✔ | ✔ | ✔ | ✘
 Popover/Poptip | ✔ | ✔ | ✔ | ✔
 Tooltip | ✔ | ✔ | ✔ | ✔
-Timeline | ✔ | ✔ | ✔ | ✘
+Timeline | ✔ | ✔ | ✔ | ✔
 Tag | ✔ | ✔ | ✔ | ✔
 Tabs | ✔ | ✔ | ✔ | ✔
 Table | ✔ | ✔ | ✔ | ✔
@@ -112,7 +115,7 @@ Alert | ✔ | ✔ | ✔ | ✔
 Drawer | ✔ | ✔ | ✔ | ✔
 Modal/Dialog | ✔ | ✔ | ✔ | ✔
 Message | ✔ | ✔ | ✔ | ✔
-Notification | ✔ | ✔ | ✔ | ✔
+Notification/Notice | ✔ | ✔ | ✔ | ✔
 Progress | ✔ | ✔ | ✔ | ✔
 Loading/Spin | ✔ | ✔ | ✔ | ✔
 Skeleton | ✔ | ✘ | ✘ | ✘

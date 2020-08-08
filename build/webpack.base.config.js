@@ -18,7 +18,10 @@ module.exports = {
     alias: {
       '@': resolve('./src')
     },
-    modules: ['node_modules']
+    modules: ['node_modules'],
+  },
+  resolveLoader: {
+    modules: ['node_modules', './build/'],
   },
   module: {
     rules: [
@@ -67,12 +70,9 @@ module.exports = {
             loader: 'vue-loader'
           },
           {
-            loader: 'vue-markdown-loader/lib/markdown-compiler',
-            options: {
-              raw: true
-            }
+            loader: 'vue-markdown-loader'
           }
-        ]
+        ] 
       }
     ]
   },

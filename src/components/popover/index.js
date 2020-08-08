@@ -1,4 +1,4 @@
-import { default as Popover } from './index.vue';
+import Popover from './index.vue';
 
 Popover.install = function (Vue) {
   Vue.component(Popover.name, Popover);

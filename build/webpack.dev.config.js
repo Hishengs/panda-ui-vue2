@@ -7,13 +7,13 @@ const baseConfig = require('./webpack.base.config.js');
 
 const resolve = p => path.resolve(process.cwd(), p);
 
-const template = resolve('./test/index.html');
+const template = resolve('./doc/index.html');
 
 const devConfig = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
-    app: resolve('./test/index.js')
+    app: resolve('./doc/index.js')
   },
   output: {
     path: resolve('./dev-dist'),

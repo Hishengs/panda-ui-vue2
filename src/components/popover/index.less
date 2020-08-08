@@ -1,27 +1,66 @@
+@import '../style/val.less';
+
 @popover-prefix: ~"panda-popover";
 @popover-arrow-width: 7px;
-@popover-arrow-bg: white;
-@popover-arrow-border-color: #dedede;
+@popover-arrow-border-color: #eee;
+@popover-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 -1px 3px 0 rgba(0, 0, 0, 0.08);
 
 .@{popover-prefix} {
   display: inline-block;
   &-popper {
-    color: #333;
-    background-color: rgba(255, 255, 255, .95);
-    border-radius: 3px;
-    box-shadow: 0 1px 5px rgba(0,0,0,.15);
+    color: @primary-text-color;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: @popover-shadow;
     z-index: 9999;
-    font-size: 14px;
+    font-size: 12px;
     &-inner {
       position: relative;
+      height: 100%;
+      max-height: 100%;
+      padding: 12px 0;
     }
-    &-inner &-arrow {
+    &-main {
+      padding: 0 16px;
+      max-height: 100%;
+      overflow-y: auto;
+      /*定义滚动条高宽及背景
+      高宽分别对应横竖滚动条的尺寸*/
+      &::-webkit-scrollbar
+      {
+        width: 8px;
+        height: 0;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track
+      {
+        border-radius: 4px;
+        background-color: transparent;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+        border-radius: 4px;
+        border: 2px solid transparent;
+        box-shadow: 4px 0 0 #B2B2B2 inset;
+        visibility: hidden;
+      }
+      &:hover {
+        &::-webkit-scrollbar-thumb {
+          visibility: initial;
+        }
+      }
+    }
+    &-arrow {
       display: block;
       width: 0;
       height: 0;
       position: absolute;
       content: " ";
       border: @popover-arrow-width solid transparent;
+      color: white;
       &::after {
         display: block;
         width: 0;
@@ -30,51 +69,91 @@
         border: @popover-arrow-width solid transparent;
       }
     }
-    &-title {
-      border-bottom: 1px solid #eee;
-      // font-size: 16px;
-      font-weight: 600;
+    &-close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      box-sizing: content-box;
+      height: 16px;
+      width: 16px;
+      padding: 4px;
+      cursor: pointer;
+      z-index: 1;
     }
     &-title, &-content {
-      padding: 6px 15px;
+      width: 100%;
+    }
+    &-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: normal;
+      color: currentColor;
+      margin-bottom: 6px;
+    }
+    &-content {
+      line-height: 1.5;
+    }
+  }
+  &-closable {
+    > .@{popover-prefix}-popper > .@{popover-prefix}-popper-inner {
+      > .@{popover-prefix}-popper-main {
+        > .@{popover-prefix}-popper-title, > .@{popover-prefix}-popper-content {
+          // 16 + 12
+          padding-right: 28px;
+        }
+      }
+    }
+  }
+  // TODO 默认的 0.45s 太久，等全局默认的时间改掉再移除此代码
+  /* .klk-fade-transition-enter-active,
+  .klk-fade-transition-leave-active {
+    transition: opacity .2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  } */
+}
+
+// dark
+.@{popover-prefix}-dark {
+  .@{popover-prefix}-popper {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.85);
+    &-arrow {
+      color: #333333;
+    }
+    &-main {
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+        box-shadow: 4px 0 0 #666666 inset;
+      }
     }
   }
 }
 
 // ============= placement ===============
-.@{popover-prefix}[data-placement^="top"] {
-  .@{popover-prefix}-popper-arrow {
+.@{popover-prefix}-popper[data-popper-placement^="top"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
     left: 50%;
     margin-left: -@popover-arrow-width;
     bottom: -@popover-arrow-width;
     border-bottom-width: 0;
     border-top-width: @popover-arrow-width;
     border-top-color: @popover-arrow-border-color;
+    border-bottom-right-radius: 2px;
     &::after {
       margin-left: -@popover-arrow-width;
       margin-top: -(@popover-arrow-width + 1);
       border-bottom-width: 0;
       border-top-width: @popover-arrow-width;
-      border-top-color: @popover-arrow-bg;
+      border-top-color: currentColor;
+      border-bottom-right-radius: 2px;
     }
   }
 }
-.@{popover-prefix}[data-placement^="top-start"],
-.@{popover-prefix}[data-placement^="bottom-start"] {
-  .@{popover-prefix}-popper-arrow {
-    left: 20%;
-  }
-}
-.@{popover-prefix}[data-placement^="top-end"],
-.@{popover-prefix}[data-placement^="bottom-end"] {
-  .@{popover-prefix}-popper-arrow {
-    left: inherit;
-    right: 20%;
-  }
-}
 
-.@{popover-prefix}[data-placement^="bottom"] {
-  .@{popover-prefix}-popper-arrow {
+
+.@{popover-prefix}-popper[data-popper-placement^="bottom"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
     left: 50%;
     margin-left: -@popover-arrow-width;
     top: -@popover-arrow-width;
@@ -86,13 +165,13 @@
       margin-top: 1px;
       border-top-width: 0;
       border-bottom-width: @popover-arrow-width;
-      border-bottom-color: @popover-arrow-bg;
+      border-bottom-color: currentColor;
     }
   }
 }
 
-.@{popover-prefix}[data-placement^="left"] {
-  .@{popover-prefix}-popper-arrow {
+.@{popover-prefix}-popper[data-popper-placement^="left"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
     top: 50%;
     margin-top: -@popover-arrow-width;
     right: -@popover-arrow-width;
@@ -104,26 +183,13 @@
       margin-top: -@popover-arrow-width;
       border-right-width: 0;
       border-left-width: @popover-arrow-width;
-      border-left-color: @popover-arrow-bg;
+      border-left-color: currentColor;
     }
   }
 }
-.@{popover-prefix}[data-placement^="left-start"],
-.@{popover-prefix}[data-placement^="right-start"] {
-  .@{popover-prefix}-popper-arrow {
-    top: 20%;
-  }
-}
-.@{popover-prefix}[data-placement^="left-end"],
-.@{popover-prefix}[data-placement^="right-end"] {
-  .@{popover-prefix}-popper-arrow {
-    top: inherit;
-    bottom: 20%;
-  }
-}
 
-.@{popover-prefix}[data-placement^="right"] {
-  .@{popover-prefix}-popper-arrow {
+.@{popover-prefix}-popper[data-popper-placement^="right"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
     top: 50%;
     margin-top: -@popover-arrow-width;
     left: -@popover-arrow-width;
@@ -135,7 +201,39 @@
       margin-top: -@popover-arrow-width;
       border-left-width: 0;
       border-right-width: @popover-arrow-width;
-      border-right-color: @popover-arrow-bg;
+      border-right-color: currentColor;
     }
+  }
+}
+
+.@{popover-prefix}-popper[data-popper-placement^="top-start"],
+.@{popover-prefix}-popper[data-popper-placement^="bottom-start"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
+    // left: 20%;
+    left: 16px;
+  }
+}
+.@{popover-prefix}-popper[data-popper-placement^="top-end"],
+.@{popover-prefix}-popper[data-popper-placement^="bottom-end"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
+    left: inherit;
+    // right: 20%;
+    right: 16px - @popover-arrow-width;
+  }
+}
+
+.@{popover-prefix}-popper[data-popper-placement^="left-start"],
+.@{popover-prefix}-popper[data-popper-placement^="right-start"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
+    // top: 20%;
+    top: 12px;
+  }
+}
+.@{popover-prefix}-popper[data-popper-placement^="left-end"],
+.@{popover-prefix}-popper[data-popper-placement^="right-end"] {
+  > .@{popover-prefix}-popper-inner > .@{popover-prefix}-popper-arrow {
+    top: inherit;
+    // bottom: 20%;
+    bottom: 12px - @popover-arrow-width;
   }
 }

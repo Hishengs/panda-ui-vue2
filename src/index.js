@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Icon from './components/icon/index.js';
 import Button from './components/button/index.js';
+import BottomSheet from './components/bottom-sheet/index.js';
 import Tag from './components/tag/index.js';
 import Badge from './components/badge/index.js';
 import Alert from './components/alert/index.js';
@@ -10,7 +11,7 @@ import { Select, Option } from './components/select/index.js';
 import Textarea from './components/textarea/index.js';
 import Radio from './components/radio/index.js';
 import Checkbox from './components/checkbox/index.js';
-import CheckboxGroup from './components/checkbox-group/index.js';
+// import CheckboxGroup from './components/checkbox-group/index.js';
 import Switch from './components/switch/index.js';
 import Slider from './components/slider/index.js';
 import TagInput from './components/tag-input/index.js';
@@ -24,10 +25,15 @@ import Message from './components/message/index.js';
 import Tooltip from './components/tooltip/index.js';
 import Popover from './components/popover/index.js';
 import Tabs from './components/tabs/index.js';
+import Carousel from './components/carousel/index.js';
+import Grid from './components/grid/index.js';
+import Pagination from './components/pagination/index.js';
+import Announcement from './components/announcement/index.js';
 
 const components = {
   Icon,
   Button,
+  BottomSheet,
   Tag,
   Badge,
   Alert,
@@ -38,7 +44,7 @@ const components = {
   Textarea,
   Radio,
   Checkbox,
-  CheckboxGroup,
+  // CheckboxGroup,
   iSwitch: Switch,
   Slider,
   TagInput,
@@ -51,6 +57,10 @@ const components = {
   Tooltip,
   Popover,
   Tabs,
+  Carousel,
+  Grid,
+  Pagination,
+  Announcement,
 };
 
 Vue.use(Notice);

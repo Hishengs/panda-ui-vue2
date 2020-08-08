@@ -1,46 +1,73 @@
 <template>
   <div
-    class="panda-popover"
     ref="popover"
+    v-click-outside="e => onClickOutside(e)"
     :class="cClass"
     :data-placement="placement"
-    v-click-outside="onClickOutside"
-    @mouseenter="onMouseenter"
-    @mouseleave="onMouseleave"
   >
     <div
-      class="panda-popover-reference"
       ref="reference"
+      class="panda-popover-reference"
       @click="onClick"
+      @mouseenter="onMouseenter"
+      @mouseleave="onMouseleave"
       @mousedown="onFocus(false)"
       @mouseup="onBlur(false)"
     >
       <slot></slot>
     </div>
-    <div class="panda-popover-popper" ref="popper" v-show="showPopper">
-      <div class="panda-popover-popper-inner">
-        <div class="panda-popover-popper-arrow"></div>
-        <div class="panda-popover-popper-title" v-if="title">
-          <slot name="title">{{ title }}</slot>
-        </div>
-        <div class="panda-popover-popper-content">
-          <slot name="content">{{ content }}</slot>
+    <!-- <panda-fade-transition> -->
+      <div
+        v-show="showPopper && (!!title || $slots.title || !!content || $slots.content)"
+        ref="popper"
+        class="panda-popover-popper"
+        :style="{
+          zIndex: popperZIndex,
+        }"
+        @click.stop="() => {}"
+        @mouseenter="onMouseenter"
+        @mouseleave="onMouseleave"
+      >
+        <div class="panda-popover-popper-inner">
+          <div v-show="arrow" class="panda-popover-popper-arrow"></div>
+          <Icon v-if="closable" class="panda-popover-popper-close-btn" name="x" @click.native="close"></Icon>
+          <div class="panda-popover-popper-main" :style="mainStyle">
+            <div v-if="title || $slots.title" class="panda-popover-popper-title">
+              <slot name="title">{{ title }}</slot>
+            </div>
+            <div class="panda-popover-popper-content">
+              <slot name="content">{{ content }}</slot>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    <!-- </panda-fade-transition> -->
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import { createPopper } from '@popperjs/core';
-  import clickOutside from '../../utils/directives/click-outside.js';
+  import { isServer } from '../../utils';
+  import clickOutside from '../../directives/v-click-outside.js';
   import { on, off } from '../../utils/dom.js';
+  import Icon from '../icon';
+  // import Helpers from '../Helpers';
 
-  const isServer = Vue.prototype.$isServer;
+  // Vue.use(Helpers);
+
+  let index = 1024;
+
+  function getIndex () {
+    return ++index;
+  }
 
   export default {
     name: 'panda-popover',
+    components: {
+      Icon,
+    },
+    directives: { clickOutside },
     props: {
       value: {
         type: Boolean,
@@ -69,7 +96,7 @@
       trigger: {
         type: String,
         validator (val) {
-          return ['hover', 'click', 'focus'].includes(val);
+          return ['hover', 'click', 'focus', 'none'].includes(val);
         },
         default: 'hover'
       },
@@ -80,20 +107,51 @@
       popperEl: Object,
       referenceEl: Object,
       disabled: Boolean,
+      arrow: {
+        type: Boolean,
+        default: true
+      },
+      closable: Boolean,
+      width: Number,
+      maxWidth: {
+        type: Number,
+        default: 360,
+      },
+      height: Number,
+      maxHeight: {
+        type: Number,
+        default: 152,
+      },
+      zIndex: Number,
+      dark: Boolean,
+      appendToBody: Boolean,
     },
-    directives: { clickOutside },
     data () {
       return {
-        showPopper: false,
+        showPopper: this.value,
         popperIns: null,
         // for focus trigger
         inputEl: null,
+        popperZIndex: this.zIndex === undefined ? getIndex() : this.zIndex,
+        popperClicked: false,
       };
     },
     computed: {
       cClass () {
-        return {};
-      }
+        return {
+          'panda-popover': true,
+          'panda-popover-dark': this.dark,
+          'panda-popover-closable': this.closable,
+        };
+      },
+      mainStyle () {
+        return {
+          width: `${this.width}px`,
+          maxWidth: `${this.maxWidth}px`,
+          height: `${this.height - 24}px`,
+          maxHeight: `${this.maxHeight - 24}px`,
+        };
+      },
     },
     watch: {
       value: {
@@ -105,7 +163,7 @@
       },
       showPopper (show) {
         if (show) {
-          this.update();
+          this.updatePopper();
           this.$emit('show');
         } else {
           this.$emit('hide');
@@ -117,7 +175,7 @@
       this.initFocus();
     },
     updated (){
-      this.$nextTick(() => this.update());
+      this.$nextTick(() => this.updatePopper());
     },
     beforeDestroy () {
       if (this.inputEl) {
@@ -128,21 +186,27 @@
         this.popperIns.destroy();
         this.popperIns = null;
       }
+      if (this.appendToBody) {
+        const popperEl = this.getPopperEl();
+        if (popperEl && popperEl.parentNode === document.body) {
+          document.body.removeChild(popperEl);
+        }
+      }
     },
     methods: {
-      update () {
+      updatePopper () {
         if (isServer) return;
         if (!this.popperIns) {
           this.createPopper();
-        }
-        this.popperIns.update();
+        } else this.popperIns.update();
       },
       createPopper () {
         if (isServer) return;
         if (this.popperIns) return;
         const reference = this.referenceEl || this.$refs.reference;
-        const popper = this.popperEl || this.$refs.popper;
+        const popper = this.getPopperEl();
         if (!reference || !popper) return;
+        if (this.appendToBody) document.body.appendChild(popper);
         const options = {
           placement: this.placement,
           modifiers: [
@@ -154,12 +218,18 @@
                   return [0, this.offset];
                 },
               }
+            },
+            {
+              name: 'flip',
+              enabled: false,
+            },
+            {
+              name: 'preventOverflow',
+              enabled: false,
             }
           ],
-          strategy: 'fixed'
         };
         this.popperIns = createPopper(reference, popper, options);
-        // console.log('>>> createPopper', this.popperIns);
       },
       initFocus () {
         if (this.shouldResponse('focus')) {
@@ -174,6 +244,9 @@
           });
         }
       },
+      getPopperEl () {
+        return this.popperEl || this.$refs.popper;
+      },
       shouldResponse (trigger = '') {
         return !(isServer || this.disabled || this.trigger !== trigger);
       },
@@ -182,33 +255,49 @@
           this.showPopper = !this.showPopper;
         }
       },
-      onClickOutside () {
+      onClickOutside (e) {
+        if (this.appendToBody) {
+          const popperEl = this.getPopperEl();
+          if (e && (e.target === popperEl || popperEl.contains(e.target))) {
+            this.popperClicked = true;
+          } else this.popperClicked = false;
+        } else this.popperClicked = false;
+
         if (this.shouldResponse('click')) {
-          this.showPopper = false;
+          this.close();
         }
       },
       onMouseenter () {
         if (this.shouldResponse('hover')) {
-          this.showPopper = true;
+          this.open();
         }
       },
       onMouseleave () {
         if (this.shouldResponse('hover')) {
-          this.showPopper = false;
+          this.close();
         }
       },
       onFocus (fromInput = true) {
         if (this.inputEl && !fromInput) return;
         if (this.shouldResponse('focus')) {
-          this.showPopper = true;
+          this.open();
         }
       },
       onBlur (fromInput = true) {
         if (this.inputEl && !fromInput) return;
         if (this.shouldResponse('focus')) {
-          this.showPopper = false;
+          this.close();
         }
       },
+      open () {
+        this.showPopper = true;
+      },
+      close () {
+        if (this.appendToBody && this.popperClicked && ['click'].includes(this.trigger)) {
+          return;
+        }
+        this.showPopper = false;
+      }
     },
   };
 </script>

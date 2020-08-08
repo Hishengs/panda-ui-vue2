@@ -1,7 +1,8 @@
-import { default as Slider } from './index.vue';
+import './index.less';
+import Slider from './Slider.vue';
 
 Slider.install = function (Vue) {
   Vue.component(Slider.name, Slider);
-}
+};
 
 export default Slider;

@@ -1,0 +1,171 @@
+@import "../style/val.less";
+
+@prefix: 'pd-carousel';
+@ctrl-width: 44px;
+@indicator-size: 12px;
+@indicator-size-small: 6px;
+@z-index: 99;
+
+.@{prefix} {
+  position: relative;
+  margin: 0;
+  &-prev, &-next {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    width: @ctrl-width;
+    height: @ctrl-width;
+    margin-top: -(@ctrl-width/2);
+    color: #999;
+    background-color: transparent;
+    &-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: inherit;
+      background-color: white;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.2);
+      outline: none;
+      border: none;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+    &:hover {
+      color: #666;
+    }
+  }
+  &-prev {
+    left: 16px;
+  }
+  &-next {
+    right: 16px;
+  }
+  &-items-wrapper {
+    overflow: hidden;
+  }
+  &-items {
+    display: flex;
+    justify-items: flex-start;
+    transition: transform .45s ease-in-out;
+  }
+  &-swiping &-items {
+    transition: none !important;
+  }
+  &-items &-item {
+    width: 100%;
+    flex-shrink: 0;
+    z-index: @z-index - 1;
+    transition: transform .45s ease-in-out;
+    &:last-child {
+      margin-right: 0;
+    }
+    &-prev {
+      z-index: @z-index;
+    }
+    &-current {
+      z-index: @z-index + 2;
+    }
+    &-next {
+      z-index: @z-index + 1;
+    }
+    &-animating {
+      z-index: @z-index + 3;
+    }
+    &-unvisible {
+      visibility: hidden;
+    }
+  }
+  .@{prefix}-item-current.@{prefix}-item-animating {
+    z-index: @z-index + 4;
+  }
+  &-indicators {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 38px;
+    padding-bottom: 18px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+  }
+  &-indicators &-indicator {
+    position: relative;
+    box-sizing: content-box;
+    display: inline-block;
+    width: @indicator-size;
+    height: @indicator-size;
+    background-color: transparent;
+    padding: 6px;
+    cursor: pointer;
+    &::after {
+      transition: background-color .45s ease-in-out;
+      position: absolute;
+      display: inline-block;
+      content: '';
+      width: @indicator-size;
+      height: @indicator-size;
+      border-radius: @indicator-size/2;
+      background-color: rgba(255, 255, 255, 0.7);
+      top: @indicator-size/2;
+      left: @indicator-size/2;
+    }
+    &-active::after {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.@{prefix}-small {
+  .@{prefix}-indicators {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .@{prefix}-indicators .@{prefix}-indicator {
+    width: @indicator-size-small;
+    height: @indicator-size-small;
+    padding: 3px;
+    &::after {
+      width: @indicator-size-small;
+      height: @indicator-size-small;
+      border-radius: @indicator-size-small/2;
+    }
+  }
+}
+
+.@{prefix}-indicators-outside {
+  margin-bottom: 36px;
+  .@{prefix}-indicators {
+    bottom: -36px;
+    background: transparent;
+    padding: 0;
+  }
+  .@{prefix}-indicators .@{prefix}-indicator {
+    &::after {
+      background-color: #e0e0e0;
+    }
+    &-active::after {
+      background-color: @color-primary;
+    }
+  }
+}
+
+.@{prefix}-controllers-outside {
+  .@{prefix}-prev {
+    left: -(@ctrl-width/2);
+  }
+  .@{prefix}-next {
+    right: -(@ctrl-width/2);
+  }
+}
+
+.@{prefix}-swiping {
+  .@{prefix}-item-prev, .@{prefix}-item-next {
+    visibility: visible !important;
+  }
+}

@@ -1,0 +1,111 @@
+@import '../style/val.less';
+
+.panda-dropdown {
+  display: inline-block;
+  .panda-dropdown-reference {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .panda-dropdown-list {
+    background-color: white;
+    // max-height: 320px;
+    overflow-y: auto;
+    /*定义滚动条高宽及背景
+    高宽分别对应横竖滚动条的尺寸*/
+    &::-webkit-scrollbar
+    {
+      width: 5px;
+      height: 0;
+    }
+    /*定义滚动条轨道
+    内阴影+圆角*/
+    &::-webkit-scrollbar-track
+    {
+      border-radius: 2px;
+      background-color: transparent;
+    }
+    /*定义滑块
+    内阴影+圆角*/
+    &::-webkit-scrollbar-thumb
+    {
+      border-radius: 4px;
+      border-right: 1px solid transparent;
+      box-shadow: 4px 0 0 #B2B2B2 inset;
+      visibility: hidden;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        visibility: initial;
+      }
+    }
+  }
+  .panda-dropdown-item {
+    padding: 11px 20px;
+    font-size: 14px;
+    color: #333333;
+    border-bottom: 1px solid #eeeeee;
+    background-color: white;
+    line-height: 1.44;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    > span {
+      display: inline-block;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: #f5f5f5;
+    }
+    svg {
+      font-size: 16px;
+      vertical-align: text-bottom;
+    }
+    &-prepend, &-append {
+      flex-shrink: 0;
+    }
+    &-prepend {
+      margin-right: 12px;
+    }
+    &-append {
+      margin-left: 12px;
+    }
+    &-text {
+      flex-grow: 1;
+      flex: 1;
+    }
+    &-disabled {
+      &, &:hover {
+        color: #b2b2b2;
+        cursor: not-allowed;
+        background-color: white;
+      }
+    }
+  }
+  .panda-poptip-popper {
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+  }
+  .panda-poptip-popper-inner {
+    padding: 0;
+  }
+  .panda-poptip-popper-main {
+    padding: 8px 0;
+  }
+  .panda-fade-transition-enter-active,
+  .panda-fade-transition-leave-active {
+    transition: opacity .2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  }
+}
+
+.panda-dropdown-checkable {
+  .panda-dropdown-item.panda-dropdown-item-checked {
+    color: @color-primary;
+  }
+}
+
+.panda-dropdown-hide-divider {
+  .panda-dropdown-item {
+    border-bottom: none;
+  }
+}

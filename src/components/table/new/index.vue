@@ -182,7 +182,7 @@
         return [
           this.size,
           this.stripe ? 'stripe' : '',
-          this.border ? 'border' : '',
+          this.border ? 'panda-table-border' : '',
           this.align ? `align-${this.align}` : '',
           this.height ? 'height' : '',
           this.loading ? 'loading' : '',

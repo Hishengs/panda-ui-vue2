@@ -1,34 +1,163 @@
-.panda-slider {
-  height: 10px;
-  line-height: 10px;
-  border-radius: 5px;
-  background-color: @bg-color-secondary;
-  color: white;
-  .panda-slider-inner {
+@import '../style/val.less';
+
+@panda-slider-main-background-color: @color-primary;
+@panda-slider-track-background-color: #E0E0E0;
+@panda-slider-button-hover-color: mix(@color-primary, black, 97%);
+@panda-slider-stop-background-color: white;
+@panda-slider-disable-color: #E0E0E0;
+@panda-slider-margin: 16px 0;
+@panda-slider-border-radius: 2px;
+@panda-slider-height: 4px;
+@panda-slider-button-size: 24px;
+@panda-slider-handle-size: 44x;
+@panda-slider-handle-offset: -10px;
+
+
+.utils-vertical-center () {
+  &::after {
+    display: inline-block;
+    content: "";
     height: 100%;
-    border-radius: 5px;
-    background-color: @color-primary;
+    vertical-align: middle
+  }
+}
+
+.panda-slider {
+  .panda-slider-track {
+    width: 100%;
+    height: @panda-slider-height;
+    margin: @panda-slider-margin;
+    background-color: @panda-slider-track-background-color;
+    border-radius: @panda-slider-border-radius;
     position: relative;
-    .panda-slider-value {
-      font-size: 11px;
-      user-select: none;
-      padding-left: 10px;
-    }
-    .panda-slider-handler {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      line-height: 1;
-      border-radius: 10px;
-      background-color: white;
-      border: 2px solid @color-primary;
-      position: absolute;
-      right: 0;
-      top: -5px;
-      &:hover {
-        transform: scale(1.1, 1.1);
-        cursor: pointer;
+    cursor: pointer;
+    vertical-align: middle;
+
+    &-disabled {
+      cursor: default;
+
+      .panda-slider-bar {
+        background-color: #cccccc;
       }
+
+      .panda-slider-button {
+        // border-color: @panda-slider-disable-color;
+      }
+
+      .panda-slider-handle {
+        &:hover,
+        &.hover {
+          cursor: not-allowed;
+        }
+
+        &.dragging {
+          cursor: not-allowed;
+        }
+      }
+
+      .panda-slider-button {
+        &:hover,
+        &.hover,
+        &.dragging {
+          transform: scale(1);
+        }
+
+        &:hover,
+        &.hover {
+          cursor: not-allowed;
+        }
+
+        &.dragging {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .panda-slider-bar {
+    height: @panda-slider-height;
+    background-color: @panda-slider-main-background-color;
+    border-top-left-radius: @panda-slider-border-radius;
+    border-bottom-left-radius: @panda-slider-border-radius;
+    position: absolute;
+  }
+
+  .panda-slider-handle {
+    height: @panda-slider-handle-size;
+    width: @panda-slider-handle-size;
+    position: absolute;
+    z-index: 1001;
+    top: @panda-slider-handle-offset;
+    transform: translateX(-50%);
+    background-color: transparent;
+    text-align: center;
+    user-select: none;
+    line-height: normal;
+    @include utils-vertical-center;
+    outline: none;
+
+    .panda-tooltip {
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    &:hover,
+    &.hover {
+      cursor: grab;
+    }
+
+    &.dragging {
+      cursor: grabbing;
+    }
+  }
+
+  .panda-slider-button {
+    width: @panda-slider-button-size;
+    height: @panda-slider-button-size;
+    // border: solid 2px @panda-slider-main-background-color;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border-radius: 50%;
+    transition: .2s;
+    user-select: none;
+
+    /* &:hover,
+    &.hover,
+    &.dragging {
+      transform: scale(1.2);
+    } */
+
+    &:hover,
+    &.hover {
+      cursor: grab;
+    }
+
+    &.dragging {
+      cursor: grabbing;
+    }
+  }
+
+  .panda-slider-stop {
+    position: absolute;
+    height: @panda-slider-height;
+    width: @panda-slider-height;
+    border-radius: 100%;
+    background-color: @panda-slider-stop-background-color;
+    transform: translateX(-50%);
+  }
+
+  .panda-slider-marks {
+    top: 0;
+    left: 12px;
+    width: 18px;
+    height: 100%;
+
+    .panda-slider-marks-text {
+      position: absolute;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: @color-blue;
+      margin-top: 15px;
     }
   }
 }

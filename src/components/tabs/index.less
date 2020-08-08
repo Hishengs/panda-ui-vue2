@@ -1,28 +1,117 @@
+@import '../style/val.less';
+
 .panda-tabs {
-  display: flex;
-  flex-direction: column;
-  color: #666;
   &-header {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
-    .panda-tab-header {
-      display: inline-block;
-      padding: 10px 15px;
-      text-align: center;
-      margin-bottom: -1px;
-      cursor: pointer;
-      &.active {
-        color: @color-primary;
-        border-bottom: 2px solid @color-primary;
-      }
+    position: relative;
+    overflow-x: hidden;
+    .panda-tabs-items {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row;
+      transition: transform 200ms ease-in-out;
+    }
+    .panda-tabs-item {
+      display: flex;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      border-bottom: 2px solid transparent;
+      color: @primary-text-color;
+      font-size: 14px;
+      flex-shrink: 0;
       &:hover {
+        cursor: pointer;
         color: @color-primary;
       }
-      &.disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-        color: inherit;
+      svg {
+        font-size: 24px;
+        margin-right: 8px;
+      }
+      > svg {
+        flex-shrink: 0;
+      }
+      > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      &-width-specified {
+        padding: 0 8px;
       }
     }
+    .panda-tabs-item-active {
+      color: @color-primary;
+      border-bottom: 2px solid @color-primary;
+      font-weight: 600;
+    }
+    .panda-tabs-item-disabled {
+      color: #b2b2b2;
+      border-bottom: 2px solid transparent;
+      font-weight: normal;
+      &, &:hover {
+        cursor: not-allowed;
+        color: #b2b2b2;
+      }
+    }
+    .panda-tabs-control {
+      visibility: hidden;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 100%;
+        background: linear-gradient(to left, white 30%, transparent);
+      }
+      .panda-tabs-prev-btn, .panda-tabs-next-btn {
+        font-size: 16px;
+        color: #999999;
+        background-color: white;
+        display: inline-flex;
+        height: 100%;
+        align-items: center;
+        &:hover {
+          cursor: pointer;
+        }
+        &-disabled {
+          color: #e0e0e0;
+          &:hover {
+            cursor: not-allowed;
+          }
+        }
+      }
+      .panda-tabs-prev-btn {
+        padding-right: 8px;
+        padding-left: 16px;
+      }
+    }
+    &-overflow {
+      & {
+        padding-right: 72px;
+      }
+      .panda-tabs-control {
+        visibility: visible;
+      }
+    }
+  }
+  &-body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 16px;
+  }
+  &-body-inner {
+    display: flex;
+    flex-direction: row;
+  }
+  .panda-tab-pane {
+    flex-basis: 100%;
+    flex-shrink: 0;
   }
 }

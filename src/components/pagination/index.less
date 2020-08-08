@@ -1,0 +1,123 @@
+@import "../style/val.less";
+
+@pagination-font-size: 16px;
+@pagination-font-size__small: 14px;
+@pagination-icon-size: 16px;
+@pagination-icon-size__small: 14px;
+@pagination-item-height: 36px;
+@pagination-item-height__small: 28px;
+@pagination-item-gap: 10px;
+@pagination-item-gap__small: 10px;
+
+
+
+.panda-pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #333333;
+  font-size: 14px;
+  > ul {
+    display: flex;
+    list-style: 0;
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      margin: 0 @pagination-item-gap/2;
+    }
+  }
+}
+
+.panda-pagination-prev-btn,
+.panda-pagination-next-btn,
+.panda-pagination-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: @pagination-item-height;
+  height: @pagination-item-height;
+  color: #666666;
+  border: 1px solid #CCCCCC;
+  font-weight: normal;
+  font-size: @pagination-font-size;
+  border-radius: 2px;
+  background-color: white;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    border-color: @color-primary;
+    color: @color-primary;
+  }
+  svg {
+    font-size: @pagination-icon-size;
+    color: currentColor;
+  }
+}
+
+.panda-pagination-prev-btn,
+.panda-pagination-next-btn {
+  padding: 0;
+}
+
+.panda-pagination-prev-btn {
+  margin-right: @pagination-item-gap/2;
+}
+
+.panda-pagination-next-btn {
+  margin-left: @pagination-item-gap/2;
+}
+
+.panda-pagination-prev-btn-disabled,
+.panda-pagination-next-btn-disabled {
+  &, &:hover {
+    cursor: not-allowed;
+    border-color: #CCCCCC;
+    color: #cccccc;
+  }
+}
+
+.panda-pagination-item {
+  padding: 0 6px;
+  &-current {
+    background-color: @color-primary;
+    color: white;
+    border-color: @color-primary;
+    &:hover {
+      color: white;
+    }
+  }
+  &-ellipsis {
+    &, &:hover {
+      border: none;
+      cursor: default;
+      color: #666666;
+    }
+  }
+  &-disabled, &-disabled:hover {
+    cursor: not-allowed;
+    border-color: #CCCCCC;
+    color: #cccccc;
+  }
+}
+
+// small size
+.panda-pagination-small {
+  .panda-pagination-prev-btn,
+  .panda-pagination-next-btn {
+    padding: 0;
+  }
+  .panda-pagination-item {
+    padding: 0 4px;
+  }
+  .panda-pagination-prev-btn,
+  .panda-pagination-next-btn,
+  .panda-pagination-item {
+    min-width: @pagination-item-height__small;
+    height: @pagination-item-height__small;
+    font-size: @pagination-font-size__small;
+    svg {
+      font-size: @pagination-icon-size__small;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+export * from './comp.js';
 
 export function debounce (fn, t) {
   const timeout = t || 200;
@@ -35,3 +36,12 @@ export default {
   on,
   off,
 };
+
+export function parseWidth (width) {
+  if (!['number', 'string'].includes(typeof width)) return width;
+  width = String(width).trim();
+  if (/^\d+$/.test(width)) {
+    width += 'px';
+  }
+  return width;
+}

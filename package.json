@@ -2,24 +2,23 @@
   "name": "panda-design",
   "version": "0.0.1",
   "description": "A UI Framework for Vue.js",
-  "main": "src/index.js",
+  "main": "dist/panda-design.common.js",
+  "typings": "types/index.d.ts",
   "files": [
-    "src"
+    "dist",
+    "src",
+    "lib",
+    "types"
   ],
-  "scripts": {
-    "dev": "webpack-dev-server --config build/webpack.dev.config.js --open",
-    "build:common": "webpack --config build/webpack.prod.config.js",
-    "parcel": "parcel ./test/index-parcel.html --open",
-    "parcel:build": "parcel build ./test/index-parcel.html",
-    "webpack": "webpack-dev-server --colors --hot --config=./test/webpack.config.js --open"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hishengs/panda-ui.git"
   },
   "keywords": [
     "UI",
-    "vue"
+    "vue",
+    "framework",
+    "component"
   ],
   "author": "Hisheng",
   "license": "ISC",
@@ -27,6 +26,16 @@
     "url": "https://github.com/Hishengs/panda-ui/issues"
   },
   "homepage": "https://github.com/Hishengs/panda-ui#readme",
+  "scripts": {
+    "dev": "webpack-dev-server --config build/webpack.dev.config.js --open",
+    "build:common": "webpack --config build/webpack.prod.config.js",
+    "parcel": "parcel ./test/index-parcel.html --open",
+    "parcel:build": "parcel build ./test/index-parcel.html",
+    "webpack": "webpack-dev-server --colors --hot --config=./test/webpack.config.js --open"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.2"
+  },
   "dependencies": {
     "@popperjs/core": "^2.0.0-rc.1",
     "eslint": "^4.19.1",
@@ -65,12 +74,17 @@
     "css-loader": "^3.4.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "highlight.js": "^10.0.3",
     "html-webpack-plugin": "^3.2.0",
+    "loader-utils": "^2.0.0",
+    "markdown-it": "^11.0.0",
     "postcss-loader": "^3.0.0",
     "progress-bar-webpack-plugin": "^1.12.1",
+    "source-map-loader": "^1.0.1",
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
     "url-loader": "^3.0.0",
-    "vmark": "^1.2.0",
-    "vue-markdown-loader": "^2.4.1",
+    "vue-router": "^3.2.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
